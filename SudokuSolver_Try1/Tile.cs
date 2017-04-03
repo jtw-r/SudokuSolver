@@ -25,7 +25,6 @@ namespace SudokuSolver_Try1 {
 			this.tileType = _TileType;
 			this.value = _value;
 			this.ideas = _ideas;
-			// Something.
 		}
 
 	}
