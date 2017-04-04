@@ -19,12 +19,17 @@ namespace SudokuSolver_Try1 {
 
 		}
 
-		private void boardGrid_CellPaint(object sender, TableLayoutCellPaintEventArgs e) {
+		public void boardGrid_CellPaint(object sender, TableLayoutCellPaintEventArgs e) {
 			int x = e.Row;
 			int y = e.Column;
-			if ((x == 3 || x == 7 || x == 11) && (y == 3 || y == 7 || y == 11)) {
-				e.Graphics.DrawRectangle(new Pen(Color.Blue), e.CellBounds);
+			if ((x == 3 || x == 7 || x == 11) || (y == 3 || y == 7 || y == 11)) {
+				//e.Graphics.DrawRectangle(new Pen(Color.Black, 4f), e.CellBounds);
+				e.Graphics.FillRectangle(Brushes.Black, e.CellBounds);
 			}
+		}
+
+		private void boardGrid_BackColorChanged(object sender, EventArgs e) {
+			
 		}
 	}
 }

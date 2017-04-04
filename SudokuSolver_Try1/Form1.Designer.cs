@@ -39,7 +39,7 @@ namespace SudokuSolver_Try1 {
 			// 
 			this.boardGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.boardGrid.BackColor = System.Drawing.Color.White;
-			this.boardGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
+			this.boardGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
 			this.boardGrid.ColumnCount = 1;
 			this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.boardGrid.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
@@ -56,6 +56,8 @@ namespace SudokuSolver_Try1 {
 			this.boardGrid.Size = new System.Drawing.Size(203, 100);
 			this.boardGrid.TabIndex = 0;
 			this.boardGrid.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.boardGrid_CellPaint);
+			this.boardGrid.BackColorChanged += new System.EventHandler(this.boardGrid_BackColorChanged);
+			this.boardGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.boardGrid_Paint);
 			// 
 			// Form1
 			// 
@@ -79,7 +81,7 @@ namespace SudokuSolver_Try1 {
 
 		public void resizeBoard(int _w, int _h) {
 			int m = 2;
-			boardGrid.Size = new System.Drawing.Size(((_w+m)*25)+15, ((_h+m)*25)+15);
+			boardGrid.Size = new System.Drawing.Size((((_w+m-1)*25)+15), (((_h+m-1)*25))+15);
 			boardGrid.RowCount = _h + m;
 			boardGrid.ColumnCount = _w + m;
 
@@ -110,9 +112,9 @@ namespace SudokuSolver_Try1 {
 			for (int x = 0; x < boardGrid.ColumnCount; x++) {
 				for (int y = 0; y < boardGrid.RowCount; y++) {
 					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-						boardGrid.Controls.Add(new TextBox() { AutoSize = true, TextAlign = HorizontalAlignment.Center }, x, y);
+						boardGrid.Controls.Add(new TextBox() { AutoSize = true, TextAlign = HorizontalAlignment.Center, BorderStyle = BorderStyle.None }, x, y);
 					} else {
-						boardGrid.CellPaint();
+						boardGrid.CellPaint += boardGrid_CellPaint;
 					}
 				}
 			}
