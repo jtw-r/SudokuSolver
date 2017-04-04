@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace SudokuSolver_Try1 {
-	static class Program {
+	public class Program {
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -14,7 +16,21 @@ namespace SudokuSolver_Try1 {
 		static void Main() {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			Form1 form = new Form1();
+			Program program = new Program();
+
+			int[] board_size = { 9, 9 };
+			Board board = program.NewBoard(board_size);
+
+			form.resizeBoard(9, 9);
+
+			Application.Run(form);
+
 		}
+
+		Board NewBoard(int[] board_size) {
+			return new Board(board_size[0], board_size[1]);
+		}
+
 	}
 }

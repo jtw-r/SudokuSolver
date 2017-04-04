@@ -1,4 +1,7 @@
-﻿namespace SudokuSolver_Try1 {
+﻿using System.Windows.Forms;
+using System;
+
+namespace SudokuSolver_Try1 {
 	partial class Form1 {
 		/// <summary>
 		/// Required designer variable.
@@ -23,20 +26,99 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.dataSet1 = new System.Data.DataSet();
+			this.boardGrid = new System.Windows.Forms.TableLayoutPanel();
+			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// dataSet1
+			// 
+			this.dataSet1.DataSetName = "NewDataSet";
+			// 
+			// boardGrid
+			// 
+			this.boardGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.boardGrid.BackColor = System.Drawing.Color.White;
+			this.boardGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
+			this.boardGrid.ColumnCount = 1;
+			this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.boardGrid.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+			this.boardGrid.Location = new System.Drawing.Point(13, 13);
+			this.boardGrid.Name = "boardGrid";
+			this.boardGrid.RowCount = 7;
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+			this.boardGrid.Size = new System.Drawing.Size(203, 100);
+			this.boardGrid.TabIndex = 0;
+			this.boardGrid.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.boardGrid_CellPaint);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(660, 302);
+			this.Controls.Add(this.boardGrid);
 			this.Name = "Form1";
 			this.Text = "Form1";
+			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
+
+		public System.Data.DataSet dataSet1;
+
+		public TableLayoutPanel boardGrid;
+
+		public void resizeBoard(int _w, int _h) {
+			int m = 2;
+			boardGrid.Size = new System.Drawing.Size(((_w+m)*25)+15, ((_h+m)*25)+15);
+			boardGrid.RowCount = _h + m;
+			boardGrid.ColumnCount = _w + m;
+
+			boardGrid.SuspendLayout();
+			boardGrid.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;//.AddColumns;
+			boardGrid.ColumnStyles.Clear();
+			boardGrid.RowStyles.Clear();
+			for (int a = 0; a < boardGrid.ColumnCount; a++) {
+				ColumnStyle cs;
+				if (a != 3 && a != 7 && a != 11) {
+					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
+				} else {
+					cs = new ColumnStyle(SizeType.Absolute, 5);
+				}
+					
+				boardGrid.ColumnStyles.Add(cs);
+			}
+			for (int b = 0; b < boardGrid.RowCount; b++) {
+				RowStyle rs;
+				if (b != 3 && b != 7 && b != 11) {
+					rs = new RowStyle(SizeType.Absolute, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
+				} else {
+					rs = new RowStyle(SizeType.Absolute, 5);
+				}
+				boardGrid.RowStyles.Add(rs);
+			}
+
+			for (int x = 0; x < boardGrid.ColumnCount; x++) {
+				for (int y = 0; y < boardGrid.RowCount; y++) {
+					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
+						boardGrid.Controls.Add(new TextBox() { AutoSize = true, TextAlign = HorizontalAlignment.Center }, x, y);
+					} else {
+						boardGrid.CellPaint();
+					}
+				}
+			}
+
+			boardGrid.ResumeLayout();
+		}
 	}
 }
 
