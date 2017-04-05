@@ -76,6 +76,9 @@ namespace SudokuSolver_Try1 {
 
 		#endregion
 
+		public int __x;
+		public int __y;
+
 		public System.Data.DataSet dataSet1;
 
 		public TableLayoutPanel boardGrid;
@@ -113,9 +116,12 @@ namespace SudokuSolver_Try1 {
 			for (var x = 0; x < boardGrid.ColumnCount; x++) {
 				for (var y = 0; y < boardGrid.RowCount; y++) {
 					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-						TextBox obj = new TextField(x, y).field;
-						obj.TextChanged += (sender, e) => textBox_TextChanged(sender, x,y,e);
-						boardGrid.Controls.Add(obj, x, y);
+						TextField obj = new TextField(x, y);
+						__x = x;
+						__y = y;
+
+						obj.field.TextChanged += (sender, e) => textBox_TextChanged(sender, obj, e);
+						boardGrid.Controls.Add(obj.field, x, y);
 					} else {
 						boardGrid.CellPaint += boardGrid_CellPaint;
 					}

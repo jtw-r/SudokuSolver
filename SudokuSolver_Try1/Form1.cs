@@ -34,9 +34,9 @@ namespace SudokuSolver_Try1 {
 			
 		}
 
-		private void textBox_TextChanged(object sender, int _x, int _y, EventArgs e) {
-			program.gameBoard.GetTile(_x,_y);
-			
+		private void textBox_TextChanged(object sender, TextField obj, EventArgs e) {
+			program.gameBoard.GetTile(obj.x,obj.y).value = obj.field.Text;
+			Console.WriteLine(program.gameBoard.GetTile(obj.x, obj.y).value);
 		}
 
 	}
