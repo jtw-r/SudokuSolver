@@ -9,6 +9,8 @@ using static UnityEngine.UI.CanvasScaler;
 namespace SudokuSolver_Try1 {
 	public class Program {
 
+		public Board gameBoard;
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -18,9 +20,10 @@ namespace SudokuSolver_Try1 {
 			Application.SetCompatibleTextRenderingDefault(false);
 			Form1 form = new Form1();
 			Program program = new Program();
+			form.program = program;
 
 			int[] board_size = { 9, 9 };
-			Board board = program.NewBoard(board_size);
+			program.gameBoard = program.NewBoard(board_size);
 
 			form.resizeBoard(9, 9);
 
@@ -31,6 +34,5 @@ namespace SudokuSolver_Try1 {
 		Board NewBoard(int[] board_size) {
 			return new Board(board_size[0], board_size[1]);
 		}
-
 	}
 }

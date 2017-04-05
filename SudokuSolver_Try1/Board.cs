@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SudokuSolver_Try1 {
-	class Board {
+	public class Board {
 
 		public Tile[,] tiles;
 		public int width;
@@ -26,7 +26,9 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public Tile GetTile(int _x, int _y) {
-			return tiles[_x, _y];
+			int x_ = (int)Math.Floor((float)(_x+1)/3);
+			int y_ = (int)Math.Floor((float)(_y+1)/3);
+			return tiles[_x-x_, _y-y_];
 		}
 
 	}

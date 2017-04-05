@@ -63,8 +63,9 @@ namespace SudokuSolver_Try1 {
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(660, 302);
+			this.ClientSize = new System.Drawing.Size(286, 132);
 			this.Controls.Add(this.boardGrid);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -109,10 +110,12 @@ namespace SudokuSolver_Try1 {
 				boardGrid.RowStyles.Add(rs);
 			}
 
-			for (int x = 0; x < boardGrid.ColumnCount; x++) {
-				for (int y = 0; y < boardGrid.RowCount; y++) {
+			for (var x = 0; x < boardGrid.ColumnCount; x++) {
+				for (var y = 0; y < boardGrid.RowCount; y++) {
 					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-						boardGrid.Controls.Add(new TextBox() { AutoSize = true, TextAlign = HorizontalAlignment.Center, BorderStyle = BorderStyle.None }, x, y);
+						TextBox obj = new TextField(x, y).field;
+						obj.TextChanged += (sender, e) => textBox_TextChanged(sender, x,y,e);
+						boardGrid.Controls.Add(obj, x, y);
 					} else {
 						boardGrid.CellPaint += boardGrid_CellPaint;
 					}

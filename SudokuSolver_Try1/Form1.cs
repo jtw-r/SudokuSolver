@@ -11,6 +11,8 @@ using System.Windows.Forms;
 namespace SudokuSolver_Try1 {
 	public partial class Form1 : Form {
 
+		public Program program;
+
 		public Form1() {
 			InitializeComponent();
 		}
@@ -31,5 +33,11 @@ namespace SudokuSolver_Try1 {
 		private void boardGrid_BackColorChanged(object sender, EventArgs e) {
 			
 		}
+
+		private void textBox_TextChanged(object sender, int _x, int _y, EventArgs e) {
+			program.gameBoard.GetTile(_x,_y);
+			
+		}
+
 	}
 }

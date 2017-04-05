@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SudokuSolver_Try1 {
-	class Tile {
+	public class Tile {
 		public enum TileType {
 			Empty,
 			InProgress,
