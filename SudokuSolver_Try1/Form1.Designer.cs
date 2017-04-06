@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using System;
+using System.Drawing;
 
 namespace SudokuSolver_Try1 {
 	partial class Form1 {
@@ -45,7 +46,7 @@ namespace SudokuSolver_Try1 {
 			this.boardGrid.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
 			this.boardGrid.Location = new System.Drawing.Point(13, 13);
 			this.boardGrid.Name = "boardGrid";
-			this.boardGrid.RowCount = 7;
+			this.boardGrid.RowCount = 1;
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
@@ -53,7 +54,7 @@ namespace SudokuSolver_Try1 {
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-			this.boardGrid.Size = new System.Drawing.Size(203, 100);
+			this.boardGrid.Size = new System.Drawing.Size(36, 26);
 			this.boardGrid.TabIndex = 0;
 			this.boardGrid.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.boardGrid_CellPaint);
 			this.boardGrid.BackColorChanged += new System.EventHandler(this.boardGrid_BackColorChanged);
@@ -75,9 +76,6 @@ namespace SudokuSolver_Try1 {
 		}
 
 		#endregion
-
-		public int __x;
-		public int __y;
 
 		public System.Data.DataSet dataSet1;
 
@@ -116,11 +114,8 @@ namespace SudokuSolver_Try1 {
 			for (var x = 0; x < boardGrid.ColumnCount; x++) {
 				for (var y = 0; y < boardGrid.RowCount; y++) {
 					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-						TextField obj = new TextField(x, y);
-						__x = x;
-						__y = y;
-
-						obj.field.TextChanged += (sender, e) => textBox_TextChanged(sender, obj, e);
+						TextField obj = program.gameBoard.GetTile(x,y).field = new TextField(x,y);
+						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
 						boardGrid.Controls.Add(obj.field, x, y);
 					} else {
 						boardGrid.CellPaint += boardGrid_CellPaint;
@@ -129,6 +124,12 @@ namespace SudokuSolver_Try1 {
 			}
 
 			boardGrid.ResumeLayout();
+		}
+
+		public void UpdateColorSquare(int _x, int _y, Color _color) {
+			var obj = program.gameBoard.GetTile(_x, _y).field;
+			obj.field.BackColor = _color;
+			boardGrid.CellPaint += (sender, e) => CellPaint(sender, _x, _y, _color, e);
 		}
 	}
 }

@@ -29,15 +29,24 @@ namespace SudokuSolver_Try1 {
 				e.Graphics.FillRectangle(Brushes.Black, e.CellBounds);
 			}
 		}
+		public void CellPaint(object sender, int _x, int _y, Color _color, TableLayoutCellPaintEventArgs e) {
+			if( e.Column == _x && e.Row == _y) {
+				//e.Graphics.DrawRectangle(new Pen(Color.Black, 4f), e.CellBounds);
+				e.Graphics.FillRectangle(new SolidBrush(_color), e.CellBounds);
+			}
+		}
 
 		private void boardGrid_BackColorChanged(object sender, EventArgs e) {
 			
 		}
 
-		private void textBox_TextChanged(object sender, TextField obj, EventArgs e) {
+		private void TextChanged(object sender, TextField obj, EventArgs e) {
 			program.gameBoard.GetTile(obj.x,obj.y).value = obj.field.Text;
 			Console.WriteLine(program.gameBoard.GetTile(obj.x, obj.y).value);
 		}
 
+		private void textBox1_BackColorChanged(object sender, EventArgs e) {
+
+		}
 	}
 }

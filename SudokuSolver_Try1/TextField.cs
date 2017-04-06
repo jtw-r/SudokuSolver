@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
-	class TextField {
+	public class TextField {
 		public int x;
 		public int y;
 		public TextBox field;
