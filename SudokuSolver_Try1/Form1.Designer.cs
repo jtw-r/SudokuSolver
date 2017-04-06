@@ -27,24 +27,19 @@ namespace SudokuSolver_Try1 {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.dataSet1 = new System.Data.DataSet();
 			this.boardGrid = new System.Windows.Forms.TableLayoutPanel();
-			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// dataSet1
-			// 
-			this.dataSet1.DataSetName = "NewDataSet";
 			// 
 			// boardGrid
 			// 
+			this.boardGrid.AutoSize = true;
 			this.boardGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.boardGrid.BackColor = System.Drawing.Color.White;
 			this.boardGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
 			this.boardGrid.ColumnCount = 1;
 			this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.boardGrid.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-			this.boardGrid.Location = new System.Drawing.Point(13, 13);
+			this.boardGrid.Location = new System.Drawing.Point(15, 15);
 			this.boardGrid.Name = "boardGrid";
 			this.boardGrid.RowCount = 1;
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
@@ -54,9 +49,8 @@ namespace SudokuSolver_Try1 {
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-			this.boardGrid.Size = new System.Drawing.Size(36, 26);
+			this.boardGrid.Size = new System.Drawing.Size(2, 2);
 			this.boardGrid.TabIndex = 0;
-			this.boardGrid.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.boardGrid_CellPaint);
 			this.boardGrid.BackColorChanged += new System.EventHandler(this.boardGrid_BackColorChanged);
 			this.boardGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.boardGrid_Paint);
 			// 
@@ -66,24 +60,26 @@ namespace SudokuSolver_Try1 {
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(286, 132);
+			this.ClientSize = new System.Drawing.Size(137, 71);
 			this.Controls.Add(this.boardGrid);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "Form1";
-			this.Text = "Form1";
-			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
+			this.Padding = new System.Windows.Forms.Padding(12);
+			this.Text = "Sudoku Solver";
+			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		public System.Data.DataSet dataSet1;
-
 		public TableLayoutPanel boardGrid;
 
 		public void resizeBoard(int _w, int _h) {
-			int m = 2;
-			boardGrid.Size = new System.Drawing.Size((((_w+m-1)*25)+15), (((_h+m-1)*25))+15);
+			int sq = (int)Math.Sqrt(_w);
+			int m = sq-1;
+
 			boardGrid.RowCount = _h + m;
 			boardGrid.ColumnCount = _w + m;
 
@@ -93,7 +89,10 @@ namespace SudokuSolver_Try1 {
 			boardGrid.RowStyles.Clear();
 			for (int a = 0; a < boardGrid.ColumnCount; a++) {
 				ColumnStyle cs;
-				if (a != 3 && a != 7 && a != 11) {
+				//if (((float)(a) / sq+1) != ((a) / sq+1)) {
+				int floor = (int)Math.Floor((float)((a+1)/(sq+1)));
+				float nonfloor = ((float)(a+1)/(sq+1));
+				if (floor != nonfloor) {
 					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
 				} else {
 					cs = new ColumnStyle(SizeType.Absolute, 5);
@@ -103,7 +102,10 @@ namespace SudokuSolver_Try1 {
 			}
 			for (int b = 0; b < boardGrid.RowCount; b++) {
 				RowStyle rs;
-				if (b != 3 && b != 7 && b != 11) {
+				//if (((float)(b) / sq+1) != ((b) / sq+1)) {
+				int floor = (int)Math.Floor((float)((b + 1) / (sq + 1)));
+				float nonfloor = ((float)(b + 1) / (sq + 1));
+				if (floor != nonfloor) {
 					rs = new RowStyle(SizeType.Absolute, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
 				} else {
 					rs = new RowStyle(SizeType.Absolute, 5);
@@ -113,15 +115,22 @@ namespace SudokuSolver_Try1 {
 
 			for (var x = 0; x < boardGrid.ColumnCount; x++) {
 				for (var y = 0; y < boardGrid.RowCount; y++) {
-					if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-						TextField obj = program.gameBoard.GetTile(x,y).field = new TextField(x,y);
+					//if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
+					int x_floor = (int)Math.Floor((float)(x + 1) / (sq+1));
+					float x_nonfloor = ((float)(x + 1) / (sq+1));
+
+					int y_floor = (int)(Math.Floor((float)(y + 1) / (sq+1)));
+					float y_nonfloor = ((float)(y + 1) / (sq+1));
+					if ((x_floor != x_nonfloor) && (y_floor != y_nonfloor)) {
+						TextField obj = program.gameBoard.GetTile(x, y).field = new TextField(x, y);
 						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
 						boardGrid.Controls.Add(obj.field, x, y);
 					} else {
-						boardGrid.CellPaint += boardGrid_CellPaint;
 					}
 				}
 			}
+
+			boardGrid.CellPaint += (sender, e) => boardGrid_CellPaint(sender, sq, e);
 
 			boardGrid.ResumeLayout();
 		}

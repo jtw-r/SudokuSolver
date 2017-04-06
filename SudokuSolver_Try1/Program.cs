@@ -24,9 +24,10 @@ namespace SudokuSolver_Try1 {
 			int[] board_size = { 9, 9 };
 			program.gameBoard = program.NewBoard(board_size);
 
-			form.resizeBoard(9, 9);
-			form.UpdateColorSquare(4, 8, Color.Red);
+			form.resizeBoard(board_size[0], board_size[1]);
 
+			Console.WriteLine("SQRT(" + board_size[0] + ") = " + Math.Sqrt(board_size[0]));
+			
 			Application.Run(form);
 
 		}

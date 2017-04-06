@@ -21,10 +21,15 @@ namespace SudokuSolver_Try1 {
 
 		}
 
-		public void boardGrid_CellPaint(object sender, TableLayoutCellPaintEventArgs e) {
-			int x = e.Row;
-			int y = e.Column;
-			if ((x == 3 || x == 7 || x == 11) || (y == 3 || y == 7 || y == 11)) {
+		public void boardGrid_CellPaint(object sender, int sq, TableLayoutCellPaintEventArgs e) {
+			int x = e.Column;
+			int y = e.Row;
+			int x_floor = (int)Math.Floor((float)(x + 1) / (sq + 1));
+			float x_nonfloor = ((float)(x + 1) / (sq + 1));
+
+			int y_floor = (int)(Math.Floor((float)(y + 1) / (sq + 1)));
+			float y_nonfloor = ((float)(y + 1) / (sq + 1));
+			if ((x_floor == x_nonfloor) || (y_floor == y_nonfloor)) {
 				//e.Graphics.DrawRectangle(new Pen(Color.Black, 4f), e.CellBounds);
 				e.Graphics.FillRectangle(Brushes.Black, e.CellBounds);
 			}
@@ -42,10 +47,14 @@ namespace SudokuSolver_Try1 {
 
 		private void TextChanged(object sender, TextField obj, EventArgs e) {
 			program.gameBoard.GetTile(obj.x,obj.y).value = obj.field.Text;
-			Console.WriteLine(program.gameBoard.GetTile(obj.x, obj.y).value);
+			//Console.WriteLine("["+obj.x+","+obj.y+"] "+program.gameBoard.GetTile(obj.x, obj.y).value);
 		}
 
 		private void textBox1_BackColorChanged(object sender, EventArgs e) {
+
+		}
+
+		private void Form1_Load(object sender, EventArgs e) {
 
 		}
 	}
