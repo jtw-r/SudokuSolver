@@ -129,7 +129,11 @@ namespace SudokuSolver_Try1 {
 		public void UpdateColorSquare(int _x, int _y, Color _color) {
 			var obj = program.gameBoard.GetTile(_x, _y).field;
 			obj.field.BackColor = _color;
-			boardGrid.CellPaint += (sender, e) => CellPaint(sender, _x, _y, _color, e);
+			if ((Math.Floor((float)(_x + 1) / 4) == ((float)(_x + 1) / 4)) || (Math.Floor((float)(_y + 1) / 4) == ((float)(_y + 1) / 4))) {
+				boardGrid.CellPaint += (sender, e) => CellPaint(sender, 0, 0, _color, e);
+			} else {
+				boardGrid.CellPaint += (sender, e) => CellPaint(sender, _x, _y, _color, e);
+			}
 		}
 	}
 }

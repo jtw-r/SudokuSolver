@@ -52,13 +52,20 @@ namespace SudokuSolver_Try1 {
 				_y = 10;
 			}
 
-			int x_offset = _x / 4;
-			int y_offset = _y / 4;
+			if ((Math.Floor((float)(_x + 1) / 4) == ((float)(_x + 1) / 4)) || (Math.Floor((float)(_y + 1) / 4) == ((float)(_y + 1) / 4))) {
+				cords.Add(0);
+				cords.Add(0);
+				return cords;
+			} else {
 
-			cords.Add(_x - (x_offset));
-			cords.Add(_y - (y_offset));
+				int x_offset = _x / 4;
+				int y_offset = _y / 4;
 
-			return cords;
+				cords.Add(_x - (x_offset));
+				cords.Add(_y - (y_offset));
+
+				return cords;
+			}
 		}
 
 	}
