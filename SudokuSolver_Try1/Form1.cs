@@ -35,6 +35,7 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 		public void CellPaint(object sender, int _x, int _y, Color _color, TableLayoutCellPaintEventArgs e) {
+			Console.WriteLine(_x);
 			if( e.Column == _x && e.Row == _y) {
 				//e.Graphics.DrawRectangle(new Pen(Color.Black, 4f), e.CellBounds);
 				e.Graphics.FillRectangle(new SolidBrush(_color), e.CellBounds);
@@ -42,12 +43,12 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void boardGrid_BackColorChanged(object sender, EventArgs e) {
-			
+			//CellPaint(sender, 0, 0, e);
 		}
 
-		private void TextChanged(object sender, TextField obj, EventArgs e) {
-			program.gameBoard.GetTile(obj.x,obj.y).value = obj.field.Text;
-			//Console.WriteLine("["+obj.x+","+obj.y+"] "+program.gameBoard.GetTile(obj.x, obj.y).value);
+		private new void TextChanged(object sender, Tile obj, EventArgs e) {
+			program.gameBoard.tiles[obj.x,obj.y].value = obj.field.Text;
+			CreateHighlight(highlightText.Text);
 		}
 
 		private void textBox1_BackColorChanged(object sender, EventArgs e) {
@@ -56,6 +57,23 @@ namespace SudokuSolver_Try1 {
 
 		private void Form1_Load(object sender, EventArgs e) {
 
+		}
+
+		private void btn_ClearHighlight_Click(object sender, EventArgs e) {
+			highlightText.Text = "";
+			RemoveHighlight();
+		}
+
+		private void btn_ShowHighlight_Click(object sender, EventArgs e) {
+			//CreateHighlight(highlightText.Text);
+		}
+
+		private void btn_ShowHighlight_MouseUp(object sender, MouseEventArgs e) {
+			CreateHighlight(highlightText.Text);
+		}
+
+		private void highlightText_TextChanged(object sender, EventArgs e) {
+			CreateHighlight(highlightText.Text);
 		}
 	}
 }

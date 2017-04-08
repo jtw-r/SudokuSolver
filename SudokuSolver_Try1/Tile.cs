@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
 	public class Tile {
@@ -16,17 +17,21 @@ namespace SudokuSolver_Try1 {
 		public int y;
 		public string value = "";
 		public List<string> ideas = new List<string>();
-		public TextField field;
+		public TextBox field;
+		public Panel panel;
+		public bool hasField = false;
 
 		public TileType tileType = TileType.Empty;
 
-		public Tile(int _x, int _y, TileType _TileType, string _value, List<string> _ideas, TextField _field ) {
+		public Tile(int _x, int _y, TileType _TileType, string _value, List<string> _ideas, TextBox _field, Panel _panel, bool _hasField ) {
 			this.x = _x;
 			this.y = _y;
 			this.tileType = _TileType;
 			this.value = _value;
 			this.ideas = _ideas;
 			this.field = _field;
+			this.panel = _panel;
+			this.hasField = _hasField;
 		}
 
 	}

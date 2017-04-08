@@ -19,19 +19,30 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-					tiles[x, y] = new Tile(x, y, Tile.TileType.Empty, "", new List<string>(), null);
+					tiles[x, y] = new Tile(x, y, Tile.TileType.Empty, "", new List<string>(), null, null, false);
 				}
 			}
 
 		}
 
 		public Tile GetTile(int _x, int _y, bool isFromTable = true) {
-			if (isFromTable) {
-				var cord = TableToTile(_x, _y);
-				return tiles[cord[0], cord[1]];
-			} else {
-				return tiles[_x, _y];
+			return tiles[_x, _y];
+		}
+
+		public List<Tile> GetRow(int row) {
+			List<Tile> tileRow = new List<Tile>();
+			for (int x = 0; x < width; x++) {
+				tileRow.Add(tiles[x,row]);
 			}
+			return tileRow;
+		}
+
+		public List<Tile> GetColumn(int column) {
+			List<Tile> tileColumn = new List<Tile>();
+			for (int y = 0; y < width; y++) {
+				tileColumn.Add(tiles[column, y]);
+			}
+			return tileColumn;
 		}
 
 		/// <summary>
@@ -44,13 +55,6 @@ namespace SudokuSolver_Try1 {
 		public List<int> TableToTile(int _x, int _y) {
 			// Will convert 10,10 -> 9,9 or 4,4 -> 3,3 or 0,0 -> 0,0
 			List<int> cords = new List<int>();
-
-			if (_x > 10) {
-				_x = 10;
-			}
-			if (_y > 10) {
-				_y = 10;
-			}
 
 			if ((Math.Floor((float)(_x + 1) / 4) == ((float)(_x + 1) / 4)) || (Math.Floor((float)(_y + 1) / 4) == ((float)(_y + 1) / 4))) {
 				cords.Add(0);
@@ -66,6 +70,18 @@ namespace SudokuSolver_Try1 {
 
 				return cords;
 			}
+		}
+
+		public List<int> TileToTable(int _x, int _y) {
+			List<int> cords = new List<int>();
+
+			int x_offset = (int)Math.Floor((float)(_x / 4));
+			int y_offset = (int)Math.Floor((float)(_y / 4));
+
+			cords.Add(_x + x_offset);
+			cords.Add(_y + y_offset);
+
+			return cords;
 		}
 
 	}
