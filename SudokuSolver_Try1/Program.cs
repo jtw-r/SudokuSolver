@@ -26,9 +26,6 @@ namespace SudokuSolver_Try1 {
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
 
-			form.UpdateColorSquare(8, 8, Color.Blue);
-			form.UpdateColorSquare(8, 8, Color.Red);
-
 			Console.WriteLine("SQRT(" + board_size[0] + ") = " + Math.Sqrt(board_size[0]));
 			
 			Application.Run(form);

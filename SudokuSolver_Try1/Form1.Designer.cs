@@ -33,6 +33,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
+			this.clickHighlight = new System.Windows.Forms.CheckBox();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -78,20 +79,24 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.highlightText, 0, 0);
 			this.highlightTable.Controls.Add(this.label1, 1, 0);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 0, 1);
+			this.highlightTable.Controls.Add(this.clickHighlight, 1, 1);
 			this.highlightTable.Location = new System.Drawing.Point(111, 85);
 			this.highlightTable.Name = "highlightTable";
 			this.highlightTable.RowCount = 2;
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.Size = new System.Drawing.Size(160, 69);
+			this.highlightTable.Size = new System.Drawing.Size(165, 69);
 			this.highlightTable.TabIndex = 2;
 			// 
 			// label1
 			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(69, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(88, 13);
+			this.label1.Size = new System.Drawing.Size(93, 26);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Highlight Number";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -105,6 +110,22 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearHighlight.Text = "Clear Highlight";
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
 			this.btn_ClearHighlight.Click += new System.EventHandler(this.btn_ClearHighlight_Click);
+			// 
+			// clickHighlight
+			// 
+			this.clickHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.clickHighlight.AutoSize = true;
+			this.clickHighlight.Checked = true;
+			this.clickHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.clickHighlight.Location = new System.Drawing.Point(69, 29);
+			this.clickHighlight.Name = "clickHighlight";
+			this.clickHighlight.Size = new System.Drawing.Size(93, 37);
+			this.clickHighlight.TabIndex = 4;
+			this.clickHighlight.Text = "Click Highlight";
+			this.clickHighlight.UseVisualStyleBackColor = true;
+			this.clickHighlight.Click += new System.EventHandler(this.clickHighlight_Click);
 			// 
 			// Form1
 			// 
@@ -210,6 +231,7 @@ namespace SudokuSolver_Try1 {
 						obj.field.Height = obj.panel.Width-obj.panel.Padding.Vertical;
 						obj.hasField = true;
 						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
+						obj.field.Click += (sender, e) => highlight_Click(sender, obj, e);
 						obj.panel.BackColor = Color.White;
 						//obj.field.BackColor = Color.Green;
 					} else {
@@ -236,7 +258,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void CreateHighlight(string num) {
-			RemoveHighlight();
+			RemoveHighlight(Color.Yellow, true);
 			for (int x = 0; x < program.gameBoard.width; x++) {
 				for (int y = 0; y < program.gameBoard.height; y++) {
 					if (program.gameBoard.tiles[x,y].value == num && num != "") {
@@ -246,12 +268,18 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		public void RemoveHighlight() {
+		public void RemoveHighlight(Color _color, bool other = false) {
 			for (int x = 0; x < program.gameBoard.width; x++) {
 				for (int y = 0; y < program.gameBoard.height; y++) {
 					if (program.gameBoard.GetTile(x, y).hasField) {
-						if (program.gameBoard.tiles[x, y].field.BackColor != Color.White) {
-							UpdateColorSquare(x, y, Color.White, true);
+						if (other) {
+							if (program.gameBoard.tiles[x, y].field.BackColor == _color) {
+								UpdateColorSquare(x, y, Color.White, true);
+							}
+						} else {
+							if (program.gameBoard.tiles[x, y].field.BackColor != _color) {
+								UpdateColorSquare(x, y, Color.White, true);
+							}
 						}
 					}
 				}
@@ -262,6 +290,7 @@ namespace SudokuSolver_Try1 {
 		private TableLayoutPanel highlightTable;
 		private Label label1;
 		private Button btn_ClearHighlight;
+		private CheckBox clickHighlight;
 	}
 }
 
