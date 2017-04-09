@@ -62,6 +62,9 @@ namespace SudokuSolver_Try1 {
 		private void btn_ClearHighlight_Click(object sender, EventArgs e) {
 			highlightText.Text = "";
 			RemoveHighlight(Color.Yellow, true);
+			if (program.lastExec != null) {
+				rcHighlight(program.lastExec);
+			}
 		}
 
 		private void btn_ShowHighlight_Click(object sender, EventArgs e) {
@@ -77,6 +80,10 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void highlight_Click(object sender, Tile obj, EventArgs e) {
+			rcHighlight(obj);
+		}
+
+		public void rcHighlight(Tile obj) {
 			if (clickHighlight.Checked) {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
@@ -112,6 +119,7 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
+				program.lastExec = obj;
 			}
 		}
 

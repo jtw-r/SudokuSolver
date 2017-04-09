@@ -9,6 +9,7 @@ namespace SudokuSolver_Try1 {
 	public class Program {
 
 		public Board gameBoard;
+		public Tile lastExec = null;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -22,11 +23,8 @@ namespace SudokuSolver_Try1 {
 			form.program = program;
 
 			int[] board_size = { 9, 9 };
-			//program.gameBoard = program.NewBoard(board_size);
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
-
-			Console.WriteLine("SQRT(" + board_size[0] + ") = " + Math.Sqrt(board_size[0]));
 			
 			Application.Run(form);
 
