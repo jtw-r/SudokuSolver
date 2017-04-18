@@ -8,9 +8,9 @@ namespace SudokuSolver_Try1 {
 		public int width;
 		public int height;
 
-		public Board(int _w, int _h) {
-			this.width = _h;
-			this.height = _w;
+		public Board(int x_length, int y_length) {
+			this.width = x_length;
+			this.height = y_length;
 
 			tiles = new Tile[width, height];
 
