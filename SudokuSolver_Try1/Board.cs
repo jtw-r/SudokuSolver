@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolver_Try1 {
 	public class Board {
@@ -12,8 +9,8 @@ namespace SudokuSolver_Try1 {
 		public int height;
 
 		public Board(int _w, int _h) {
-			this.width = _w;
-			this.height = _h;
+			this.width = _h;
+			this.height = _w;
 
 			tiles = new Tile[width, height];
 
@@ -31,16 +28,16 @@ namespace SudokuSolver_Try1 {
 
 		public List<Tile> GetRow(int row) {
 			List<Tile> tileRow = new List<Tile>();
-			for (int x = 0; x < width; x++) {
-				tileRow.Add(tiles[x,row]);
+			for (int y = 0; y < height; y++) {
+				tileRow.Add(tiles[row,y]);
 			}
 			return tileRow;
 		}
 
 		public List<Tile> GetColumn(int column) {
 			List<Tile> tileColumn = new List<Tile>();
-			for (int y = 0; y < width; y++) {
-				tileColumn.Add(tiles[column, y]);
+			for (int x = 0; x < width; x++) {
+				tileColumn.Add(tiles[x, column]);
 			}
 			return tileColumn;
 		}

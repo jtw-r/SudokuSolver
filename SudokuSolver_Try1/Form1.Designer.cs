@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using System;
 using System.Drawing;
-using System.Collections.Generic;
 
 namespace SudokuSolver_Try1 {
 	partial class Form1 {
@@ -155,93 +154,102 @@ namespace SudokuSolver_Try1 {
 		public Board resizeBoard(int _w, int _h) {
 
 			this.Controls.Add(this.boardGrid);
-			int sq = (int)Math.Sqrt(_w);
-			int m = sq-1;
+			int w_sq = (int)Math.Sqrt(_w);
+			int h_sq = (int)Math.Sqrt(_h);
 
-			boardGrid.RowCount = _h + m;
-			boardGrid.ColumnCount = _w + m;
+			boardGrid.ColumnCount = _w + (w_sq - 1);
+			boardGrid.RowCount = _h + (h_sq - 1);
 
 			// Not sure if I need to flip these.
-			Board gameBoard = new Board(boardGrid.RowCount, boardGrid.ColumnCount);
+			Board gameBoard = new Board(boardGrid.ColumnCount, boardGrid.RowCount);
 
 			boardGrid.SuspendLayout();
-			boardGrid.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;//.AddColumns;
+			boardGrid.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
 			boardGrid.ColumnStyles.Clear();
 			boardGrid.RowStyles.Clear();
-			for (int a = 0; a < boardGrid.ColumnCount; a++) {
-				ColumnStyle cs;
-				//if (((float)(a) / sq+1) != ((a) / sq+1)) {
-				int floor = (int)Math.Floor((float)((a+1)/(sq+1)));
-				float nonfloor = ((float)(a+1)/(sq+1));
-				if (floor != nonfloor) {
-					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
-				} else {
-					cs = new ColumnStyle(SizeType.Absolute, 5);
-				}
-					
-				boardGrid.ColumnStyles.Add(cs);
-			}
-			for (int b = 0; b < boardGrid.RowCount; b++) {
-				RowStyle rs;
-				//if (((float)(b) / sq+1) != ((b) / sq+1)) {
-				int floor = (int)Math.Floor((float)((b + 1) / (sq + 1)));
-				float nonfloor = ((float)(b + 1) / (sq + 1));
-				if (floor != nonfloor) {
-					rs = new RowStyle(SizeType.Absolute, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
-				} else {
-					rs = new RowStyle(SizeType.Absolute, 5);
-				}
-				boardGrid.RowStyles.Add(rs);
-			}
+			
+			
 
-			for (var x = 0; x < boardGrid.ColumnCount; x++) {
-				for (var y = 0; y < boardGrid.RowCount; y++) {
-					/*//if ((x != 3 && x != 7 && x != 11) && (y != 3 && y != 7 && y != 11)) {
-					int x_floor = (int)Math.Floor((float)(x + 1) / (sq+1));
-					float x_nonfloor = ((float)(x + 1) / (sq+1));
-
-					int y_floor = (int)(Math.Floor((float)(y + 1) / (sq+1)));
-					float y_nonfloor = ((float)(y + 1) / (sq+1));
-					if ((x_floor != x_nonfloor) && (y_floor != y_nonfloor)) {
-						TextField obj = gameBoard.GetTile(x, y).field = new TextField(x, y);
-						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
-						boardGrid.Controls.Add(obj.field, x, y);
-					} else {
-					}*/
+			for (var x = 0; x < gameBoard.width; x++) {
+				for (var y = 0; y < gameBoard.height; y++) {
 					Tile obj = gameBoard.tiles[x,y];
-					obj.panel = new Panel();
+
+					obj.panel = new Panel() { Margin = new Padding(0),
+											  Padding = new Padding(5),
+											  BackColor = Color.White,
+											  Size = new Size(
+											  (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount,
+											  (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount)};
+
 					boardGrid.Controls.Add(obj.panel);
-					obj.panel.Margin = new Padding(0);
-					obj.panel.Padding = new Padding(5);
 
-					//Console.WriteLine(obj.panel.Size);
+					int x_floor = (int)Math.Floor((float)((x + 1) / (h_sq + 1)));
+					float x_nonfloor = ((float)(x + 1) / (h_sq + 1));
 
-					int x_floor = (int)Math.Floor((float)(x + 1) / (sq + 1));
-					float x_nonfloor = ((float)(x + 1) / (sq + 1));
+					//int floor = (int)Math.Floor((float)((a + 1) / (w_sq + 1)));
+					//float nonfloor = ((float)(a + 1) / (w_sq + 1));
 
-					int y_floor = (int)(Math.Floor((float)(y + 1) / (sq + 1)));
-					float y_nonfloor = ((float)(y + 1) / (sq + 1));
+					int y_floor = (int)(Math.Floor((float)(y + 1) / (w_sq + 1)));
+					float y_nonfloor = ((float)(y + 1) / (w_sq + 1));
+
 					if ((x_floor != x_nonfloor) && (y_floor != y_nonfloor)) {
-						obj.panel.Size = new Size((boardGrid.RowCount + 1) * 25 / boardGrid.RowCount, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
-						//obj.panel.Margin = new Padding(5, 5, 5, 5);
 						obj.field = new TextBox() { AutoSize = false, TextAlign = HorizontalAlignment.Center, BorderStyle = BorderStyle.None };
 						obj.panel.Controls.Add(obj.field);
+
 						obj.field.Location = new Point(obj.panel.Padding.Left,obj.panel.Padding.Top);
+
 						obj.field.Width = obj.panel.Width-obj.panel.Padding.Horizontal;
 						obj.field.Height = obj.panel.Width-obj.panel.Padding.Vertical;
-						obj.hasField = true;
+
 						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
 						obj.field.Click += (sender, e) => highlight_Click(sender, obj, e);
-						obj.panel.BackColor = Color.White;
-						//obj.field.BackColor = Color.Green;
-					} else {
-						obj.panel.BackColor = Color.Black;
-						Console.WriteLine("Black [" + x + "," + y + "]");
+
+						obj.field.BackColor = Color.Blue;
+
+						obj.hasField = true;
 					}
 				}
 			}
 
-			
+			for (int a = 0; a < boardGrid.ColumnCount; a++) {
+				ColumnStyle cs;
+
+				int floor = (int)Math.Floor((float)((a + 1) / (w_sq + 1)));
+				float nonfloor = ((float)(a + 1) / (w_sq + 1));
+
+				if (floor != nonfloor) {
+					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
+				} else {
+					cs = new ColumnStyle(SizeType.Absolute, 5);
+					var col = gameBoard.GetColumn(a);
+
+					for (int _x = 0; _x < col.Count; _x++) {
+						col[_x].panel.BackColor = Color.Black;
+					}
+
+				}
+
+				boardGrid.ColumnStyles.Add(cs);
+			}
+
+			for (int b = 0; b < boardGrid.RowCount; b++) {
+				RowStyle rs;
+
+				int floor = (int)Math.Floor((float)((b + 1) / (h_sq + 1)));
+				float nonfloor = ((float)(b + 1) / (h_sq + 1));
+
+				if (floor != nonfloor) {
+					rs = new RowStyle(SizeType.Absolute, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
+				} else {
+					rs = new RowStyle(SizeType.Absolute, 5);
+					var row = gameBoard.GetRow(b);
+
+					for (int _y = 0; _y < row.Count; _y++) {
+						row[_y].panel.BackColor = Color.Black;
+					}
+				}
+				boardGrid.RowStyles.Add(rs);
+			}
 
 			boardGrid.ResumeLayout();
 
@@ -253,7 +261,9 @@ namespace SudokuSolver_Try1 {
 
 		public void UpdateColorSquare(int _x, int _y, Color _color, bool thing = false) {
 			Tile obj = program.gameBoard.tiles[_x,_y];
-			obj.field.BackColor = _color;
+			if (obj.hasField) {
+				obj.field.BackColor = _color;
+			}
 			obj.panel.BackColor = _color;
 		}
 

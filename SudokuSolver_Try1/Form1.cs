@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
@@ -88,13 +83,13 @@ namespace SudokuSolver_Try1 {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 
-				List<Tile> col = program.gameBoard.GetColumn(obj.x);
-				List<Tile> row = program.gameBoard.GetRow(obj.y);
+				List<Tile> col = program.gameBoard.GetColumn(obj.y);
+				List<Tile> row = program.gameBoard.GetRow(obj.x);
 
 				for (int col_num = 0; col_num < col.Count; col_num++) {
 					if (col[col_num].hasField) {
 						if (col[col_num].panel.BackColor == Color.White) {
-							if (col[col_num].y != obj.y) {
+							if (col[col_num].x != obj.x) {
 								col[col_num].panel.BackColor = Color.LightBlue;
 								col[col_num].field.BackColor = Color.LightBlue;
 							} else {
@@ -105,10 +100,10 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
-				for (int row_num = 0; row_num < col.Count; row_num++) {
+				for (int row_num = 0; row_num < row.Count; row_num++) {
 					if (row[row_num].hasField) {
 						if (row[row_num].panel.BackColor == Color.White) {
-							if (row[row_num].x != obj.x) {
+							if (row[row_num].y != obj.y) {
 								row[row_num].panel.BackColor = Color.LightBlue;
 								row[row_num].field.BackColor = Color.LightBlue;
 							} else {
