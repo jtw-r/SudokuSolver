@@ -33,6 +33,8 @@ namespace SudokuSolver_Try1 {
 			this.label1 = new System.Windows.Forms.Label();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
 			this.clickHighlight = new System.Windows.Forms.CheckBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.lb_occur = new System.Windows.Forms.Label();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -64,7 +66,7 @@ namespace SudokuSolver_Try1 {
 			// 
 			this.highlightText.Location = new System.Drawing.Point(3, 3);
 			this.highlightText.Name = "highlightText";
-			this.highlightText.Size = new System.Drawing.Size(60, 20);
+			this.highlightText.Size = new System.Drawing.Size(68, 20);
 			this.highlightText.TabIndex = 1;
 			this.highlightText.TextChanged += new System.EventHandler(this.highlightText_TextChanged);
 			// 
@@ -79,12 +81,15 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.label1, 1, 0);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 0, 1);
 			this.highlightTable.Controls.Add(this.clickHighlight, 1, 1);
+			this.highlightTable.Controls.Add(this.label2, 0, 2);
+			this.highlightTable.Controls.Add(this.lb_occur, 1, 2);
 			this.highlightTable.Location = new System.Drawing.Point(111, 85);
 			this.highlightTable.Name = "highlightTable";
-			this.highlightTable.RowCount = 2;
+			this.highlightTable.RowCount = 3;
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.Size = new System.Drawing.Size(165, 69);
+			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.highlightTable.Size = new System.Drawing.Size(173, 89);
 			this.highlightTable.TabIndex = 2;
 			// 
 			// label1
@@ -93,7 +98,7 @@ namespace SudokuSolver_Try1 {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(69, 0);
+			this.label1.Location = new System.Drawing.Point(77, 0);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(93, 26);
 			this.label1.TabIndex = 2;
@@ -104,7 +109,7 @@ namespace SudokuSolver_Try1 {
 			// 
 			this.btn_ClearHighlight.Location = new System.Drawing.Point(3, 29);
 			this.btn_ClearHighlight.Name = "btn_ClearHighlight";
-			this.btn_ClearHighlight.Size = new System.Drawing.Size(60, 37);
+			this.btn_ClearHighlight.Size = new System.Drawing.Size(68, 37);
 			this.btn_ClearHighlight.TabIndex = 3;
 			this.btn_ClearHighlight.Text = "Clear Highlight";
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
@@ -118,7 +123,7 @@ namespace SudokuSolver_Try1 {
 			this.clickHighlight.AutoSize = true;
 			this.clickHighlight.Checked = true;
 			this.clickHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.clickHighlight.Location = new System.Drawing.Point(69, 29);
+			this.clickHighlight.Location = new System.Drawing.Point(77, 29);
 			this.clickHighlight.Name = "clickHighlight";
 			this.clickHighlight.Size = new System.Drawing.Size(93, 37);
 			this.clickHighlight.TabIndex = 4;
@@ -126,10 +131,37 @@ namespace SudokuSolver_Try1 {
 			this.clickHighlight.UseVisualStyleBackColor = true;
 			this.clickHighlight.Click += new System.EventHandler(this.clickHighlight_Click);
 			// 
+			// label2
+			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(3, 69);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(68, 20);
+			this.label2.TabIndex = 5;
+			this.label2.Text = "Occurances:";
+			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lb_occur
+			// 
+			this.lb_occur.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lb_occur.AutoSize = true;
+			this.lb_occur.Location = new System.Drawing.Point(77, 69);
+			this.lb_occur.Name = "lb_occur";
+			this.lb_occur.Size = new System.Drawing.Size(93, 20);
+			this.lb_occur.TabIndex = 6;
+			this.lb_occur.Text = "0";
+			this.lb_occur.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(321, 263);
@@ -159,16 +191,13 @@ namespace SudokuSolver_Try1 {
 
 			boardGrid.ColumnCount = _w + (w_sq - 1);
 			boardGrid.RowCount = _h + (h_sq - 1);
-
-			// Not sure if I need to flip these.
+			
 			Board gameBoard = new Board(boardGrid.ColumnCount, boardGrid.RowCount);
 
 			boardGrid.SuspendLayout();
 			boardGrid.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
 			boardGrid.ColumnStyles.Clear();
 			boardGrid.RowStyles.Clear();
-			
-			
 
 			for (var x = 0; x < gameBoard.width; x++) {
 				for (var y = 0; y < gameBoard.height; y++) {
@@ -183,28 +212,19 @@ namespace SudokuSolver_Try1 {
 
 					boardGrid.Controls.Add(obj.panel);
 
-					int x_floor = (int)Math.Floor((float)((x + 1) / (h_sq + 1)));
-					float x_nonfloor = ((float)(x + 1) / (h_sq + 1));
+					if (!isSqrt(x,h_sq) && !isSqrt(y,w_sq)) {
+						obj.field = new TextBox() { AutoSize = false,
+													TextAlign = HorizontalAlignment.Center,
+													BorderStyle = BorderStyle.None,
+													Location = new Point(obj.panel.Padding.Left, obj.panel.Padding.Top),
+													Size = new Size(
+													obj.panel.Width - obj.panel.Padding.Horizontal,
+													obj.panel.Width - obj.panel.Padding.Vertical)};
 
-					//int floor = (int)Math.Floor((float)((a + 1) / (w_sq + 1)));
-					//float nonfloor = ((float)(a + 1) / (w_sq + 1));
-
-					int y_floor = (int)(Math.Floor((float)(y + 1) / (w_sq + 1)));
-					float y_nonfloor = ((float)(y + 1) / (w_sq + 1));
-
-					if ((x_floor != x_nonfloor) && (y_floor != y_nonfloor)) {
-						obj.field = new TextBox() { AutoSize = false, TextAlign = HorizontalAlignment.Center, BorderStyle = BorderStyle.None };
 						obj.panel.Controls.Add(obj.field);
-
-						obj.field.Location = new Point(obj.panel.Padding.Left,obj.panel.Padding.Top);
-
-						obj.field.Width = obj.panel.Width-obj.panel.Padding.Horizontal;
-						obj.field.Height = obj.panel.Width-obj.panel.Padding.Vertical;
 
 						obj.field.TextChanged += (sender, e) => TextChanged(sender, obj, e);
 						obj.field.Click += (sender, e) => highlight_Click(sender, obj, e);
-
-						obj.field.BackColor = Color.Blue;
 
 						obj.hasField = true;
 					}
@@ -214,10 +234,7 @@ namespace SudokuSolver_Try1 {
 			for (int a = 0; a < boardGrid.ColumnCount; a++) {
 				ColumnStyle cs;
 
-				int floor = (int)Math.Floor((float)((a + 1) / (w_sq + 1)));
-				float nonfloor = ((float)(a + 1) / (w_sq + 1));
-
-				if (floor != nonfloor) {
+				if (!isSqrt(a,w_sq)) {
 					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
 				} else {
 					cs = new ColumnStyle(SizeType.Absolute, 5);
@@ -235,10 +252,7 @@ namespace SudokuSolver_Try1 {
 			for (int b = 0; b < boardGrid.RowCount; b++) {
 				RowStyle rs;
 
-				int floor = (int)Math.Floor((float)((b + 1) / (h_sq + 1)));
-				float nonfloor = ((float)(b + 1) / (h_sq + 1));
-
-				if (floor != nonfloor) {
+				if (!isSqrt(b,h_sq)) {
 					rs = new RowStyle(SizeType.Absolute, (boardGrid.RowCount + 1) * 25 / boardGrid.RowCount);
 				} else {
 					rs = new RowStyle(SizeType.Absolute, 5);
@@ -296,11 +310,75 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
+		public bool isSqrt(int val, int sq) {
+			int floor = (int)Math.Floor((float)((val + 1) / (sq + 1)));
+			float nonfloor = ((float)(val + 1) / (sq + 1));
+
+			if (floor == nonfloor) {
+				return true;
+			}
+			return false;
+		}
+
+		public void ShowPossibilities(string pos) {
+			if (clickHighlight.Checked) {
+				RemoveHighlight(Color.LightGreen, true);
+				var gb = program.gameBoard;
+				for (int x = 0; x < gb.width; x++) {
+					for (int y = 0; y < gb.height; y++) {
+
+						if (gb.tiles[x, y].value == "" && gb.tiles[x, y].hasField) {
+
+							bool isPossible = true;
+
+							var col = gb.GetColumn(y);
+							var row = gb.GetRow(x);
+
+							for (int a = 0; a < col.Count; a++) {
+								if (col[a].value == pos) {
+									isPossible = false;
+								}
+							}
+
+							for (int b = 0; b < row.Count; b++) {
+								if (row[b].value == pos) {
+									isPossible = false;
+								}
+							}
+
+							if (isPossible == true) {
+								UpdateColorSquare(x, y, Color.LightGreen);
+							}
+
+						}
+
+					}
+				}
+			}
+		}
+
+		public void SetCount() {
+			var gb = program.gameBoard;
+			int count = 0;
+			for (int x = 0; x < gb.width; x++) {
+				for (int y = 0; y < gb.height; y++) {
+
+					if (gb.tiles[x, y].value == highlightText.Text && gb.tiles[x, y].hasField && gb.tiles[x,y].value != "") {
+						count += 1;
+					}
+				}
+			}
+
+			lb_occur.Text = "" + count;
+		}
+
 		private TextBox highlightText;
 		private TableLayoutPanel highlightTable;
 		private Label label1;
 		private Button btn_ClearHighlight;
 		private CheckBox clickHighlight;
+		private Label label2;
+		private Label lb_occur;
 	}
 }
 

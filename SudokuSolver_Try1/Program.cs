@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
@@ -22,10 +18,9 @@ namespace SudokuSolver_Try1 {
 			Program program = new Program();
 			form.program = program;
 
-			int[] board_size = { 9, 16 };
+			int[] board_size = { 9, 9 };
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
-			form.UpdateColorSquare(1, 9,Color.Red);
 			
 			Application.Run(form);
 

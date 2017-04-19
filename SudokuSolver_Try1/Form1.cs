@@ -44,6 +44,8 @@ namespace SudokuSolver_Try1 {
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
 			program.gameBoard.tiles[obj.x, obj.y].value = obj.field.Text;
 			CreateHighlight(highlightText.Text);
+			ShowPossibilities(highlightText.Text);
+			SetCount();
 		}
 
 		private void textBox1_BackColorChanged(object sender, EventArgs e) {
@@ -72,6 +74,9 @@ namespace SudokuSolver_Try1 {
 
 		private void highlightText_TextChanged(object sender, EventArgs e) {
 			CreateHighlight(highlightText.Text);
+			ShowPossibilities(highlightText.Text);
+			SetCount();
+
 		}
 
 		private void highlight_Click(object sender, Tile obj, EventArgs e) {
@@ -122,6 +127,7 @@ namespace SudokuSolver_Try1 {
 			if (!clickHighlight.Checked) {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
+				RemoveHighlight(Color.LightGreen, true);
 			}
 		}
 	}
