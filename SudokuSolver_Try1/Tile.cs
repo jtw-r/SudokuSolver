@@ -15,6 +15,9 @@ namespace SudokuSolver_Try1 {
 
 		public int x;
 		public int y;
+		
+		public int group;
+		
 		public string value = "";
 		public List<string> ideas = new List<string>();
 		public TextBox field;
