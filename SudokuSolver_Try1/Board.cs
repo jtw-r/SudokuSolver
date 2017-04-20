@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SudokuSolver_Try1 {
 	public class Board {
@@ -15,7 +16,7 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-					tiles[x, y] = new Tile(x, y, Tile.TileType.Empty, "", new List<string>(), null, null, false);
+					tiles[x, y] = new Tile(x, y, Tile.TileType.Empty, "", new List<string>(), null, null, false,width,height);
 				}
 			}
 
@@ -39,6 +40,54 @@ namespace SudokuSolver_Try1 {
 				tileColumn.Add(tiles[x, column]);
 			}
 			return tileColumn;
+		}
+
+		public List<Tile> GetGroup(int _group) {
+			List<Tile> tileGroup = new List<Tile>();
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (tiles[x,y].group == _group) {
+						tileGroup.Add(tiles[x, y]);
+					}
+				}
+			}
+			return tileGroup;
+		}
+
+		public void Clear() {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					Tile t = tiles[x, y];
+					if (t.hasField) {
+						t.field.Text = "";
+					}
+				}
+			}
+		}
+
+		public void LoadDataset(int num) {
+			Data d = new Data();
+
+			for (int x = 0; x < 9; x++) {
+				for (int y = 0; y < 9; y++) {
+					int x_offset = (int)(x / Math.Sqrt(9));
+					int y_offset = (int)(y / Math.Sqrt(9));
+
+					tiles[x + x_offset, y + y_offset].field.Text = d.presets[Clamp(num,0,d.entries-1), x, y];
+
+				}
+			}
+
+		}
+
+		public int Clamp(int num, int min, int max) {
+			if (num < min) {
+				num = min;
+			} else if (num > max) {
+				num = max;
+			}
+
+			return num;
 		}
 
 	}

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="TextField.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Form1.cs">

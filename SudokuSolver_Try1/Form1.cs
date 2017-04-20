@@ -128,7 +128,17 @@ namespace SudokuSolver_Try1 {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 				RemoveHighlight(Color.LightGreen, true);
+			} else {
+				ShowPossibilities(highlightText.Text);
 			}
+		}
+
+		private void btn_ClearGrid_MouseUp(object sender, MouseEventArgs e) {
+			program.gameBoard.Clear();
+		}
+
+		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
+			program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
 		}
 	}
 }
