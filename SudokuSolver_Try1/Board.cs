@@ -73,7 +73,13 @@ namespace SudokuSolver_Try1 {
 					int x_offset = (int)(x / Math.Sqrt(9));
 					int y_offset = (int)(y / Math.Sqrt(9));
 
-					tiles[x + x_offset, y + y_offset].field.Text = d.presets[Clamp(num,0,d.entries-1), x, y];
+					var value = d.presets[Clamp(num, 0, d.entries - 1), x, y];
+
+					if (value == " ") {
+						value = "";
+					}
+
+					tiles[x + x_offset, y + y_offset].field.Text = value;
 
 				}
 			}

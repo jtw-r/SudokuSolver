@@ -140,5 +140,9 @@ namespace SudokuSolver_Try1 {
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
 			program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
 		}
+
+		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
+			Cycle();
+		}
 	}
 }

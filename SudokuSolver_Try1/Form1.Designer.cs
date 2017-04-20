@@ -31,6 +31,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightText = new System.Windows.Forms.TextBox();
 			this.highlightTable = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
+			this.cb_autoFill = new System.Windows.Forms.CheckBox();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
 			this.clickHighlight = new System.Windows.Forms.CheckBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -38,6 +39,7 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearGrid = new System.Windows.Forms.Button();
 			this.btn_LoadPreset = new System.Windows.Forms.Button();
 			this.tb_presetNum = new System.Windows.Forms.TextBox();
+			this.btn_autoCycle = new System.Windows.Forms.Button();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -82,6 +84,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.highlightTable.Controls.Add(this.highlightText, 0, 0);
 			this.highlightTable.Controls.Add(this.label1, 1, 0);
+			this.highlightTable.Controls.Add(this.cb_autoFill, 1, 6);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 0, 1);
 			this.highlightTable.Controls.Add(this.clickHighlight, 1, 1);
 			this.highlightTable.Controls.Add(this.label2, 0, 2);
@@ -89,16 +92,18 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.btn_ClearGrid, 0, 4);
 			this.highlightTable.Controls.Add(this.btn_LoadPreset, 0, 5);
 			this.highlightTable.Controls.Add(this.tb_presetNum, 1, 5);
-			this.highlightTable.Location = new System.Drawing.Point(111, 85);
+			this.highlightTable.Controls.Add(this.btn_autoCycle, 0, 6);
+			this.highlightTable.Location = new System.Drawing.Point(34, 15);
 			this.highlightTable.Name = "highlightTable";
-			this.highlightTable.RowCount = 6;
+			this.highlightTable.RowCount = 7;
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.Size = new System.Drawing.Size(187, 166);
+			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.highlightTable.Size = new System.Drawing.Size(187, 208);
 			this.highlightTable.TabIndex = 2;
 			// 
 			// label1
@@ -113,6 +118,17 @@ namespace SudokuSolver_Try1 {
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Highlight Number";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// cb_autoFill
+			// 
+			this.cb_autoFill.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cb_autoFill.Location = new System.Drawing.Point(84, 169);
+			this.cb_autoFill.Name = "cb_autoFill";
+			this.cb_autoFill.Size = new System.Drawing.Size(100, 36);
+			this.cb_autoFill.TabIndex = 10;
+			this.cb_autoFill.Text = "Autofill Highlighted";
+			this.cb_autoFill.UseVisualStyleBackColor = true;
 			// 
 			// btn_ClearHighlight
 			// 
@@ -192,6 +208,16 @@ namespace SudokuSolver_Try1 {
 			this.tb_presetNum.Name = "tb_presetNum";
 			this.tb_presetNum.Size = new System.Drawing.Size(100, 20);
 			this.tb_presetNum.TabIndex = 9;
+			// 
+			// btn_autoCycle
+			// 
+			this.btn_autoCycle.Location = new System.Drawing.Point(3, 169);
+			this.btn_autoCycle.Name = "btn_autoCycle";
+			this.btn_autoCycle.Size = new System.Drawing.Size(75, 36);
+			this.btn_autoCycle.TabIndex = 11;
+			this.btn_autoCycle.Text = "Auto Cycle";
+			this.btn_autoCycle.UseVisualStyleBackColor = true;
+			this.btn_autoCycle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_autoCycle_MouseUp);
 			// 
 			// Form1
 			// 
@@ -356,8 +382,10 @@ namespace SudokuSolver_Try1 {
 			return false;
 		}
 
-		public void ShowPossibilities(string pos) {
-			if (clickHighlight.Checked) {
+		public int cycleNum = 0;
+
+		public void ShowPossibilities(string pos, bool thing = false, int mode = 0) {
+			if (clickHighlight.Checked || thing) {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
 				var gb = program.gameBoard;
@@ -401,43 +429,103 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
+				if (mode == 0) {
+					#region for loops
+
+					for (int x = 0; x < gb.width; x++) {
+						for (int y = 0; y < gb.height; y++) {
+							if (poss[x, y] == 1) {
+								var group = gb.GetGroup(gb.tiles[x, y].group);
+								var row = gb.GetRow(x);
+								var column = gb.GetColumn(y);
+
+								var g_dummy = 0;
+								var r_dummy = 0;
+								var c_dummy = 0;
+
+								for (int i = 0; i < group.Count; i++) {
+									if (poss[group[i].x, group[i].y] == 1) {
+										g_dummy++;
+									}
+								}
+
+								for (int i = 0; i < row.Count; i++) {
+									if (poss[i, y] == 1) {
+										r_dummy++;
+									}
+								}
+
+								for (int i = 0; i < column.Count; i++) {
+									if (poss[x, i] == 1) {
+										c_dummy++;
+									}
+								}
+
+								// Look at group, find cell with least
+								// amount of overlap from other numbers.
+
+								if (g_dummy == 1 || r_dummy == 1 || c_dummy == 1) {
+									if (cb_autoFill.Checked) {
+										gb.tiles[x, y].field.Text = "" + pos;
+									} else {
+										UpdateColorSquare(x, y, Color.Green);
+									}
+								}
+
+							}
+						}
+					}
+					#endregion
+				} else if (mode == 1) {
+					var sel = 0;
+					int x = 0;
+					int y = 0;
+					Random rnd = new Random();
+					x = rnd.Next(0, 10);
+					y = rnd.Next(0, 10);
+
+					sel = poss[x, y];
+
+					if (sel == 1) {
+						gb.tiles[x, y].field.Text = "" + pos;
+						Cycle();
+					} else {
+						Cycle();
+					}
+
+				}
+			}
+		}
+
+		public void Cycle() {
+			for (int i = 0; i < 30; i++) {
+				var gb = program.gameBoard;
+
+				for (int n = 1; n < 10; n++) {
+					ShowPossibilities("" + n, true);
+				}
+
+				int counter = 0;
+
 				for (int x = 0; x < gb.width; x++) {
 					for (int y = 0; y < gb.height; y++) {
-						if (poss[x, y] == 1) {
-							var group = gb.GetGroup(gb.tiles[x, y].group);
-							var row = gb.GetRow(x);
-							var column = gb.GetColumn(y);
-
-							var g_dummy = 0;
-							var r_dummy = 0;
-							var c_dummy = 0;
-
-							for (int i = 0; i < group.Count; i++) {
-								if (poss[group[i].x, group[i].y] == 1) {
-									g_dummy++;
-								}
+						if (gb.tiles[x, y].hasField) {
+							if (gb.tiles[x, y].field.Text != "") {
+								counter++;
 							}
-
-							for (int i = 0; i < row.Count; i++) {
-								if (poss[row[i].x,y] == 1) {
-									r_dummy++;
-								}
-							}
-
-							for (int i = 0; i < column.Count; i++) {
-								if (poss[x,column[i].y] == 1) {
-									c_dummy++;
-								}
-							}
-
-							if (g_dummy == 1 || r_dummy == 1 || c_dummy == 1) {
-								UpdateColorSquare(x, y, Color.Green);
-							}
-
 						}
 					}
 				}
+
+				if (counter == 9 * 9) {
+					return;
+				}
+
 			}
+		}
+
+		public void CycleRandom() {
+
 		}
 
 		public void SetCount() {
@@ -465,6 +553,8 @@ namespace SudokuSolver_Try1 {
 		private Button btn_ClearGrid;
 		private Button btn_LoadPreset;
 		private TextBox tb_presetNum;
+		private CheckBox cb_autoFill;
+		private Button btn_autoCycle;
 	}
 }
 
