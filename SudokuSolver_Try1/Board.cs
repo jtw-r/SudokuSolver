@@ -96,5 +96,21 @@ namespace SudokuSolver_Try1 {
 			return num;
 		}
 
+		public int FindOccurance(string str) {
+			int occ = 0;
+
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (tiles[x,y].hasField) {
+						if (tiles[x,y].field.Text == str) {
+							occ++;
+						}
+					}
+				}
+			}
+
+			return occ;
+		}
+
 	}
 }

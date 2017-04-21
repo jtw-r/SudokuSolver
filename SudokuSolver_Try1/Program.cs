@@ -22,7 +22,7 @@ namespace SudokuSolver_Try1 {
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
 
-			program.gameBoard.LoadDataset(0);
+			//program.gameBoard.LoadDataset(0);
 			
 			Application.Run(form);
 
