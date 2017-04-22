@@ -57,11 +57,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_ClearHighlight_Click(object sender, EventArgs e) {
-			highlightText.Text = "";
-			RemoveHighlight(Color.Yellow, true);
-			if (program.lastExec != null) {
-				rcHighlight(program.lastExec);
-			}
+			
 		}
 
 		private void btn_ShowHighlight_Click(object sender, EventArgs e) {
@@ -123,26 +119,74 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		private void clickHighlight_Click(object sender, EventArgs e) {
+		/*private void clickHighlight_Click(object sender, EventArgs e) {
 			if (!clickHighlight.Checked) {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
-				RemoveHighlight(Color.LightGreen, true);
-			} else {
-				ShowPossibilities(highlightText.Text);
 			}
-		}
+		}*/
 
 		private void btn_ClearGrid_MouseUp(object sender, MouseEventArgs e) {
 			program.gameBoard.Clear();
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
-			program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
+			int n;
+			if (tb_presetNum.Text == "") {
+				return;
+			} else if (int.TryParse(tb_presetNum.Text,out n)) {
+				program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
+			}
+			
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
 			Cycle();
+		}
+
+		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {
+			if (focusHighlight.Checked) {
+				CreateHighlight(highlightText.Text);
+			} else {
+				RemoveHighlight(Color.Yellow, true);
+				if (program.lastExec != null && clickHighlight.Checked) {
+					rcHighlight(program.lastExec);
+				}
+			}
+		}
+
+		private void clickHighlight_Click_1(object sender, EventArgs e) {
+		}
+
+		private void cb_possib_CheckedChanged(object sender, EventArgs e) {
+			if (cb_possib.Checked) {
+				ShowPossibilities(highlightText.Text);
+			} else {
+				RemoveHighlight(Color.LightGreen, true);
+				RemoveHighlight(Color.Green, true);
+			}
+		}
+
+		private void clickHighlight_CheckedChanged(object sender, EventArgs e) {
+			if(!clickHighlight.Checked) {
+				RemoveHighlight(Color.LightBlue, true);
+				RemoveHighlight(Color.Blue, true);
+			} else {
+				if (program.lastExec != null) {
+					rcHighlight(program.lastExec);
+				}
+			}
+		}
+
+		private void btn_ClearHighlight_MouseUp(object sender, MouseEventArgs e) {
+			highlightText.Text = "";
+			RemoveHighlight(Color.Yellow, true);
+			if (program.lastExec != null) {
+				rcHighlight(program.lastExec);
+			}
+
+			cb_possib.Checked = false;
+			focusHighlight.Checked = false;
 		}
 	}
 }
