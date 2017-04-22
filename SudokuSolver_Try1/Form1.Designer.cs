@@ -68,8 +68,6 @@ namespace SudokuSolver_Try1 {
 			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
 			this.boardGrid.Size = new System.Drawing.Size(2, 2);
 			this.boardGrid.TabIndex = 0;
-			this.boardGrid.BackColorChanged += new System.EventHandler(this.boardGrid_BackColorChanged);
-			this.boardGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.boardGrid_Paint);
 			// 
 			// highlightText
 			// 
@@ -270,6 +268,7 @@ namespace SudokuSolver_Try1 {
 			this.cb_autoFill.TabIndex = 10;
 			this.cb_autoFill.Text = "Autofill Possibilities";
 			this.cb_autoFill.UseVisualStyleBackColor = true;
+			this.cb_autoFill.CheckedChanged += new System.EventHandler(this.cb_autoFill_CheckedChanged);
 			// 
 			// btn_ClearHighlight
 			// 
@@ -282,7 +281,6 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearHighlight.TabIndex = 3;
 			this.btn_ClearHighlight.Text = "Clear Highlight";
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
-			this.btn_ClearHighlight.Click += new System.EventHandler(this.btn_ClearHighlight_Click);
 			this.btn_ClearHighlight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearHighlight_MouseUp);
 			// 
 			// Form1
@@ -572,7 +570,9 @@ namespace SudokuSolver_Try1 {
 					Cycle(2);
 				}
 
-				rcHighlight(program.lastExec);
+				if (program.lastExec != null) {
+					rcHighlight(program.lastExec);
+				}
 
 			}
 		}
