@@ -97,7 +97,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
-			Cycle();
+			MasterCycle();
 		}
 
 		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {

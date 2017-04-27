@@ -551,23 +551,24 @@ namespace SudokuSolver_Try1 {
 							}
 						}
 					}
-
 				} else if (mode == 1) {
+					gb.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
 					int x = 0;
 					int y = 0;
+					int count = 0;
 					while (true) {
 						Random rnd = new Random();
 						x = rnd.Next(1, 9);
 						y = rnd.Next(1, 9);
 
 						if (poss[x, y] == 1) {
+							Console.WriteLine(x + "," + y);
 							break;
 						}
-
 					}
 
-					gb.tiles[x, y].field.Text = "" + pos;
-					Cycle(2);
+					return;
+
 				}
 
 				if (program.lastExec != null) {
@@ -577,7 +578,185 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		public void Cycle(int tollerance = 5) {
+		/// <summary>
+		/// For testing only.
+		/// </summary>
+		public void doTest() {
+			List<long> times = new List<long>();
+
+			for (int i = 0; i < 20; i++) {
+				program.gameBoard.LoadDataset(5);
+				var sw = System.Diagnostics.Stopwatch.StartNew();
+				sw.Start();
+				MasterCycle();
+				sw.Stop();
+				times.Add(sw.ElapsedMilliseconds);
+			}
+
+			long total_time = 0;
+			foreach (var item in times) {
+				total_time += item;
+			}
+
+			Console.WriteLine(total_time / times.Count);
+
+			
+		}
+
+		public void MasterCycle(int tollerance = 10) {
+			// Do cycles of checking for possibilities.
+			// If it gets stuck:
+			//	Start a random guess, see it through, and if it doesn't work, re-guess.
+
+			// Numbers that are not fully solved yet.
+			List<int> left = new List<int>();
+
+			// The history of what has happened.
+			List<int> history = new List<int>();
+
+			for (int i = 1; i < 10; i++) {
+				left.Add(i);
+			}
+
+			var gb = program.gameBoard;
+			while (gb.FindOccurance("") != 0) {
+
+				List<int> _left = new List<int>();
+				history.Add(gb.FindOccurance(""));
+
+				foreach (var item in left) {
+					// Basic check for possibilities.
+					ShowPossibilities("" + item, true);
+
+					//Console.WriteLine(gb.FindOccurance(""));
+
+					if (gb.FindOccurance("" + item) < 9) {
+						_left.Add(item);
+					}
+				}
+
+				left = _left;
+
+				if (gb.FindOccurance("") == 0) {
+					// The gameboard is full!
+					return;
+				} else if (history.Count > tollerance) {
+					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
+						bool canBreak = true;
+						for (int i = history[history.Count - (tollerance + 1)]; i < history[history.Count - 1]; i++) {
+							if (history[i] != history[history.Count - 1]) {
+								canBreak = false;
+							}
+						}
+
+						if (canBreak) {
+							// By this point, the program has gotten stuck so it needs some help.
+							// Create a restore point incase the random guess doesn't work and
+							// finally, do a random guess to see if it will work.
+
+							string[,] restorePoint = new string[gb.width, gb.height];
+
+							for (int _x = 0; _x < gb.width; _x++) {
+								for (int _y = 0; _y < gb.height; _y++) {
+									if (gb.tiles[_x, _y].hasField) {
+										restorePoint[_x, _y] = gb.tiles[_x, _y].field.Text.ToString();
+									} else {
+										restorePoint[_x, _y] = null;
+									}
+								}
+							}
+
+							// Pick a random number from what is left.
+							Random rnd_entry = new Random();
+
+							if (GuessCycle(left[rnd_entry.Next(0,left.Count-1)])) {
+								// Yay! The random guess worked and the program was able to
+								// completly solve the sudoku puzzle. Exit the while loop.
+								return;
+							} else {
+								// Oh no. The random guess did not work. Reset the board to before
+								// the random guess and try again.
+
+								Console.WriteLine("Guess Failed :( Empty spaces left: " + gb.FindOccurance(""));
+
+								for (int _x = 0; _x < gb.width; _x++) {
+									for (int _y = 0; _y < gb.height; _y++) {
+										if (gb.tiles[_x, _y].hasField) {
+											gb.tiles[_x, _y].field.Text = restorePoint[_x, _y].ToString();
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public bool GuessCycle(int num,int tollerance = 10) {
+			Console.WriteLine("Started a random guess! Tollerance: " + tollerance);
+
+			var gb = program.gameBoard;
+			int x;
+			int y;
+			int[,] poss = GetPossibilities("" + num);
+			while (true) {
+				Random rnd = new Random();
+				x = rnd.Next(1, 9);
+				y = rnd.Next(1, 9);
+
+				if (poss[x, y] == 1) {
+					Console.WriteLine("("+x + "," + y+") = "+num);
+					gb.tiles[x, y].field.Text = "" + num;
+					break;
+				}
+			}
+
+			List<int> left = new List<int>();
+			List<int> history = new List<int>();
+			for (int i = 1; i < 10; i++) {
+				left.Add(i);
+			}
+
+			while (gb.FindOccurance("") != 0) {
+
+				List<int> _left = new List<int>();
+				history.Add(gb.FindOccurance(""));
+
+				foreach (var item in left) {
+					// Basic check for possibilities.
+					ShowPossibilities("" + item, true);
+
+					//Console.WriteLine(gb.FindOccurance(""));
+
+					if (gb.FindOccurance("" + item) < 9) {
+						_left.Add(item);
+					}
+				}
+
+				left = _left;
+
+				if (gb.FindOccurance("") == 0) {
+					return true;
+				} else if (history.Count > tollerance) {
+					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
+						bool canBreak = true;
+						for (int i = history[history.Count - (tollerance + 1)]; i < history[history.Count - 1]; i++) {
+							if (history[i] != history[history.Count - 1]) {
+								canBreak = false;
+							}
+						}
+
+						if (canBreak) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		/*public bool Cycle(int tollerance = 20, bool master = true) {
 			List<int> a_left = new List<int>();
 			List<int> history = new List<int>();
 			for (int i = 1; i < 10; i++) {
@@ -593,26 +772,88 @@ namespace SudokuSolver_Try1 {
 				foreach (var item in a_left) {
 					ShowPossibilities("" + item, true);
 
-					if (gb.FindOccurance("" + item) != 9) {
+					Console.WriteLine(gb.FindOccurance(""));
+
+					if (gb.FindOccurance("" + item) < 9) {
 						b_left.Add(item);
 					}
 				}
 
 				a_left = b_left;
 
-				if (history.Count > tollerance) {
+				if (gb.FindOccurance("") == 0) {
+					return true;
+				} else if (history.Count > tollerance) {
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
-						break;
+						bool canBreak = true;
+						for (int i = history[history.Count - (tollerance + 1)]; i < history[history.Count - 1]; i++) {
+							if (history[i] != history[history.Count - 1]) {
+								canBreak = false;
+							}
+						}
+						if (canBreak) {
+							if (master) {
+								int x;
+								int y;
+								bool didSomething = false;
+								int[,] poss = GetPossibilities("" + a_left[0]);
+								while (true) {
+									if (a_left.Count > 0) {
+										Random rnd = new Random();
+										x = rnd.Next(1, 9);
+										y = rnd.Next(1, 9);
+
+										if (poss[x, y] == 1) {
+											Console.WriteLine(x + "," + y);
+											gb.tiles[x, y].field.Text = "" + a_left[0];
+											didSomething = true;
+											break;
+										}
+									} else {
+										return false;
+									}
+								}
+
+								string[,] restorePoint = new string[gb.width, gb.height];
+
+								for (int _x = 0; _x < gb.width; _x++) {
+									for (int _y = 0; _y < gb.height; _y++) {
+										if (gb.tiles[_x, _y].hasField) {
+											restorePoint[_x, _y] = gb.tiles[_x, _y].field.Text.ToString();
+										} else {
+											restorePoint[_x, _y] = null;
+										}
+									}
+								}
+
+								if (didSomething) {
+									if (Cycle(20, false)) {
+										Console.WriteLine("=)");
+									} else {
+										Console.WriteLine(":(");
+										for (int _x = 0; _x < gb.width; _x++) {
+											for (int _y = 0; _y < gb.height; _y++) {
+												if (gb.tiles[_x, _y].hasField) {
+													gb.tiles[_x, _y].field.Text = restorePoint[_x, _y].ToString();
+												}
+											}
+										}
+									}
+								}
+
+							} else {
+								if (a_left.Count > 0) {
+									Console.WriteLine("Returned false.");
+									return false;
+								}
+								return true;
+							}
+						}
 					}
 				}
-
 			}
-
-			if (a_left.Count > 0) {
-				ShowPossibilities("" + a_left[0], true, 1);
-			}
-
-		}
+			return true;
+		}*/
 
 		public void SetCount() {
 			var gb = program.gameBoard;
