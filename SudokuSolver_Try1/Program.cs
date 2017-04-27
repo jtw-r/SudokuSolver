@@ -21,15 +21,13 @@ namespace SudokuSolver_Try1 {
 			int[] board_size = { 9, 9 };
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
-
-			//program.gameBoard.LoadDataset(0);
 			
 			Application.Run(form);
 
 		}
 
-		Board NewBoard(int[] board_size) {
+		/*Board NewBoard(int[] board_size) {
 			return new Board(board_size[0], board_size[1]);
-		}
+		}*/
 	}
 }
