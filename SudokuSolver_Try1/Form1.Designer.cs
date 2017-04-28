@@ -36,7 +36,7 @@ namespace SudokuSolver_Try1 {
 			this.lb_occur = new System.Windows.Forms.Label();
 			this.btn_autoCycle = new System.Windows.Forms.Button();
 			this.btn_ClearGrid = new System.Windows.Forms.Button();
-			this.label3 = new System.Windows.Forms.Label();
+			this.lb_presetNum = new System.Windows.Forms.Label();
 			this.cb_possib = new System.Windows.Forms.CheckBox();
 			this.focusHighlight = new System.Windows.Forms.CheckBox();
 			this.clickHighlight = new System.Windows.Forms.CheckBox();
@@ -90,7 +90,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.lb_occur, 1, 1);
 			this.highlightTable.Controls.Add(this.btn_autoCycle, 0, 10);
 			this.highlightTable.Controls.Add(this.btn_ClearGrid, 0, 8);
-			this.highlightTable.Controls.Add(this.label3, 0, 7);
+			this.highlightTable.Controls.Add(this.lb_presetNum, 0, 7);
 			this.highlightTable.Controls.Add(this.cb_possib, 0, 5);
 			this.highlightTable.Controls.Add(this.focusHighlight, 0, 4);
 			this.highlightTable.Controls.Add(this.clickHighlight, 0, 3);
@@ -181,18 +181,18 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearGrid.UseVisualStyleBackColor = true;
 			this.btn_ClearGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearGrid_MouseUp);
 			// 
-			// label3
+			// lb_presetNum
 			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lb_presetNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 143);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(109, 26);
-			this.label3.TabIndex = 14;
-			this.label3.Text = "Preset Number:";
-			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lb_presetNum.AutoSize = true;
+			this.lb_presetNum.Location = new System.Drawing.Point(3, 143);
+			this.lb_presetNum.Name = "lb_presetNum";
+			this.lb_presetNum.Size = new System.Drawing.Size(109, 26);
+			this.lb_presetNum.TabIndex = 14;
+			this.lb_presetNum.Text = "Preset Number:";
+			this.lb_presetNum.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// cb_possib
 			// 
@@ -290,7 +290,7 @@ namespace SudokuSolver_Try1 {
 			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(321, 427);
+			this.ClientSize = new System.Drawing.Size(321, 296);
 			this.Controls.Add(this.highlightTable);
 			this.Controls.Add(this.boardGrid);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -634,9 +634,6 @@ namespace SudokuSolver_Try1 {
 						} else {
 							// Oh no. The random guess did not work. Reset the board to before
 							// the random guess and try again.
-
-							//Console.WriteLine("Guess Failed :( Empty spaces left: " + gb.FindOccurance(""));
-
 							for (int _x = 0; _x < gb.width; _x++) {
 								for (int _y = 0; _y < gb.height; _y++) {
 									if (gb.tiles[_x, _y].hasField) {
@@ -651,19 +648,14 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public bool GuessCycle(int num,int tollerance = 10) {
-			//Console.WriteLine("Started a random guess! Tollerance: " + tollerance);
-
 			var gb = program.gameBoard;
-			int x;
-			int y;
 			int[,] poss = GetPossibilities("" + num);
 			Random rnd = new Random();
 			while (true) {
-				x = rnd.Next(1, 9);
-				y = rnd.Next(1, 9);
+				int x = rnd.Next(1, 9);
+				int y = rnd.Next(1, 9);
 
 				if (poss[x, y] == 1) {
-					//Console.WriteLine("("+x + "," + y+") = "+num);
 					gb.tiles[x, y].field.Text = "" + num;
 					break;
 				}
@@ -713,17 +705,8 @@ namespace SudokuSolver_Try1 {
 		
 		public void SetCount() {
 			var gb = program.gameBoard;
-			int count = 0;
-			for (int x = 0; x < gb.width; x++) {
-				for (int y = 0; y < gb.height; y++) {
 
-					if (gb.tiles[x, y].value == highlightText.Text && gb.tiles[x, y].hasField && gb.tiles[x, y].value != "") {
-						count += 1;
-					}
-				}
-			}
-
-			lb_occur.Text = "" + count;
+			lb_occur.Text = "" + gb.FindOccurance(highlightText.Text);
 		}
 
 		private TextBox highlightText;
@@ -740,7 +723,7 @@ namespace SudokuSolver_Try1 {
 		private Button btn_autoCycle;
 		private CheckBox focusHighlight;
 		private CheckBox cb_possib;
-		private Label label3;
+		private Label lb_presetNum;
 	}
 }
 
