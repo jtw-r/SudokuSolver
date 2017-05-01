@@ -13,15 +13,11 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			program.gameBoard.tiles[obj.x, obj.y].value = obj.field.Text;
+			program.gameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
 			CreateHighlight(highlightText.Text);
 			ShowPossibilities(highlightText.Text);
 			SetCount();
 		}
-
-		/*private void textBox1_BackColorChanged(object sender, EventArgs e) {
-
-		}*/
 
 		private void Form1_Load(object sender, EventArgs e) {
 
@@ -87,13 +83,21 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
-			int n;
-			if (tb_presetNum.Text == "") {
-				return;
-			} else if (int.TryParse(tb_presetNum.Text,out n)) {
-				program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
+			// Configure open file dialog box
+			OpenFileDialog dlg = new OpenFileDialog();
+			//dlg.FileName = "Document"; // Default file name
+			dlg.DefaultExt = ".ssp"; // Default file extension
+			dlg.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp"; // Filter files by extension
+
+			// Show open file dialog box
+			var result = dlg.ShowDialog();
+
+			// Process open file dialog box results
+			if (result == DialogResult.OK) {
+				Read(@dlg.FileName);
+				dlg.Dispose();
 			}
-			
+
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
