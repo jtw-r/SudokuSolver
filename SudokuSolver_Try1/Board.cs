@@ -77,28 +77,6 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 		}
-
-		public void LoadDataset(int num) {
-			Data d = new Data();
-
-			for (int x = 0; x < 9; x++) {
-				for (int y = 0; y < 9; y++) {
-					int x_offset = (int)(x / Math.Sqrt(9));
-					int y_offset = (int)(y / Math.Sqrt(9));
-
-					var value = d.presets[Clamp(num, 0, d.entries - 1), x, y];
-
-					if (value == " ") {
-						value = "";
-					}
-
-					tiles[x + x_offset, y + y_offset].field.Text = value;
-
-				}
-			}
-
-		}
-
 		
 
 		public int Clamp(int num, int min, int max) {

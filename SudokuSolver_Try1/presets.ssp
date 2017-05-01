@@ -1,6 +1,8 @@
-﻿// Sudoku Solver Puzzle
-//
-// _ denotes a blank cell
+﻿/////////////////////////////////////////////////////////////
+// Sudoku Solver Puzzle                                    //
+//                             (c) 2017 Jonathan Reiterman //
+// '_' denotes a blank cell                                //
+/////////////////////////////////////////////////////////////
 
 Size: 9,9
 Notes: Internet
