@@ -7,11 +7,11 @@ You may be thinking "Well that takes the fun out of it" and yes, you would be ri
 
 #### Some of those tools are:
 - Handy grid
-- Option to highlight rows and columns inline with the selected cell (`click highlight`.)
-- Option to highlight/search and find occurances of numbers on the board (`focus highlight`.)
+- Option to highlight rows and columns inline with the selected cell (`click highlight.`)
+- Option to highlight/search and find occurances of numbers on the board (`focus highlight.`)
 - Option to highlight possible spaces for a number.
 - Option to autofill single possibilites.
-- Option to solve it for you (`auto cycle`.)
+- Option to solve it for you (`auto cycle.`)
 - Plus a few other things not listed.
 
 
