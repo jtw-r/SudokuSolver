@@ -17,7 +17,7 @@ You may be thinking "*Well that takes the fun out of it*" and yes, you would be 
 
 ---
 ### *Sounds Great*, where do I **download** it?
-Good question! [How about here](https://github.com/thejonathanr/SudokuSolver/files/969310/SudokuSolver_Try1.Executable.zip)
+Good question! [How about here](https://github.com/thejonathanr/SudokuSolver/releases/latest)
 
 
 ---
