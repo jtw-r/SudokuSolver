@@ -4,12 +4,12 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
-	public partial class Form1 : Form {
+	public partial class MainUI : Form {
 
 		public Program program;
-		public Form1 self;
+		public MainUI self;
 
-		public Form1() {
+		public MainUI() {
 			InitializeComponent();
 		}
 

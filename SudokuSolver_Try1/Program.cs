@@ -25,7 +25,7 @@ namespace SudokuSolver_Try1 {
 		static void Main() {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Form1 form = new Form1();
+			MainUI form = new MainUI();
 			Program program = new Program();
 			form.program = program;
 			form.self = form;

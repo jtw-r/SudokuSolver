@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 
 namespace SudokuSolver_Try1 {
-	partial class Form1 {
+	partial class MainUI {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>

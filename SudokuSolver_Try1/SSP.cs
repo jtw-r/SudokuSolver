@@ -9,9 +9,9 @@ namespace SudokuSolver_Try1 {
 	class SSP {
 
 		Program program;
-		Form1 form1;
+		MainUI form1;
 
-		public SSP(Program _program, Form1 _form) {
+		public SSP(Program _program, MainUI _form) {
 			program = _program;
 			form1 = _form;
 		}
