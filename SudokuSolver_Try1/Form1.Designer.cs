@@ -2,6 +2,9 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace SudokuSolver_Try1 {
 	partial class Form1 {
@@ -28,7 +31,6 @@ namespace SudokuSolver_Try1 {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.boardGrid = new System.Windows.Forms.TableLayoutPanel();
 			this.highlightText = new System.Windows.Forms.TextBox();
 			this.highlightTable = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -36,38 +38,15 @@ namespace SudokuSolver_Try1 {
 			this.lb_occur = new System.Windows.Forms.Label();
 			this.btn_autoCycle = new System.Windows.Forms.Button();
 			this.btn_ClearGrid = new System.Windows.Forms.Button();
-			this.label3 = new System.Windows.Forms.Label();
 			this.cb_possib = new System.Windows.Forms.CheckBox();
 			this.focusHighlight = new System.Windows.Forms.CheckBox();
 			this.clickHighlight = new System.Windows.Forms.CheckBox();
-			this.btn_LoadPreset = new System.Windows.Forms.Button();
-			this.tb_presetNum = new System.Windows.Forms.TextBox();
 			this.cb_autoFill = new System.Windows.Forms.CheckBox();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
+			this.btn_LoadPreset = new System.Windows.Forms.Button();
+			this.btn_Save = new System.Windows.Forms.Button();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// boardGrid
-			// 
-			this.boardGrid.AutoSize = true;
-			this.boardGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.boardGrid.BackColor = System.Drawing.Color.White;
-			this.boardGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-			this.boardGrid.ColumnCount = 1;
-			this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.boardGrid.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-			this.boardGrid.Location = new System.Drawing.Point(15, 15);
-			this.boardGrid.Name = "boardGrid";
-			this.boardGrid.RowCount = 1;
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-			this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-			this.boardGrid.Size = new System.Drawing.Size(2, 2);
-			this.boardGrid.TabIndex = 0;
 			// 
 			// highlightText
 			// 
@@ -89,15 +68,14 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.label2, 0, 1);
 			this.highlightTable.Controls.Add(this.lb_occur, 1, 1);
 			this.highlightTable.Controls.Add(this.btn_autoCycle, 0, 10);
-			this.highlightTable.Controls.Add(this.btn_ClearGrid, 0, 8);
-			this.highlightTable.Controls.Add(this.label3, 0, 7);
+			this.highlightTable.Controls.Add(this.btn_ClearGrid, 0, 7);
 			this.highlightTable.Controls.Add(this.cb_possib, 0, 5);
 			this.highlightTable.Controls.Add(this.focusHighlight, 0, 4);
 			this.highlightTable.Controls.Add(this.clickHighlight, 0, 3);
-			this.highlightTable.Controls.Add(this.btn_LoadPreset, 1, 8);
-			this.highlightTable.Controls.Add(this.tb_presetNum, 1, 7);
 			this.highlightTable.Controls.Add(this.cb_autoFill, 1, 5);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
+			this.highlightTable.Controls.Add(this.btn_LoadPreset, 1, 7);
+			this.highlightTable.Controls.Add(this.btn_Save, 1, 8);
 			this.highlightTable.Location = new System.Drawing.Point(34, 15);
 			this.highlightTable.Name = "highlightTable";
 			this.highlightTable.RowCount = 11;
@@ -112,7 +90,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
 			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.Size = new System.Drawing.Size(236, 266);
+			this.highlightTable.Size = new System.Drawing.Size(236, 275);
 			this.highlightTable.TabIndex = 2;
 			// 
 			// label1
@@ -160,11 +138,11 @@ namespace SudokuSolver_Try1 {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.highlightTable.SetColumnSpan(this.btn_autoCycle, 2);
-			this.btn_autoCycle.Location = new System.Drawing.Point(3, 230);
+			this.btn_autoCycle.Location = new System.Drawing.Point(3, 232);
 			this.btn_autoCycle.Name = "btn_autoCycle";
-			this.btn_autoCycle.Size = new System.Drawing.Size(230, 33);
+			this.btn_autoCycle.Size = new System.Drawing.Size(230, 40);
 			this.btn_autoCycle.TabIndex = 11;
-			this.btn_autoCycle.Text = "Auto Cycle";
+			this.btn_autoCycle.Text = "Solve";
 			this.btn_autoCycle.UseVisualStyleBackColor = true;
 			this.btn_autoCycle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_autoCycle_MouseUp);
 			// 
@@ -173,26 +151,14 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_ClearGrid.Location = new System.Drawing.Point(3, 172);
+			this.btn_ClearGrid.Location = new System.Drawing.Point(3, 150);
 			this.btn_ClearGrid.Name = "btn_ClearGrid";
-			this.btn_ClearGrid.Size = new System.Drawing.Size(109, 42);
+			this.highlightTable.SetRowSpan(this.btn_ClearGrid, 2);
+			this.btn_ClearGrid.Size = new System.Drawing.Size(109, 66);
 			this.btn_ClearGrid.TabIndex = 7;
-			this.btn_ClearGrid.Text = "Clear Grid";
+			this.btn_ClearGrid.Text = "Clear Board";
 			this.btn_ClearGrid.UseVisualStyleBackColor = true;
 			this.btn_ClearGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearGrid_MouseUp);
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 143);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(109, 26);
-			this.label3.TabIndex = 14;
-			this.label3.Text = "Preset Number:";
-			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// cb_possib
 			// 
@@ -200,7 +166,7 @@ namespace SudokuSolver_Try1 {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cb_possib.AutoSize = true;
-			this.cb_possib.Location = new System.Drawing.Point(3, 107);
+			this.cb_possib.Location = new System.Drawing.Point(3, 111);
 			this.cb_possib.Name = "cb_possib";
 			this.cb_possib.Size = new System.Drawing.Size(109, 23);
 			this.cb_possib.TabIndex = 13;
@@ -216,7 +182,7 @@ namespace SudokuSolver_Try1 {
 			this.focusHighlight.AutoSize = true;
 			this.focusHighlight.Location = new System.Drawing.Point(3, 75);
 			this.focusHighlight.Name = "focusHighlight";
-			this.focusHighlight.Size = new System.Drawing.Size(109, 26);
+			this.focusHighlight.Size = new System.Drawing.Size(109, 30);
 			this.focusHighlight.TabIndex = 12;
 			this.focusHighlight.Text = "Focus Highlight";
 			this.focusHighlight.UseVisualStyleBackColor = true;
@@ -238,31 +204,12 @@ namespace SudokuSolver_Try1 {
 			this.clickHighlight.UseVisualStyleBackColor = true;
 			this.clickHighlight.CheckedChanged += new System.EventHandler(this.clickHighlight_CheckedChanged);
 			// 
-			// btn_LoadPreset
-			// 
-			this.btn_LoadPreset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_LoadPreset.Location = new System.Drawing.Point(118, 172);
-			this.btn_LoadPreset.Name = "btn_LoadPreset";
-			this.btn_LoadPreset.Size = new System.Drawing.Size(115, 27);
-			this.btn_LoadPreset.TabIndex = 8;
-			this.btn_LoadPreset.Text = "Load Preset";
-			this.btn_LoadPreset.UseVisualStyleBackColor = true;
-			this.btn_LoadPreset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
-			// 
-			// tb_presetNum
-			// 
-			this.tb_presetNum.Location = new System.Drawing.Point(118, 146);
-			this.tb_presetNum.Name = "tb_presetNum";
-			this.tb_presetNum.Size = new System.Drawing.Size(115, 20);
-			this.tb_presetNum.TabIndex = 9;
-			// 
 			// cb_autoFill
 			// 
 			this.cb_autoFill.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cb_autoFill.Location = new System.Drawing.Point(118, 107);
+			this.cb_autoFill.Location = new System.Drawing.Point(118, 111);
 			this.cb_autoFill.Name = "cb_autoFill";
 			this.cb_autoFill.Size = new System.Drawing.Size(115, 23);
 			this.cb_autoFill.TabIndex = 10;
@@ -277,11 +224,36 @@ namespace SudokuSolver_Try1 {
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_ClearHighlight.Location = new System.Drawing.Point(118, 75);
 			this.btn_ClearHighlight.Name = "btn_ClearHighlight";
-			this.btn_ClearHighlight.Size = new System.Drawing.Size(115, 26);
+			this.btn_ClearHighlight.Size = new System.Drawing.Size(115, 30);
 			this.btn_ClearHighlight.TabIndex = 3;
 			this.btn_ClearHighlight.Text = "Clear Highlight";
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
 			this.btn_ClearHighlight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearHighlight_MouseUp);
+			// 
+			// btn_LoadPreset
+			// 
+			this.btn_LoadPreset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_LoadPreset.Location = new System.Drawing.Point(118, 150);
+			this.btn_LoadPreset.Name = "btn_LoadPreset";
+			this.btn_LoadPreset.Size = new System.Drawing.Size(115, 30);
+			this.btn_LoadPreset.TabIndex = 8;
+			this.btn_LoadPreset.Text = "Load Board";
+			this.btn_LoadPreset.UseVisualStyleBackColor = true;
+			this.btn_LoadPreset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
+			// 
+			// btn_Save
+			// 
+			this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Save.Location = new System.Drawing.Point(118, 186);
+			this.btn_Save.Name = "btn_Save";
+			this.btn_Save.Size = new System.Drawing.Size(115, 30);
+			this.btn_Save.TabIndex = 14;
+			this.btn_Save.Text = "Save Board";
+			this.btn_Save.UseVisualStyleBackColor = true;
+			this.btn_Save.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Save_MouseDown);
 			// 
 			// Form1
 			// 
@@ -290,12 +262,12 @@ namespace SudokuSolver_Try1 {
 			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(321, 427);
+			this.ClientSize = new System.Drawing.Size(321, 385);
 			this.Controls.Add(this.highlightTable);
-			this.Controls.Add(this.boardGrid);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "Form1";
 			this.Padding = new System.Windows.Forms.Padding(12);
+			this.ShowIcon = false;
 			this.Text = "Sudoku Solver";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.highlightTable.ResumeLayout(false);
@@ -307,11 +279,20 @@ namespace SudokuSolver_Try1 {
 
 		#endregion
 
-		public TableLayoutPanel boardGrid;
-
 		public Board resizeBoard(int _w, int _h) {
 
-			this.Controls.Add(this.boardGrid);
+			var d = this.Controls.Find("boardGrid",false);
+			if (d.Length > 0) {
+				d[0].Dispose();
+			}
+
+			TableLayoutPanel boardGrid = new TableLayoutPanel();
+			boardGrid.Name = "boardGrid";
+			boardGrid.Location = new Point(12, 12);
+			boardGrid.AutoSize = AutoSize;
+			boardGrid.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+
+			this.Controls.Add(boardGrid);
 			int w_sq = (int)Math.Sqrt(_w);
 			int h_sq = (int)Math.Sqrt(_h);
 
@@ -325,9 +306,9 @@ namespace SudokuSolver_Try1 {
 			boardGrid.ColumnStyles.Clear();
 			boardGrid.RowStyles.Clear();
 
-			for (var x = 0; x < gameBoard.width; x++) {
-				for (var y = 0; y < gameBoard.height; y++) {
-					Tile obj = gameBoard.tiles[x, y];
+			for (var x = 0; x < gameBoard.Width; x++) {
+				for (var y = 0; y < gameBoard.Height; y++) {
+					Tile obj = gameBoard.GetTile(x, y);
 
 					obj.panel = new Panel() {
 						Margin = new Padding(0),
@@ -404,7 +385,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void UpdateColorSquare(int _x, int _y, Color _color, bool thing = false) {
-			Tile obj = program.gameBoard.tiles[_x, _y];
+			Tile obj = program.gameBoard.GetTile(_x, _y);
 			if (obj.hasField) {
 				obj.field.BackColor = _color;
 			}
@@ -414,9 +395,9 @@ namespace SudokuSolver_Try1 {
 		public void CreateHighlight(string num) {
 			if (focusHighlight.Checked) {
 				RemoveHighlight(Color.Yellow, true);
-				for (int x = 0; x < program.gameBoard.width; x++) {
-					for (int y = 0; y < program.gameBoard.height; y++) {
-						if (program.gameBoard.tiles[x, y].value == num && num != "") {
+				for (int x = 0; x < program.gameBoard.Width; x++) {
+					for (int y = 0; y < program.gameBoard.Height; y++) {
+						if (program.gameBoard.GetTile(x, y).value == num && num != "") {
 							UpdateColorSquare(x, y, Color.Yellow, true);
 						}
 					}
@@ -425,15 +406,15 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void RemoveHighlight(Color _color, bool other = false) {
-			for (int x = 0; x < program.gameBoard.width; x++) {
-				for (int y = 0; y < program.gameBoard.height; y++) {
+			for (int x = 0; x < program.gameBoard.Width; x++) {
+				for (int y = 0; y < program.gameBoard.Height; y++) {
 					if (program.gameBoard.GetTile(x, y).hasField) {
 						if (other) {
-							if (program.gameBoard.tiles[x, y].field.BackColor == _color) {
+							if (program.gameBoard.GetTile(x, y).field.BackColor == _color) {
 								UpdateColorSquare(x, y, Color.White, true);
 							}
 						} else {
-							if (program.gameBoard.tiles[x, y].field.BackColor != _color) {
+							if (program.gameBoard.GetTile(x, y).field.BackColor != _color) {
 								UpdateColorSquare(x, y, Color.White, true);
 							}
 						}
@@ -457,15 +438,15 @@ namespace SudokuSolver_Try1 {
 		public int[,] GetPossibilities(string num) {
 			Board gb = program.gameBoard;
 
-			int[,] poss = new int[gb.width, gb.height];
+			int[,] poss = new int[program.gameBoard.Width, program.gameBoard.Height];
 
-			for (int x = 0; x < gb.width; x++) {
-				for (int y = 0; y < gb.height; y++) {
+			for (int x = 0; x < program.gameBoard.Width; x++) {
+				for (int y = 0; y < program.gameBoard.Height; y++) {
 
-					if (gb.tiles[x, y].value == "" && gb.tiles[x, y].hasField) {
-						var col = gb.GetColumn(y);
-						var row = gb.GetRow(x);
-						var group = gb.GetGroup(gb.tiles[x, y].group);
+					if (program.gameBoard.GetTile(x, y).value == "" && program.gameBoard.GetTile(x, y).hasField) {
+						var col = program.gameBoard.GetColumn(y);
+						var row = program.gameBoard.GetRow(x);
+						var group = program.gameBoard.GetGroup(program.gameBoard.GetTile(x, y).group);
 
 						poss[x, y] = 1;
 
@@ -501,8 +482,8 @@ namespace SudokuSolver_Try1 {
 
 				int[,] poss = GetPossibilities(pos);
 
-				for (int x = 0; x < gb.width; x++) {
-					for (int y = 0; y < gb.height; y++) {
+				for (int x = 0; x < program.gameBoard.Width; x++) {
+					for (int y = 0; y < program.gameBoard.Height; y++) {
 
 						if (poss[x, y] == 1) {
 							if (!thing) {
@@ -513,12 +494,12 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
-				for (int x = 0; x < gb.width; x++) {
-					for (int y = 0; y < gb.height; y++) {
+				for (int x = 0; x < program.gameBoard.Width; x++) {
+					for (int y = 0; y < program.gameBoard.Height; y++) {
 						if (poss[x, y] == 1) {
-							var group = gb.GetGroup(gb.tiles[x, y].group);
-							var row = gb.GetRow(x);
-							var column = gb.GetColumn(y);
+							var group = program.gameBoard.GetGroup(program.gameBoard.GetTile(x, y).group);
+							var row = program.gameBoard.GetRow(x);
+							var column = program.gameBoard.GetColumn(y);
 
 							int[] dummy = { 0, 0, 0 };
 
@@ -543,7 +524,7 @@ namespace SudokuSolver_Try1 {
 							for (int i = 0; i < dummy.Length; i++) {
 								if (dummy[i] == 1) {
 									if (cb_autoFill.Checked || thing) {
-										gb.tiles[x, y].field.Text = "" + pos;
+										program.gameBoard.GetTile(x, y).field.Text = "" + pos;
 									} else {
 										UpdateColorSquare(x, y, Color.Green);
 									}
@@ -573,11 +554,11 @@ namespace SudokuSolver_Try1 {
 			}
 
 			var gb = program.gameBoard;
-			while (gb.FindOccurance("") != 0) {
+			while (program.gameBoard.FindOccurance("") != 0) {
 				// Loop this until the puzzle is solved.
 
 				List<int> _left = new List<int>();
-				history.Add(gb.FindOccurance(""));
+				history.Add(program.gameBoard.FindOccurance(""));
 
 				foreach (var item in left) {
 					// Basic check for possibilities.
@@ -585,7 +566,7 @@ namespace SudokuSolver_Try1 {
 
 					// Add the numbers that still need to be solved
 					// to a place holder list.
-					if (gb.FindOccurance("" + item) < 9) {
+					if (program.gameBoard.FindOccurance("" + item) < 9) {
 						_left.Add(item);
 					}
 				}
@@ -594,7 +575,7 @@ namespace SudokuSolver_Try1 {
 				// the place holder.
 				left = _left;
 
-				if (gb.FindOccurance("") == 0) {
+				if (program.gameBoard.FindOccurance("") == 0) {
 					// The gameboard is full! It solved it.
 					return;
 				} else if (history.Count > tollerance) {
@@ -604,12 +585,12 @@ namespace SudokuSolver_Try1 {
 						// Create a restore point incase the random guess doesn't work and
 						// finally, do a random guess to see if it will work.
 
-						string[,] restorePoint = new string[gb.width, gb.height];
+						string[,] restorePoint = new string[program.gameBoard.Width, program.gameBoard.Height];
 
-						for (int _x = 0; _x < gb.width; _x++) {
-							for (int _y = 0; _y < gb.height; _y++) {
-								if (gb.tiles[_x, _y].hasField) {
-									restorePoint[_x, _y] = gb.tiles[_x, _y].field.Text.ToString();
+						for (int _x = 0; _x < program.gameBoard.Width; _x++) {
+							for (int _y = 0; _y < program.gameBoard.Height; _y++) {
+								if (program.gameBoard.GetTile(_x, _y).hasField) {
+									restorePoint[_x, _y] = program.gameBoard.GetTile(_x, _y).field.Text.ToString();
 								} else {
 									restorePoint[_x, _y] = null;
 								}
@@ -619,8 +600,8 @@ namespace SudokuSolver_Try1 {
 						// Find the number with the least possible spaces left.
 						List<string> toSort = new List<string>();
 						for (int i = 1; i < 10; i++) {
-							if (gb.FindOccurance(""+i) < 9) {
-								toSort.Add(9-gb.FindOccurance(""+i) + "," + i);
+							if (program.gameBoard.FindOccurance(""+i) < 9) {
+								toSort.Add(9-program.gameBoard.FindOccurance(""+i) + "," + i);
 							}
 						}
 
@@ -634,13 +615,10 @@ namespace SudokuSolver_Try1 {
 						} else {
 							// Oh no. The random guess did not work. Reset the board to before
 							// the random guess and try again.
-
-							//Console.WriteLine("Guess Failed :( Empty spaces left: " + gb.FindOccurance(""));
-
-							for (int _x = 0; _x < gb.width; _x++) {
-								for (int _y = 0; _y < gb.height; _y++) {
-									if (gb.tiles[_x, _y].hasField) {
-										gb.tiles[_x, _y].field.Text = restorePoint[_x, _y].ToString();
+							for (int _x = 0; _x < program.gameBoard.Width; _x++) {
+								for (int _y = 0; _y < program.gameBoard.Height; _y++) {
+									if (program.gameBoard.GetTile(_x, _y).hasField) {
+										program.gameBoard.GetTile(_x, _y).field.Text = restorePoint[_x, _y].ToString();
 									}
 								}
 							}
@@ -651,20 +629,15 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public bool GuessCycle(int num,int tollerance = 10) {
-			//Console.WriteLine("Started a random guess! Tollerance: " + tollerance);
-
 			var gb = program.gameBoard;
-			int x;
-			int y;
 			int[,] poss = GetPossibilities("" + num);
 			Random rnd = new Random();
 			while (true) {
-				x = rnd.Next(1, 9);
-				y = rnd.Next(1, 9);
+				int x = rnd.Next(1, 9);
+				int y = rnd.Next(1, 9);
 
 				if (poss[x, y] == 1) {
-					//Console.WriteLine("("+x + "," + y+") = "+num);
-					gb.tiles[x, y].field.Text = "" + num;
+					program.gameBoard.GetTile(x, y).field.Text = "" + num;
 					break;
 				}
 			}
@@ -675,23 +648,23 @@ namespace SudokuSolver_Try1 {
 				left.Add(i);
 			}
 
-			while (gb.FindOccurance("") != 0) {
+			while (program.gameBoard.FindOccurance("") != 0) {
 
 				List<int> _left = new List<int>();
-				history.Add(gb.FindOccurance(""));
+				history.Add(program.gameBoard.FindOccurance(""));
 
 				foreach (var item in left) {
 					// Basic check for possibilities.
 					ShowPossibilities("" + item, true);
 
-					if (gb.FindOccurance("" + item) < 9) {
+					if (program.gameBoard.FindOccurance("" + item) < 9) {
 						_left.Add(item);
 					}
 				}
 
 				left = _left;
 
-				if (gb.FindOccurance("") == 0) {
+				if (program.gameBoard.FindOccurance("") == 0) {
 					return true;
 				} else if (history.Count > tollerance) {
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
@@ -710,20 +683,11 @@ namespace SudokuSolver_Try1 {
 			}
 			return true;
 		}
-		
+
 		public void SetCount() {
 			var gb = program.gameBoard;
-			int count = 0;
-			for (int x = 0; x < gb.width; x++) {
-				for (int y = 0; y < gb.height; y++) {
 
-					if (gb.tiles[x, y].value == highlightText.Text && gb.tiles[x, y].hasField && gb.tiles[x, y].value != "") {
-						count += 1;
-					}
-				}
-			}
-
-			lb_occur.Text = "" + count;
+			lb_occur.Text = "" + program.gameBoard.FindOccurance(highlightText.Text);
 		}
 
 		private TextBox highlightText;
@@ -735,12 +699,11 @@ namespace SudokuSolver_Try1 {
 		private Label lb_occur;
 		private Button btn_ClearGrid;
 		private Button btn_LoadPreset;
-		private TextBox tb_presetNum;
 		private CheckBox cb_autoFill;
 		private Button btn_autoCycle;
 		private CheckBox focusHighlight;
 		private CheckBox cb_possib;
-		private Label label3;
+		private Button btn_Save;
 	}
 }
 

@@ -7,21 +7,18 @@ namespace SudokuSolver_Try1 {
 	public partial class Form1 : Form {
 
 		public Program program;
+		public Form1 self;
 
 		public Form1() {
 			InitializeComponent();
 		}
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			program.gameBoard.tiles[obj.x, obj.y].value = obj.field.Text;
+			program.gameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
 			CreateHighlight(highlightText.Text);
 			ShowPossibilities(highlightText.Text);
 			SetCount();
 		}
-
-		/*private void textBox1_BackColorChanged(object sender, EventArgs e) {
-
-		}*/
 
 		private void Form1_Load(object sender, EventArgs e) {
 
@@ -87,13 +84,10 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
-			int n;
-			if (tb_presetNum.Text == "") {
-				return;
-			} else if (int.TryParse(tb_presetNum.Text,out n)) {
-				program.gameBoard.LoadDataset(Convert.ToInt32(tb_presetNum.Text)-1);
-			}
-			
+			SSP ssp = new SSP(program, self);
+
+			ssp.Load();
+
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
@@ -149,6 +143,12 @@ namespace SudokuSolver_Try1 {
 			if (cb_autoFill.Checked) {
 				ShowPossibilities(highlightText.Text);
 			}
+		}
+
+		private void btn_Save_MouseDown(object sender, MouseEventArgs e) {
+			SSP ssp = new SSP(program, self);
+
+			ssp.Save();
 		}
 	}
 }
