@@ -31,30 +31,30 @@ namespace SudokuSolver_Try1 {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.highlightText = new System.Windows.Forms.TextBox();
+			this.tb_HighlightText = new System.Windows.Forms.TextBox();
 			this.highlightTable = new System.Windows.Forms.TableLayoutPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.lb_occur = new System.Windows.Forms.Label();
-			this.btn_autoCycle = new System.Windows.Forms.Button();
-			this.btn_ClearGrid = new System.Windows.Forms.Button();
-			this.cb_possib = new System.Windows.Forms.CheckBox();
-			this.focusHighlight = new System.Windows.Forms.CheckBox();
-			this.clickHighlight = new System.Windows.Forms.CheckBox();
-			this.cb_autoFill = new System.Windows.Forms.CheckBox();
+			this.lb_FocusNumber = new System.Windows.Forms.Label();
+			this.lb_Occurances = new System.Windows.Forms.Label();
+			this.lb_OccuranceNumber = new System.Windows.Forms.Label();
+			this.btn_Solve = new System.Windows.Forms.Button();
+			this.btn_ClearBoard = new System.Windows.Forms.Button();
+			this.cb_ShowPossibilities = new System.Windows.Forms.CheckBox();
+			this.cb_FocusHighlight = new System.Windows.Forms.CheckBox();
+			this.cb_ClickHighlight = new System.Windows.Forms.CheckBox();
+			this.cb_AutoFillPossibilities = new System.Windows.Forms.CheckBox();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
-			this.btn_LoadPreset = new System.Windows.Forms.Button();
-			this.btn_Save = new System.Windows.Forms.Button();
+			this.btn_LoadBoard = new System.Windows.Forms.Button();
+			this.btn_SaveBoard = new System.Windows.Forms.Button();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// highlightText
+			// tb_HighlightText
 			// 
-			this.highlightText.Location = new System.Drawing.Point(118, 3);
-			this.highlightText.Name = "highlightText";
-			this.highlightText.Size = new System.Drawing.Size(115, 20);
-			this.highlightText.TabIndex = 1;
-			this.highlightText.TextChanged += new System.EventHandler(this.highlightText_TextChanged);
+			this.tb_HighlightText.Location = new System.Drawing.Point(118, 3);
+			this.tb_HighlightText.Name = "tb_HighlightText";
+			this.tb_HighlightText.Size = new System.Drawing.Size(115, 20);
+			this.tb_HighlightText.TabIndex = 1;
+			this.tb_HighlightText.TextChanged += new System.EventHandler(this.highlightText_TextChanged);
 			// 
 			// highlightTable
 			// 
@@ -63,19 +63,19 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.ColumnCount = 2;
 			this.highlightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.highlightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.highlightTable.Controls.Add(this.highlightText, 1, 0);
-			this.highlightTable.Controls.Add(this.label1, 0, 0);
-			this.highlightTable.Controls.Add(this.label2, 0, 1);
-			this.highlightTable.Controls.Add(this.lb_occur, 1, 1);
-			this.highlightTable.Controls.Add(this.btn_autoCycle, 0, 10);
-			this.highlightTable.Controls.Add(this.btn_ClearGrid, 0, 7);
-			this.highlightTable.Controls.Add(this.cb_possib, 0, 5);
-			this.highlightTable.Controls.Add(this.focusHighlight, 0, 4);
-			this.highlightTable.Controls.Add(this.clickHighlight, 0, 3);
-			this.highlightTable.Controls.Add(this.cb_autoFill, 1, 5);
+			this.highlightTable.Controls.Add(this.tb_HighlightText, 1, 0);
+			this.highlightTable.Controls.Add(this.lb_FocusNumber, 0, 0);
+			this.highlightTable.Controls.Add(this.lb_Occurances, 0, 1);
+			this.highlightTable.Controls.Add(this.lb_OccuranceNumber, 1, 1);
+			this.highlightTable.Controls.Add(this.btn_Solve, 0, 10);
+			this.highlightTable.Controls.Add(this.btn_ClearBoard, 0, 7);
+			this.highlightTable.Controls.Add(this.cb_ShowPossibilities, 0, 5);
+			this.highlightTable.Controls.Add(this.cb_FocusHighlight, 0, 4);
+			this.highlightTable.Controls.Add(this.cb_ClickHighlight, 0, 3);
+			this.highlightTable.Controls.Add(this.cb_AutoFillPossibilities, 1, 5);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
-			this.highlightTable.Controls.Add(this.btn_LoadPreset, 1, 7);
-			this.highlightTable.Controls.Add(this.btn_Save, 1, 8);
+			this.highlightTable.Controls.Add(this.btn_LoadBoard, 1, 7);
+			this.highlightTable.Controls.Add(this.btn_SaveBoard, 1, 8);
 			this.highlightTable.Location = new System.Drawing.Point(34, 15);
 			this.highlightTable.Name = "highlightTable";
 			this.highlightTable.RowCount = 11;
@@ -93,129 +93,129 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Size = new System.Drawing.Size(236, 275);
 			this.highlightTable.TabIndex = 2;
 			// 
-			// label1
+			// lb_FocusNumber
 			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lb_FocusNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(109, 26);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "Focus Number:";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lb_FocusNumber.AutoSize = true;
+			this.lb_FocusNumber.Location = new System.Drawing.Point(3, 0);
+			this.lb_FocusNumber.Name = "lb_FocusNumber";
+			this.lb_FocusNumber.Size = new System.Drawing.Size(109, 26);
+			this.lb_FocusNumber.TabIndex = 2;
+			this.lb_FocusNumber.Text = "Focus Number:";
+			this.lb_FocusNumber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// label2
+			// lb_Occurances
 			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lb_Occurances.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 26);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(109, 13);
-			this.label2.TabIndex = 5;
-			this.label2.Text = "Occurances:";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lb_Occurances.AutoSize = true;
+			this.lb_Occurances.Location = new System.Drawing.Point(3, 26);
+			this.lb_Occurances.Name = "lb_Occurances";
+			this.lb_Occurances.Size = new System.Drawing.Size(109, 13);
+			this.lb_Occurances.TabIndex = 5;
+			this.lb_Occurances.Text = "Occurances:";
+			this.lb_Occurances.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// lb_occur
+			// lb_OccuranceNumber
 			// 
-			this.lb_occur.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lb_OccuranceNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lb_occur.AutoSize = true;
-			this.lb_occur.Location = new System.Drawing.Point(118, 26);
-			this.lb_occur.Name = "lb_occur";
-			this.lb_occur.Size = new System.Drawing.Size(115, 13);
-			this.lb_occur.TabIndex = 6;
-			this.lb_occur.Text = "0";
-			this.lb_occur.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lb_OccuranceNumber.AutoSize = true;
+			this.lb_OccuranceNumber.Location = new System.Drawing.Point(118, 26);
+			this.lb_OccuranceNumber.Name = "lb_OccuranceNumber";
+			this.lb_OccuranceNumber.Size = new System.Drawing.Size(115, 13);
+			this.lb_OccuranceNumber.TabIndex = 6;
+			this.lb_OccuranceNumber.Text = "0";
+			this.lb_OccuranceNumber.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// btn_autoCycle
+			// btn_Solve
 			// 
-			this.btn_autoCycle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.btn_Solve.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.highlightTable.SetColumnSpan(this.btn_autoCycle, 2);
-			this.btn_autoCycle.Location = new System.Drawing.Point(3, 232);
-			this.btn_autoCycle.Name = "btn_autoCycle";
-			this.btn_autoCycle.Size = new System.Drawing.Size(230, 40);
-			this.btn_autoCycle.TabIndex = 11;
-			this.btn_autoCycle.Text = "Solve";
-			this.btn_autoCycle.UseVisualStyleBackColor = true;
-			this.btn_autoCycle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_autoCycle_MouseUp);
+			this.highlightTable.SetColumnSpan(this.btn_Solve, 2);
+			this.btn_Solve.Location = new System.Drawing.Point(3, 232);
+			this.btn_Solve.Name = "btn_Solve";
+			this.btn_Solve.Size = new System.Drawing.Size(230, 40);
+			this.btn_Solve.TabIndex = 11;
+			this.btn_Solve.Text = "Solve";
+			this.btn_Solve.UseVisualStyleBackColor = true;
+			this.btn_Solve.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_autoCycle_MouseUp);
 			// 
-			// btn_ClearGrid
+			// btn_ClearBoard
 			// 
-			this.btn_ClearGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.btn_ClearBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_ClearGrid.Location = new System.Drawing.Point(3, 150);
-			this.btn_ClearGrid.Name = "btn_ClearGrid";
-			this.highlightTable.SetRowSpan(this.btn_ClearGrid, 2);
-			this.btn_ClearGrid.Size = new System.Drawing.Size(109, 66);
-			this.btn_ClearGrid.TabIndex = 7;
-			this.btn_ClearGrid.Text = "Clear Board";
-			this.btn_ClearGrid.UseVisualStyleBackColor = true;
-			this.btn_ClearGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearGrid_MouseUp);
+			this.btn_ClearBoard.Location = new System.Drawing.Point(3, 150);
+			this.btn_ClearBoard.Name = "btn_ClearBoard";
+			this.highlightTable.SetRowSpan(this.btn_ClearBoard, 2);
+			this.btn_ClearBoard.Size = new System.Drawing.Size(109, 66);
+			this.btn_ClearBoard.TabIndex = 7;
+			this.btn_ClearBoard.Text = "Clear Board";
+			this.btn_ClearBoard.UseVisualStyleBackColor = true;
+			this.btn_ClearBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearGrid_MouseUp);
 			// 
-			// cb_possib
+			// cb_ShowPossibilities
 			// 
-			this.cb_possib.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.cb_ShowPossibilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cb_possib.AutoSize = true;
-			this.cb_possib.Location = new System.Drawing.Point(3, 111);
-			this.cb_possib.Name = "cb_possib";
-			this.cb_possib.Size = new System.Drawing.Size(109, 23);
-			this.cb_possib.TabIndex = 13;
-			this.cb_possib.Text = "Show Possibilities";
-			this.cb_possib.UseVisualStyleBackColor = true;
-			this.cb_possib.CheckedChanged += new System.EventHandler(this.cb_possib_CheckedChanged);
+			this.cb_ShowPossibilities.AutoSize = true;
+			this.cb_ShowPossibilities.Location = new System.Drawing.Point(3, 111);
+			this.cb_ShowPossibilities.Name = "cb_ShowPossibilities";
+			this.cb_ShowPossibilities.Size = new System.Drawing.Size(109, 23);
+			this.cb_ShowPossibilities.TabIndex = 13;
+			this.cb_ShowPossibilities.Text = "Show Possibilities";
+			this.cb_ShowPossibilities.UseVisualStyleBackColor = true;
+			this.cb_ShowPossibilities.CheckedChanged += new System.EventHandler(this.cb_possib_CheckedChanged);
 			// 
-			// focusHighlight
+			// cb_FocusHighlight
 			// 
-			this.focusHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.cb_FocusHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.focusHighlight.AutoSize = true;
-			this.focusHighlight.Location = new System.Drawing.Point(3, 75);
-			this.focusHighlight.Name = "focusHighlight";
-			this.focusHighlight.Size = new System.Drawing.Size(109, 30);
-			this.focusHighlight.TabIndex = 12;
-			this.focusHighlight.Text = "Focus Highlight";
-			this.focusHighlight.UseVisualStyleBackColor = true;
-			this.focusHighlight.CheckedChanged += new System.EventHandler(this.focusHighlight_CheckedChanged);
+			this.cb_FocusHighlight.AutoSize = true;
+			this.cb_FocusHighlight.Location = new System.Drawing.Point(3, 75);
+			this.cb_FocusHighlight.Name = "cb_FocusHighlight";
+			this.cb_FocusHighlight.Size = new System.Drawing.Size(109, 30);
+			this.cb_FocusHighlight.TabIndex = 12;
+			this.cb_FocusHighlight.Text = "Focus Highlight";
+			this.cb_FocusHighlight.UseVisualStyleBackColor = true;
+			this.cb_FocusHighlight.CheckedChanged += new System.EventHandler(this.focusHighlight_CheckedChanged);
 			// 
-			// clickHighlight
+			// cb_ClickHighlight
 			// 
-			this.clickHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.cb_ClickHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.clickHighlight.AutoSize = true;
-			this.clickHighlight.Checked = true;
-			this.clickHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.clickHighlight.Location = new System.Drawing.Point(3, 52);
-			this.clickHighlight.Name = "clickHighlight";
-			this.clickHighlight.Size = new System.Drawing.Size(109, 17);
-			this.clickHighlight.TabIndex = 4;
-			this.clickHighlight.Text = "Click Highlight";
-			this.clickHighlight.UseVisualStyleBackColor = true;
-			this.clickHighlight.CheckedChanged += new System.EventHandler(this.clickHighlight_CheckedChanged);
+			this.cb_ClickHighlight.AutoSize = true;
+			this.cb_ClickHighlight.Checked = true;
+			this.cb_ClickHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_ClickHighlight.Location = new System.Drawing.Point(3, 52);
+			this.cb_ClickHighlight.Name = "cb_ClickHighlight";
+			this.cb_ClickHighlight.Size = new System.Drawing.Size(109, 17);
+			this.cb_ClickHighlight.TabIndex = 4;
+			this.cb_ClickHighlight.Text = "Click Highlight";
+			this.cb_ClickHighlight.UseVisualStyleBackColor = true;
+			this.cb_ClickHighlight.CheckedChanged += new System.EventHandler(this.clickHighlight_CheckedChanged);
 			// 
-			// cb_autoFill
+			// cb_AutoFillPossibilities
 			// 
-			this.cb_autoFill.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.cb_AutoFillPossibilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.cb_autoFill.Location = new System.Drawing.Point(118, 111);
-			this.cb_autoFill.Name = "cb_autoFill";
-			this.cb_autoFill.Size = new System.Drawing.Size(115, 23);
-			this.cb_autoFill.TabIndex = 10;
-			this.cb_autoFill.Text = "Autofill Possibilities";
-			this.cb_autoFill.UseVisualStyleBackColor = true;
-			this.cb_autoFill.CheckedChanged += new System.EventHandler(this.cb_autoFill_CheckedChanged);
+			this.cb_AutoFillPossibilities.Location = new System.Drawing.Point(118, 111);
+			this.cb_AutoFillPossibilities.Name = "cb_AutoFillPossibilities";
+			this.cb_AutoFillPossibilities.Size = new System.Drawing.Size(115, 23);
+			this.cb_AutoFillPossibilities.TabIndex = 10;
+			this.cb_AutoFillPossibilities.Text = "Autofill Possibilities";
+			this.cb_AutoFillPossibilities.UseVisualStyleBackColor = true;
+			this.cb_AutoFillPossibilities.CheckedChanged += new System.EventHandler(this.cb_autoFill_CheckedChanged);
 			// 
 			// btn_ClearHighlight
 			// 
@@ -230,32 +230,32 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
 			this.btn_ClearHighlight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearHighlight_MouseUp);
 			// 
-			// btn_LoadPreset
+			// btn_LoadBoard
 			// 
-			this.btn_LoadPreset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btn_LoadBoard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_LoadPreset.Location = new System.Drawing.Point(118, 150);
-			this.btn_LoadPreset.Name = "btn_LoadPreset";
-			this.btn_LoadPreset.Size = new System.Drawing.Size(115, 30);
-			this.btn_LoadPreset.TabIndex = 8;
-			this.btn_LoadPreset.Text = "Load Board";
-			this.btn_LoadPreset.UseVisualStyleBackColor = true;
-			this.btn_LoadPreset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
+			this.btn_LoadBoard.Location = new System.Drawing.Point(118, 150);
+			this.btn_LoadBoard.Name = "btn_LoadBoard";
+			this.btn_LoadBoard.Size = new System.Drawing.Size(115, 30);
+			this.btn_LoadBoard.TabIndex = 8;
+			this.btn_LoadBoard.Text = "Load Board";
+			this.btn_LoadBoard.UseVisualStyleBackColor = true;
+			this.btn_LoadBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
 			// 
-			// btn_Save
+			// btn_SaveBoard
 			// 
-			this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.btn_SaveBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Save.Location = new System.Drawing.Point(118, 186);
-			this.btn_Save.Name = "btn_Save";
-			this.btn_Save.Size = new System.Drawing.Size(115, 30);
-			this.btn_Save.TabIndex = 14;
-			this.btn_Save.Text = "Save Board";
-			this.btn_Save.UseVisualStyleBackColor = true;
-			this.btn_Save.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Save_MouseDown);
+			this.btn_SaveBoard.Location = new System.Drawing.Point(118, 186);
+			this.btn_SaveBoard.Name = "btn_SaveBoard";
+			this.btn_SaveBoard.Size = new System.Drawing.Size(115, 30);
+			this.btn_SaveBoard.TabIndex = 14;
+			this.btn_SaveBoard.Text = "Save Board";
+			this.btn_SaveBoard.UseVisualStyleBackColor = true;
+			this.btn_SaveBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Save_MouseDown);
 			// 
-			// Form1
+			// MainUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -265,7 +265,7 @@ namespace SudokuSolver_Try1 {
 			this.ClientSize = new System.Drawing.Size(321, 385);
 			this.Controls.Add(this.highlightTable);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.Name = "Form1";
+			this.Name = "MainUI";
 			this.Padding = new System.Windows.Forms.Padding(12);
 			this.ShowIcon = false;
 			this.Text = "Sudoku Solver";
@@ -393,7 +393,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void CreateHighlight(string num) {
-			if (focusHighlight.Checked) {
+			if (cb_FocusHighlight.Checked) {
 				RemoveHighlight(Color.Yellow, true);
 				for (int x = 0; x < program.gameBoard.Width; x++) {
 					for (int y = 0; y < program.gameBoard.Height; y++) {
@@ -475,7 +475,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void ShowPossibilities(string pos, bool thing = false, int mode = 0) {
-			if (cb_possib.Checked || thing) {
+			if (cb_ShowPossibilities.Checked || thing) {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
 				var gb = program.gameBoard;
@@ -523,7 +523,7 @@ namespace SudokuSolver_Try1 {
 
 							for (int i = 0; i < dummy.Length; i++) {
 								if (dummy[i] == 1) {
-									if (cb_autoFill.Checked || thing) {
+									if (cb_AutoFillPossibilities.Checked || thing) {
 										program.gameBoard.GetTile(x, y).field.Text = "" + pos;
 									} else {
 										UpdateColorSquare(x, y, Color.Green);
@@ -696,27 +696,27 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void SetCount() {
-			if (highlightText.Text != "") {
+			if (tb_HighlightText.Text != "") {
 				var gb = program.gameBoard;
 
-				lb_occur.Text = "" + program.gameBoard.FindOccurance(highlightText.Text);
+				lb_OccuranceNumber.Text = "" + program.gameBoard.FindOccurance(tb_HighlightText.Text);
 			}
 		}
 
-		private TextBox highlightText;
+		private TextBox tb_HighlightText;
 		private TableLayoutPanel highlightTable;
-		private Label label1;
+		private Label lb_FocusNumber;
 		private Button btn_ClearHighlight;
-		private CheckBox clickHighlight;
-		private Label label2;
-		private Label lb_occur;
-		private Button btn_ClearGrid;
-		private Button btn_LoadPreset;
-		private CheckBox cb_autoFill;
-		private Button btn_autoCycle;
-		private CheckBox focusHighlight;
-		private CheckBox cb_possib;
-		private Button btn_Save;
+		private CheckBox cb_ClickHighlight;
+		private Label lb_Occurances;
+		private Label lb_OccuranceNumber;
+		private Button btn_ClearBoard;
+		private Button btn_LoadBoard;
+		private CheckBox cb_AutoFillPossibilities;
+		private Button btn_Solve;
+		private CheckBox cb_FocusHighlight;
+		private CheckBox cb_ShowPossibilities;
+		private Button btn_SaveBoard;
 	}
 }
 

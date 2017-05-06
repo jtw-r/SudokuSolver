@@ -15,8 +15,8 @@ namespace SudokuSolver_Try1 {
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
 			program.gameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
-			CreateHighlight(highlightText.Text);
-			ShowPossibilities(highlightText.Text);
+			CreateHighlight(tb_HighlightText.Text);
+			ShowPossibilities(tb_HighlightText.Text);
 			SetCount();
 		}
 
@@ -25,12 +25,12 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_ShowHighlight_MouseUp(object sender, MouseEventArgs e) {
-			CreateHighlight(highlightText.Text);
+			CreateHighlight(tb_HighlightText.Text);
 		}
 
 		private void highlightText_TextChanged(object sender, EventArgs e) {
-			CreateHighlight(highlightText.Text);
-			ShowPossibilities(highlightText.Text);
+			CreateHighlight(tb_HighlightText.Text);
+			ShowPossibilities(tb_HighlightText.Text);
 			SetCount();
 
 		}
@@ -40,7 +40,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void rcHighlight(Tile obj) {
-			if (clickHighlight.Checked) {
+			if (cb_ClickHighlight.Checked) {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 
@@ -95,11 +95,11 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {
-			if (focusHighlight.Checked) {
-				CreateHighlight(highlightText.Text);
+			if (cb_FocusHighlight.Checked) {
+				CreateHighlight(tb_HighlightText.Text);
 			} else {
 				RemoveHighlight(Color.Yellow, true);
-				if (program.lastExec != null && clickHighlight.Checked) {
+				if (program.lastExec != null && cb_ClickHighlight.Checked) {
 					rcHighlight(program.lastExec);
 				}
 			}
@@ -109,8 +109,8 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void cb_possib_CheckedChanged(object sender, EventArgs e) {
-			if (cb_possib.Checked) {
-				ShowPossibilities(highlightText.Text);
+			if (cb_ShowPossibilities.Checked) {
+				ShowPossibilities(tb_HighlightText.Text);
 			} else {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
@@ -118,7 +118,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void clickHighlight_CheckedChanged(object sender, EventArgs e) {
-			if(!clickHighlight.Checked) {
+			if(!cb_ClickHighlight.Checked) {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 			} else {
@@ -129,19 +129,19 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_ClearHighlight_MouseUp(object sender, MouseEventArgs e) {
-			highlightText.Text = "";
+			tb_HighlightText.Text = "";
 			RemoveHighlight(Color.Yellow, true);
 			if (program.lastExec != null) {
 				rcHighlight(program.lastExec);
 			}
 
-			cb_possib.Checked = false;
-			focusHighlight.Checked = false;
+			cb_ShowPossibilities.Checked = false;
+			cb_FocusHighlight.Checked = false;
 		}
 
 		private void cb_autoFill_CheckedChanged(object sender, EventArgs e) {
-			if (cb_autoFill.Checked) {
-				ShowPossibilities(highlightText.Text);
+			if (cb_AutoFillPossibilities.Checked) {
+				ShowPossibilities(tb_HighlightText.Text);
 			}
 		}
 
