@@ -7,6 +7,7 @@ namespace SudokuSolver_Try1 {
 	public partial class Form1 : Form {
 
 		public Program program;
+		public Form1 self;
 
 		public Form1() {
 			InitializeComponent();
@@ -83,20 +84,9 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
-			// Configure open file dialog box
-			OpenFileDialog dlg = new OpenFileDialog();
-			//dlg.FileName = "Document"; // Default file name
-			dlg.DefaultExt = ".ssp"; // Default file extension
-			dlg.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp"; // Filter files by extension
+			SSP ssp = new SSP(program, self);
 
-			// Show open file dialog box
-			var result = dlg.ShowDialog();
-
-			// Process open file dialog box results
-			if (result == DialogResult.OK) {
-				Read(@dlg.FileName);
-				dlg.Dispose();
-			}
+			ssp.Load();
 
 		}
 
@@ -153,6 +143,12 @@ namespace SudokuSolver_Try1 {
 			if (cb_autoFill.Checked) {
 				ShowPossibilities(highlightText.Text);
 			}
+		}
+
+		private void btn_Save_MouseDown(object sender, MouseEventArgs e) {
+			SSP ssp = new SSP(program, self);
+
+			ssp.Save();
 		}
 	}
 }

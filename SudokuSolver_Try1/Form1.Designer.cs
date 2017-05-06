@@ -41,10 +41,10 @@ namespace SudokuSolver_Try1 {
 			this.cb_possib = new System.Windows.Forms.CheckBox();
 			this.focusHighlight = new System.Windows.Forms.CheckBox();
 			this.clickHighlight = new System.Windows.Forms.CheckBox();
-			this.btn_LoadPreset = new System.Windows.Forms.Button();
 			this.cb_autoFill = new System.Windows.Forms.CheckBox();
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btn_LoadPreset = new System.Windows.Forms.Button();
+			this.btn_Save = new System.Windows.Forms.Button();
 			this.highlightTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -75,7 +75,7 @@ namespace SudokuSolver_Try1 {
 			this.highlightTable.Controls.Add(this.cb_autoFill, 1, 5);
 			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
 			this.highlightTable.Controls.Add(this.btn_LoadPreset, 1, 7);
-			this.highlightTable.Controls.Add(this.button1, 1, 8);
+			this.highlightTable.Controls.Add(this.btn_Save, 1, 8);
 			this.highlightTable.Location = new System.Drawing.Point(34, 15);
 			this.highlightTable.Name = "highlightTable";
 			this.highlightTable.RowCount = 11;
@@ -204,18 +204,6 @@ namespace SudokuSolver_Try1 {
 			this.clickHighlight.UseVisualStyleBackColor = true;
 			this.clickHighlight.CheckedChanged += new System.EventHandler(this.clickHighlight_CheckedChanged);
 			// 
-			// btn_LoadPreset
-			// 
-			this.btn_LoadPreset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_LoadPreset.Location = new System.Drawing.Point(118, 150);
-			this.btn_LoadPreset.Name = "btn_LoadPreset";
-			this.btn_LoadPreset.Size = new System.Drawing.Size(115, 30);
-			this.btn_LoadPreset.TabIndex = 8;
-			this.btn_LoadPreset.Text = "Load Board";
-			this.btn_LoadPreset.UseVisualStyleBackColor = true;
-			this.btn_LoadPreset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
-			// 
 			// cb_autoFill
 			// 
 			this.cb_autoFill.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -242,17 +230,30 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearHighlight.UseVisualStyleBackColor = true;
 			this.btn_ClearHighlight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_ClearHighlight_MouseUp);
 			// 
-			// button1
+			// btn_LoadPreset
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.btn_LoadPreset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_LoadPreset.Location = new System.Drawing.Point(118, 150);
+			this.btn_LoadPreset.Name = "btn_LoadPreset";
+			this.btn_LoadPreset.Size = new System.Drawing.Size(115, 30);
+			this.btn_LoadPreset.TabIndex = 8;
+			this.btn_LoadPreset.Text = "Load Board";
+			this.btn_LoadPreset.UseVisualStyleBackColor = true;
+			this.btn_LoadPreset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_LoadPreset_MouseUp);
+			// 
+			// btn_Save
+			// 
+			this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(118, 186);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(115, 30);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "Save Board";
-			this.button1.UseVisualStyleBackColor = true;
+			this.btn_Save.Location = new System.Drawing.Point(118, 186);
+			this.btn_Save.Name = "btn_Save";
+			this.btn_Save.Size = new System.Drawing.Size(115, 30);
+			this.btn_Save.TabIndex = 14;
+			this.btn_Save.Text = "Save Board";
+			this.btn_Save.UseVisualStyleBackColor = true;
+			this.btn_Save.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Save_MouseDown);
 			// 
 			// Form1
 			// 
@@ -683,68 +684,6 @@ namespace SudokuSolver_Try1 {
 			return true;
 		}
 
-		public void Read(string file) {
-
-			if (Path.GetExtension(file) == ".ssp") {
-				string text = File.ReadAllText(file);
-
-				string[] boards = text.Split(new[] { "Size:" }, StringSplitOptions.None);
-
-				int b_num = 1;
-
-				if (boards.Length > 2) {
-					SelectBoard select = new SelectBoard();
-
-					//select.cb_SelectBoard.DataSource = Enumerable.Range(1, boards.Length-1).ToList();
-					var dict = new Dictionary<int, string>();
-
-					for (int i = 1; i < boards.Length; i++) {
-						var da = boards[i].Replace("Notes:", " ").Split('\n');
-						dict.Add(i, "Board #" + i + da[1]);
-					}
-
-					var scb = select.cb_SelectBoard;
-					scb.DataSource = new BindingSource(dict,null);
-					scb.DisplayMember = "Value";
-					scb.ValueMember = "Key";
-
-
-					if (select.ShowDialog() == DialogResult.OK) {
-						b_num = Convert.ToInt32(select.cb_SelectBoard.SelectedValue.ToString());
-						select.Dispose();
-					} else {
-						return;
-					}
-				}
-
-				string[] lines = boards[b_num].Split('\n');
-
-				string[] size = lines[0].Replace("\r","").Replace(" ","").Split(',');
-
-				program.gameBoard = resizeBoard(Convert.ToInt32(size[0]), Convert.ToInt32(size[1]));
-
-				string[] data = boards[b_num].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
-
-				string[] d = Regex.Split(data[1].Replace("\n","").Replace("\r", ""), string.Empty,RegexOptions.IgnorePatternWhitespace);
-
-				for (int x = 0; x < Convert.ToInt32(size[0]); x++) {
-					for (int y = 0; y < Convert.ToInt32(size[1]); y++) {
-						int x_offset = (int)(x / Math.Sqrt(Convert.ToInt32(size[0])));
-						int y_offset = (int)(y / Math.Sqrt(Convert.ToInt32(size[1])));
-
-						var value = d[(x * Convert.ToInt32(size[0])) + (y + 1)];
-
-						if (value == "_") {
-							value = "";
-						}
-
-						program.gameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
-					}
-				}
-
-			}
-		}
-
 		public void SetCount() {
 			var gb = program.gameBoard;
 
@@ -764,7 +703,7 @@ namespace SudokuSolver_Try1 {
 		private Button btn_autoCycle;
 		private CheckBox focusHighlight;
 		private CheckBox cb_possib;
-		private Button button1;
+		private Button btn_Save;
 	}
 }
 
