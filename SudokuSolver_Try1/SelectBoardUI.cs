@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
-	public partial class SelectBoard : Form {
-		public SelectBoard() {
+	public partial class SelectBoardUI : Form {
+		public SelectBoardUI() {
 			InitializeComponent();
 		}
 

@@ -1,5 +1,5 @@
 ﻿namespace SudokuSolver_Try1 {
-	partial class SelectBoard {
+	partial class SelectBoardUI {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>

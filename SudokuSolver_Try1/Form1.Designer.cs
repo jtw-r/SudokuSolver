@@ -433,7 +433,7 @@ namespace SudokuSolver_Try1 {
 			return false;
 		}
 
-		public int cycleNum = 0;
+		//public int cycleNum = 0;
 
 		public int[,] GetPossibilities(string num) {
 			Board gb = program.gameBoard;
@@ -608,7 +608,7 @@ namespace SudokuSolver_Try1 {
 						toSort.Sort();
 						string[] num = toSort[0].Split(',');
 
-						if (GuessCycle(Convert.ToInt32(num[0]))) {
+						if (GuessCycle(num)) {
 							// Yay! The random guess worked and the program was able to
 							// completly solve the sudoku puzzle. Exit the while loop.
 							return;
@@ -628,17 +628,28 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		public bool GuessCycle(int num,int tollerance = 10) {
+		public bool GuessCycle(string[] num,int tollerance = 10) {
 			var gb = program.gameBoard;
-			int[,] poss = GetPossibilities("" + num);
-			Random rnd = new Random();
-			while (true) {
-				int x = rnd.Next(1, 9);
-				int y = rnd.Next(1, 9);
+			for (int a = 0; a < program.gameBoard.FindOccurance("") / 20; a++) {
+				for (int i = 0; i < num.Length - 1; i++) {
+					int[,] poss = GetPossibilities("" + num[i]);
+					Random rnd = new Random();
+					int cycle_num = 0;
+					while (true) {
+						int x = rnd.Next(1, 9);
+						int y = rnd.Next(1, 9);
 
-				if (poss[x, y] == 1) {
-					program.gameBoard.GetTile(x, y).field.Text = "" + num;
-					break;
+						if (poss[x, y] == 1) {
+							program.gameBoard.GetTile(x, y).field.Text = "" + num[i];
+							break;
+						}
+						cycle_num++;
+						if (cycle_num > 100) {
+							// If this has searched through 100 random positions and
+							// none of them work, stop the loop.
+							break;
+						}
+					}
 				}
 			}
 
@@ -685,9 +696,11 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void SetCount() {
-			var gb = program.gameBoard;
+			if (highlightText.Text != "") {
+				var gb = program.gameBoard;
 
-			lb_occur.Text = "" + program.gameBoard.FindOccurance(highlightText.Text);
+				lb_occur.Text = "" + program.gameBoard.FindOccurance(highlightText.Text);
+			}
 		}
 
 		private TextBox highlightText;

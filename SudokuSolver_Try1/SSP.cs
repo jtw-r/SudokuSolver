@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
@@ -21,31 +18,30 @@ namespace SudokuSolver_Try1 {
 
 		public void Load(string filename = null) {
 			if (filename == null) {
-				OpenFileDialog fileDG = new OpenFileDialog();
-				fileDG.DefaultExt = ".ssp";
-				fileDG.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp";
+				OpenFileDialog saveFileDG = new OpenFileDialog();
+				saveFileDG.DefaultExt = ".ssp";
+				saveFileDG.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp";
 
-				var result = fileDG.ShowDialog();
+				var result = saveFileDG.ShowDialog();
 
 				if (result == DialogResult.OK) {
-					filename = @fileDG.FileName;
-					fileDG.Dispose();
+					filename = saveFileDG.FileName;
+					saveFileDG.Dispose();
 				} else {
 					return;
 				}
 			}
 
 			if (Path.GetExtension(filename) == ".ssp") {
-				string text = File.ReadAllText(filename);
+				string fileContents = File.ReadAllText(filename);
 
-				string[] boards = text.Split(new[] { "Size:" }, StringSplitOptions.None);
+				string[] boards = fileContents.Split(new[] { "Size:" }, StringSplitOptions.None);
 
-				int b_num = 1;
+				int selectedBoardNum = 1;
 
 				if (boards.Length > 2) {
-					SelectBoard select = new SelectBoard();
+					SelectBoardUI select = new SelectBoardUI();
 
-					//select.cb_SelectBoard.DataSource = Enumerable.Range(1, boards.Length-1).ToList();
 					var dict = new Dictionary<int, string>();
 
 					for (int i = 1; i < boards.Length; i++) {
@@ -53,36 +49,36 @@ namespace SudokuSolver_Try1 {
 						dict.Add(i, "Board #" + i + da[1]);
 					}
 
-					var scb = select.cb_SelectBoard;
-					scb.DataSource = new BindingSource(dict, null);
-					scb.DisplayMember = "Value";
-					scb.ValueMember = "Key";
+					var selectBoardComboBox = select.cb_SelectBoard;
+					selectBoardComboBox.DataSource = new BindingSource(dict, null);
+					selectBoardComboBox.DisplayMember = "Value";
+					selectBoardComboBox.ValueMember = "Key";
 
 
 					if (select.ShowDialog() == DialogResult.OK) {
-						b_num = Convert.ToInt32(select.cb_SelectBoard.SelectedValue.ToString());
+						selectedBoardNum = Convert.ToInt32(selectBoardComboBox.SelectedValue.ToString());
 						select.Dispose();
 					} else {
 						return;
 					}
 				}
 
-				string[] lines = boards[b_num].Split('\n');
+				string[] fileLines = boards[selectedBoardNum].Split('\n');
 
-				string[] size = lines[0].Replace("\r", "").Replace(" ", "").Split(',');
+				string[] boardSize = fileLines[0].Replace("\r", "").Replace(" ", "").Split(',');
 
-				program.gameBoard = form1.resizeBoard(Convert.ToInt32(size[0]), Convert.ToInt32(size[1]));
+				program.gameBoard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
 
-				string[] data = boards[b_num].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
+				string[] selectedBoardData = boards[selectedBoardNum].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
 
-				string[] d = Regex.Split(data[1].Replace("\n", "").Replace("\r", ""), string.Empty, RegexOptions.IgnorePatternWhitespace);
+				string[] boardData = Regex.Split(selectedBoardData[1].Replace("\n", "").Replace("\r", ""), string.Empty, RegexOptions.IgnorePatternWhitespace);
 
-				for (int x = 0; x < Convert.ToInt32(size[0]); x++) {
-					for (int y = 0; y < Convert.ToInt32(size[1]); y++) {
-						int x_offset = (int)(x / Math.Sqrt(Convert.ToInt32(size[0])));
-						int y_offset = (int)(y / Math.Sqrt(Convert.ToInt32(size[1])));
+				for (int x = 0; x < Convert.ToInt32(boardSize[0]); x++) {
+					for (int y = 0; y < Convert.ToInt32(boardSize[1]); y++) {
+						int x_offset = (int)(x / Math.Sqrt(Convert.ToInt32(boardSize[0])));
+						int y_offset = (int)(y / Math.Sqrt(Convert.ToInt32(boardSize[1])));
 
-						var value = d[(x * Convert.ToInt32(size[0])) + (y + 1)];
+						var value = boardData[(x * Convert.ToInt32(boardSize[0])) + (y + 1)];
 
 						if (value == "_") {
 							value = "";
@@ -98,15 +94,13 @@ namespace SudokuSolver_Try1 {
 
 		public void Save(string filename = null) {
 			if (filename == null) {
-				SaveFileDialog fileDG = new SaveFileDialog();
-				fileDG.DefaultExt = ".ssp";
-				fileDG.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp";
+				SaveFileDialog saveFileDG = new SaveFileDialog();
+				saveFileDG.DefaultExt = ".ssp";
+				saveFileDG.Filter = "Sudoku Solver Puzzles (.ssp)|*.ssp";
 
-				var result = fileDG.ShowDialog();
-
-				if (result == DialogResult.OK) {
-					filename = @fileDG.FileName;
-					fileDG.Dispose();
+				if (saveFileDG.ShowDialog() == DialogResult.OK) {
+					filename = saveFileDG.FileName;
+					saveFileDG.Dispose();
 				} else {
 					return;
 				}
@@ -114,44 +108,63 @@ namespace SudokuSolver_Try1 {
 
 			DateTime time = DateTime.Now;
 
-			string[] lines = {	"Size: "+program.Board_size[0]+","+program.Board_size[1],
-								"Notes: "+time.ToString(new CultureInfo("en-US")),
-								"Puzzle:"};
+			string[] begining = { "/////////////////////////////////////////////////////////////", "// Sudoku Solver Puzzle                                    //", "//                             (c) 2017 Jonathan Reiterman //", "// '_' denotes a blank cell                                //", "/////////////////////////////////////////////////////////////" };
+
+			string[] lines = { "Size: "+program.Board_size[0]+","+program.Board_size[1],
+							   "Notes: "+time.ToString(new CultureInfo("en-US")),
+							   "Puzzle:"};
 
 			string[] puzzle = new string[program.Board_size[0]];
+			int[] boardSize = program.Board_size;
 
 			for (int x = 0; x < program.gameBoard.Width; x++) {
 				for (int y = 0; y < program.gameBoard.Height; y++) {
-					if (!form1.isSqrt(x, (int)Math.Sqrt(program.Board_size[0])) && !form1.isSqrt(y, (int)Math.Sqrt(program.Board_size[1]))) {
+					if (!form1.isSqrt(x, (int)Math.Sqrt(boardSize[0])) && !form1.isSqrt(y, (int)Math.Sqrt(boardSize[1]))) {
 						var value = program.gameBoard.GetTile(x, y).field.Text;
 
 						if (value == "") {
 							value = "_";
 						}
 
-						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(program.Board_size[0]) + 1)));
+						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(boardSize[0]) + 1)));
 
 						puzzle[x - (x_offset)] += value;
 					}
 				}
 			}
 
-			string text = "Do you want to overide the boards in this file?\nNo preexisting boards may exist in this file. This is just a generic warning.\nYes = overide. No = append.";
-			string caption = "Overide boards?";
+			string[] fileBoards;
 
-			DialogResult results = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel,MessageBoxIcon.Question);
+			if (File.Exists(filename)) {
+				fileBoards = File.ReadAllText(filename).Split(new[] { "Size:" }, StringSplitOptions.None);
+			} else {
+				fileBoards = new [] {""};
+			}
 
-			switch (results) {
-				case DialogResult.Yes:
-					File.WriteAllLines(filename, lines);
-					File.AppendAllLines(filename, puzzle);
-				break;
-				case DialogResult.No:
-					File.AppendAllLines(filename, lines);
-					File.AppendAllLines(filename, puzzle);
-				break;
-				case DialogResult.Cancel:
-				return;
+			if (fileBoards.Length > 1) {
+
+				string text = "Do you want to overide the boards in this file?\nYes = overide. No = append.";
+				string caption = "Overide existing boards?";
+
+				DialogResult result = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+				switch (result) {
+					case DialogResult.Yes:
+						File.WriteAllLines(filename, begining);
+						File.AppendAllLines(filename, lines);
+						File.AppendAllLines(filename, puzzle);
+					break;
+					case DialogResult.No:
+						File.AppendAllLines(filename, lines);
+						File.AppendAllLines(filename, puzzle);
+					break;
+					case DialogResult.Cancel:
+					return;
+				}
+			} else {
+				File.WriteAllLines(filename, begining);
+				File.AppendAllLines(filename, lines);
+				File.AppendAllLines(filename, puzzle);
 			}
 
 		}
