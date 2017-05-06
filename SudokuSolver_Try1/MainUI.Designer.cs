@@ -348,7 +348,7 @@ namespace SudokuSolver_Try1 {
 				if (!isSqrt(a, w_sq)) {
 					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
 				} else {
-					cs = new ColumnStyle(SizeType.Absolute, 5);
+					cs = new ColumnStyle(SizeType.Absolute);
 					var col = gameBoard.GetColumn(a);
 
 					for (int _x = 0; _x < col.Count; _x++) {

@@ -99,6 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="ConfirmationUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmationUI.Designer.cs">
+      <DependentUpon>ConfirmationUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectBoardUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConfirmationUI.resx">
+      <DependentUpon>ConfirmationUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
     </EmbeddedResource>

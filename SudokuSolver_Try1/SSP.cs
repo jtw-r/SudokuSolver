@@ -143,24 +143,29 @@ namespace SudokuSolver_Try1 {
 
 			if (fileBoards.Length > 1) {
 
-				string text = "Do you want to overide the boards in this file?\nYes = overide. No = append.";
+				string text = "This file aready contains boards.";
 				string caption = "Overide existing boards?";
 
-				DialogResult result = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+				ConfirmationUI conf = new ConfirmationUI(caption, text, "Overide", "Cancel", "Append");
+
+				DialogResult result = conf.ShowDialog();
 
 				switch (result) {
-					case DialogResult.Yes:
+					case DialogResult.No:
+						// Overwrite
 						File.WriteAllLines(filename, begining);
 						File.AppendAllLines(filename, lines);
 						File.AppendAllLines(filename, puzzle);
 					break;
-					case DialogResult.No:
+					case DialogResult.Yes:
+						// Append
 						File.AppendAllLines(filename, lines);
 						File.AppendAllLines(filename, puzzle);
 					break;
 					case DialogResult.Cancel:
 					return;
 				}
+				conf.Dispose();
 			} else {
 				File.WriteAllLines(filename, begining);
 				File.AppendAllLines(filename, lines);
