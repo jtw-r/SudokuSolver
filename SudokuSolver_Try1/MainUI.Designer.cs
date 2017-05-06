@@ -32,7 +32,7 @@ namespace SudokuSolver_Try1 {
 		/// </summary>
 		private void InitializeComponent() {
 			this.tb_HighlightText = new System.Windows.Forms.TextBox();
-			this.highlightTable = new System.Windows.Forms.TableLayoutPanel();
+			this.OptionsTable = new System.Windows.Forms.TableLayoutPanel();
 			this.lb_FocusNumber = new System.Windows.Forms.Label();
 			this.lb_Occurances = new System.Windows.Forms.Label();
 			this.lb_OccuranceNumber = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@ namespace SudokuSolver_Try1 {
 			this.btn_ClearHighlight = new System.Windows.Forms.Button();
 			this.btn_LoadBoard = new System.Windows.Forms.Button();
 			this.btn_SaveBoard = new System.Windows.Forms.Button();
-			this.highlightTable.SuspendLayout();
+			this.OptionsTable.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tb_HighlightText
@@ -56,42 +56,42 @@ namespace SudokuSolver_Try1 {
 			this.tb_HighlightText.TabIndex = 1;
 			this.tb_HighlightText.TextChanged += new System.EventHandler(this.highlightText_TextChanged);
 			// 
-			// highlightTable
+			// OptionsTable
 			// 
-			this.highlightTable.AutoSize = true;
-			this.highlightTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.highlightTable.ColumnCount = 2;
-			this.highlightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.highlightTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.highlightTable.Controls.Add(this.tb_HighlightText, 1, 0);
-			this.highlightTable.Controls.Add(this.lb_FocusNumber, 0, 0);
-			this.highlightTable.Controls.Add(this.lb_Occurances, 0, 1);
-			this.highlightTable.Controls.Add(this.lb_OccuranceNumber, 1, 1);
-			this.highlightTable.Controls.Add(this.btn_Solve, 0, 10);
-			this.highlightTable.Controls.Add(this.btn_ClearBoard, 0, 7);
-			this.highlightTable.Controls.Add(this.cb_ShowPossibilities, 0, 5);
-			this.highlightTable.Controls.Add(this.cb_FocusHighlight, 0, 4);
-			this.highlightTable.Controls.Add(this.cb_ClickHighlight, 0, 3);
-			this.highlightTable.Controls.Add(this.cb_AutoFillPossibilities, 1, 5);
-			this.highlightTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
-			this.highlightTable.Controls.Add(this.btn_LoadBoard, 1, 7);
-			this.highlightTable.Controls.Add(this.btn_SaveBoard, 1, 8);
-			this.highlightTable.Location = new System.Drawing.Point(34, 15);
-			this.highlightTable.Name = "highlightTable";
-			this.highlightTable.RowCount = 11;
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-			this.highlightTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.highlightTable.Size = new System.Drawing.Size(236, 275);
-			this.highlightTable.TabIndex = 2;
+			this.OptionsTable.AutoSize = true;
+			this.OptionsTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.OptionsTable.ColumnCount = 2;
+			this.OptionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.OptionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.OptionsTable.Controls.Add(this.tb_HighlightText, 1, 0);
+			this.OptionsTable.Controls.Add(this.lb_FocusNumber, 0, 0);
+			this.OptionsTable.Controls.Add(this.lb_Occurances, 0, 1);
+			this.OptionsTable.Controls.Add(this.lb_OccuranceNumber, 1, 1);
+			this.OptionsTable.Controls.Add(this.btn_Solve, 0, 10);
+			this.OptionsTable.Controls.Add(this.btn_ClearBoard, 0, 7);
+			this.OptionsTable.Controls.Add(this.cb_ShowPossibilities, 0, 5);
+			this.OptionsTable.Controls.Add(this.cb_FocusHighlight, 0, 4);
+			this.OptionsTable.Controls.Add(this.cb_ClickHighlight, 0, 3);
+			this.OptionsTable.Controls.Add(this.cb_AutoFillPossibilities, 1, 5);
+			this.OptionsTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
+			this.OptionsTable.Controls.Add(this.btn_LoadBoard, 1, 7);
+			this.OptionsTable.Controls.Add(this.btn_SaveBoard, 1, 8);
+			this.OptionsTable.Location = new System.Drawing.Point(34, 15);
+			this.OptionsTable.Name = "OptionsTable";
+			this.OptionsTable.RowCount = 11;
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.OptionsTable.Size = new System.Drawing.Size(236, 275);
+			this.OptionsTable.TabIndex = 2;
 			// 
 			// lb_FocusNumber
 			// 
@@ -137,7 +137,7 @@ namespace SudokuSolver_Try1 {
 			this.btn_Solve.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.highlightTable.SetColumnSpan(this.btn_Solve, 2);
+			this.OptionsTable.SetColumnSpan(this.btn_Solve, 2);
 			this.btn_Solve.Location = new System.Drawing.Point(3, 232);
 			this.btn_Solve.Name = "btn_Solve";
 			this.btn_Solve.Size = new System.Drawing.Size(230, 40);
@@ -153,7 +153,7 @@ namespace SudokuSolver_Try1 {
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_ClearBoard.Location = new System.Drawing.Point(3, 150);
 			this.btn_ClearBoard.Name = "btn_ClearBoard";
-			this.highlightTable.SetRowSpan(this.btn_ClearBoard, 2);
+			this.OptionsTable.SetRowSpan(this.btn_ClearBoard, 2);
 			this.btn_ClearBoard.Size = new System.Drawing.Size(109, 66);
 			this.btn_ClearBoard.TabIndex = 7;
 			this.btn_ClearBoard.Text = "Clear Board";
@@ -263,15 +263,15 @@ namespace SudokuSolver_Try1 {
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(321, 385);
-			this.Controls.Add(this.highlightTable);
+			this.Controls.Add(this.OptionsTable);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "MainUI";
 			this.Padding = new System.Windows.Forms.Padding(12);
 			this.ShowIcon = false;
 			this.Text = "Sudoku Solver";
 			this.Load += new System.EventHandler(this.Form1_Load);
-			this.highlightTable.ResumeLayout(false);
-			this.highlightTable.PerformLayout();
+			this.OptionsTable.ResumeLayout(false);
+			this.OptionsTable.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -378,7 +378,7 @@ namespace SudokuSolver_Try1 {
 
 			boardGrid.ResumeLayout();
 
-			highlightTable.Location = new Point(boardGrid.Size.Width + Padding.Left * 2, 5 + Padding.Top);
+			OptionsTable.Location = new Point(boardGrid.Size.Width + Padding.Left * 2, 5 + Padding.Top);
 
 			return gameBoard;
 
@@ -704,7 +704,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private TextBox tb_HighlightText;
-		private TableLayoutPanel highlightTable;
+		private TableLayoutPanel OptionsTable;
 		private Label lb_FocusNumber;
 		private Button btn_ClearHighlight;
 		private CheckBox cb_ClickHighlight;
