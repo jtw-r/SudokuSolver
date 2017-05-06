@@ -106,7 +106,6 @@
       <DependentUpon>SelectBoardUI.cs</DependentUpon>
     </Compile>
     <Compile Include="SSP.cs" />
-    <Compile Include="TextField.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="MainUI.cs">
       <SubType>Form</SubType>
