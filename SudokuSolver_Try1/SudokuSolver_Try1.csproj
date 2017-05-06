@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
-    <Compile Include="Data.cs" />
     <Compile Include="SelectBoardUI.cs">
       <SubType>Form</SubType>
     </Compile>
