@@ -24,7 +24,7 @@ Good question! [How about here](https://github.com/thejonathanr/SudokuSolver/rel
 ### Build Log:
 **Version 1.0.0**
 - Added solving functionality
-- Added focus number/occurances
+- Added focus number/occurrences
 - Added Highlights
   - Click highlight
   - Focus highlight
