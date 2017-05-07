@@ -110,7 +110,8 @@ namespace SudokuSolver_Try1 {
 
 			string[] begining = { "/////////////////////////////////////////////////////////////", "// Sudoku Solver Puzzle                                    //", "//                             (c) 2017 Jonathan Reiterman //", "// '_' denotes a blank cell                                //", "/////////////////////////////////////////////////////////////" };
 
-			string[] lines = { "Size: "+program.Board_size[0]+","+program.Board_size[1],
+			string[] lines = { "",
+							   "Size: " +program.Board_size[0]+","+program.Board_size[1],
 							   "Notes: "+time.ToString(new CultureInfo("en-US")),
 							   "Puzzle:"};
 

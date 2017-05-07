@@ -114,6 +114,7 @@ namespace SudokuSolver_Try1 {
 			} else {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
+				RemoveHighlight(Color.Red, true);
 			}
 		}
 

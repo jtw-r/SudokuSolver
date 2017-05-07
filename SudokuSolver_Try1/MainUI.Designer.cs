@@ -64,7 +64,6 @@ namespace SudokuSolver_Try1 {
 			this.OptionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.OptionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.OptionsTable.Controls.Add(this.tb_HighlightText, 1, 0);
-			this.OptionsTable.Controls.Add(this.lb_FocusNumber, 0, 0);
 			this.OptionsTable.Controls.Add(this.lb_Occurances, 0, 1);
 			this.OptionsTable.Controls.Add(this.lb_OccuranceNumber, 1, 1);
 			this.OptionsTable.Controls.Add(this.btn_Solve, 0, 10);
@@ -76,9 +75,10 @@ namespace SudokuSolver_Try1 {
 			this.OptionsTable.Controls.Add(this.btn_ClearHighlight, 1, 4);
 			this.OptionsTable.Controls.Add(this.btn_LoadBoard, 1, 7);
 			this.OptionsTable.Controls.Add(this.btn_SaveBoard, 1, 8);
-			this.OptionsTable.Location = new System.Drawing.Point(34, 15);
+			this.OptionsTable.Controls.Add(this.lb_FocusNumber, 0, 0);
+			this.OptionsTable.Location = new System.Drawing.Point(15, 15);
 			this.OptionsTable.Name = "OptionsTable";
-			this.OptionsTable.RowCount = 11;
+			this.OptionsTable.RowCount = 12;
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
@@ -89,6 +89,7 @@ namespace SudokuSolver_Try1 {
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.OptionsTable.Size = new System.Drawing.Size(236, 275);
 			this.OptionsTable.TabIndex = 2;
@@ -262,7 +263,7 @@ namespace SudokuSolver_Try1 {
 			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(321, 385);
+			this.ClientSize = new System.Drawing.Size(266, 305);
 			this.Controls.Add(this.OptionsTable);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "MainUI";
@@ -348,7 +349,7 @@ namespace SudokuSolver_Try1 {
 				if (!isSqrt(a, w_sq)) {
 					cs = new ColumnStyle(SizeType.Absolute, (boardGrid.ColumnCount + 1) * 25 / boardGrid.ColumnCount);
 				} else {
-					cs = new ColumnStyle(SizeType.Absolute);
+					cs = new ColumnStyle(SizeType.Absolute, 5);
 					var col = gameBoard.GetColumn(a);
 
 					for (int _x = 0; _x < col.Count; _x++) {
@@ -433,54 +434,13 @@ namespace SudokuSolver_Try1 {
 			return false;
 		}
 
-		//public int cycleNum = 0;
-
-		public int[,] GetPossibilities(string num) {
-			Board gb = program.gameBoard;
-
-			int[,] poss = new int[program.gameBoard.Width, program.gameBoard.Height];
-
-			for (int x = 0; x < program.gameBoard.Width; x++) {
-				for (int y = 0; y < program.gameBoard.Height; y++) {
-
-					if (program.gameBoard.GetTile(x, y).value == "" && program.gameBoard.GetTile(x, y).hasField) {
-						var col = program.gameBoard.GetColumn(y);
-						var row = program.gameBoard.GetRow(x);
-						var group = program.gameBoard.GetGroup(program.gameBoard.GetTile(x, y).group);
-
-						poss[x, y] = 1;
-
-						for (int a = 0; a < col.Count; a++) {
-							if (col[a].value == num) {
-								poss[x, y] = 0;
-							}
-						}
-
-						for (int b = 0; b < row.Count; b++) {
-							if (row[b].value == num) {
-								poss[x, y] = 0;
-							}
-						}
-
-						for (int c = 0; c < group.Count; c++) {
-							if (group[c].x != x && group[c].y != y && group[c].value == num) {
-								poss[x, y] = 0;
-							}
-						}
-					}
-				}
-			}
-
-			return poss;
-		}
-
 		public void ShowPossibilities(string pos, bool thing = false, int mode = 0) {
 			if (cb_ShowPossibilities.Checked || thing) {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
 				var gb = program.gameBoard;
 
-				int[,] poss = GetPossibilities(pos);
+				int[,] poss = gb.GetPossibilities(pos);
 
 				for (int x = 0; x < program.gameBoard.Width; x++) {
 					for (int y = 0; y < program.gameBoard.Height; y++) {
@@ -632,7 +592,7 @@ namespace SudokuSolver_Try1 {
 			var gb = program.gameBoard;
 			for (int a = 0; a < program.gameBoard.FindOccurance("") / 20; a++) {
 				for (int i = 0; i < num.Length - 1; i++) {
-					int[,] poss = GetPossibilities("" + num[i]);
+					int[,] poss = gb.GetPossibilities("" + num[i]);
 					Random rnd = new Random();
 					int cycle_num = 0;
 					while (true) {

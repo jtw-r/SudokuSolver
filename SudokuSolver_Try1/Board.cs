@@ -105,5 +105,48 @@ namespace SudokuSolver_Try1 {
 			return occ;
 		}
 
+		/// <summary>
+		/// Gets the possible spaces for a number.
+		/// </summary>
+		/// <param name="num">The number to check.</param>
+		/// <returns></returns>
+		public int[,] GetPossibilities(string num) {
+
+			int[,] possibilities = new int[Width, Height];
+
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < Height; y++) {
+
+					if (GetTile(x, y).value == "" && GetTile(x, y).hasField) {
+						var column = GetColumn(y);
+						var row = GetRow(x);
+						var group = GetGroup(GetTile(x, y).group);
+
+						possibilities[x, y] = 1;
+
+						for (int a = 0; a < column.Count; a++) {
+							if (column[a].value == num) {
+								possibilities[x, y] = 0;
+							}
+						}
+
+						for (int b = 0; b < row.Count; b++) {
+							if (row[b].value == num) {
+								possibilities[x, y] = 0;
+							}
+						}
+
+						for (int c = 0; c < group.Count; c++) {
+							if (group[c].x != x && group[c].y != y && group[c].value == num) {
+								possibilities[x, y] = 0;
+							}
+						}
+					}
+				}
+			}
+
+			return possibilities;
+		}
+
 	}
 }

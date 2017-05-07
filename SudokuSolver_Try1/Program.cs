@@ -32,14 +32,8 @@ namespace SudokuSolver_Try1 {
 
 			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
 
-			//form.Read(@"C:\Users\Photography\Documents\Visual Studio 2015\Projects\SudokuSolver_Try1\SudokuSolver_Try1\presets.ssp");
-			
 			Application.Run(form);
 
 		}
-
-		/*Board NewBoard(int[] board_size) {
-			return new Board(board_size[0], board_size[1]);
-		}*/
 	}
 }
