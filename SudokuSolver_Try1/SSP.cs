@@ -46,7 +46,11 @@ namespace SudokuSolver_Try1 {
 
 					for (int i = 1; i < boards.Length; i++) {
 						var da = boards[i].Replace("Notes:", " ").Split('\n');
-						dict.Add(i, "Board #" + i + da[1]);
+						if (da[1].Contains("Puzzle:")) {
+							dict.Add(i, "Board #" + i);
+						} else {
+							dict.Add(i, "Board #" + i + da[1]);
+						}
 					}
 
 					var selectBoardComboBox = select.cb_SelectBoard;
@@ -73,23 +77,26 @@ namespace SudokuSolver_Try1 {
 
 				string[] boardData = Regex.Split(selectedBoardData[1].Replace("\n", "").Replace("\r", ""), string.Empty, RegexOptions.IgnorePatternWhitespace);
 
-				for (int x = 0; x < Convert.ToInt32(boardSize[0]); x++) {
-					for (int y = 0; y < Convert.ToInt32(boardSize[1]); y++) {
-						int x_offset = (int)(x / Math.Sqrt(Convert.ToInt32(boardSize[0])));
-						int y_offset = (int)(y / Math.Sqrt(Convert.ToInt32(boardSize[1])));
+				if (boardData.Length/ Convert.ToInt32(boardSize[1]) == Convert.ToInt32(boardSize[0])) {
+					for (int x = 0; x < Convert.ToInt32(boardSize[0]); x++) {
+						for (int y = 0; y < Convert.ToInt32(boardSize[1]); y++) {
+							int x_offset = (int)(x / Math.Sqrt(Convert.ToInt32(boardSize[0])));
+							int y_offset = (int)(y / Math.Sqrt(Convert.ToInt32(boardSize[1])));
 
-						var value = boardData[(x * Convert.ToInt32(boardSize[0])) + (y + 1)];
+							var value = boardData[(x * Convert.ToInt32(boardSize[0])) + (y + 1)];
 
-						if (value == "_") {
-							value = "";
+							if (value == "_") {
+								value = "";
+							}
+
+							program.gameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
 						}
-
-						program.gameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
 					}
+					return;
 				}
 
 			}
-
+			MessageBox.Show("This file is not the correct format", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
 
 		public void Save(string filename = null) {
