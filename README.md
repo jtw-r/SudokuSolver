@@ -22,6 +22,10 @@ Good question! [How about here](https://github.com/thejonathanr/SudokuSolver/rel
 
 ---
 ### Build Log:
+**Version 1.1.0**
+- Added saving and loading feature for boards.
+- Added .ssp file format support, not fully finished, but stable for now.
+
 **Version 1.0.0**
 - Added solving functionality
 - Added focus number/occurrences
