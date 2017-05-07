@@ -35,7 +35,7 @@ namespace SudokuSolver_Try1 {
 
 		}
 
-		public Tile GetTile(int _x, int _y, bool isFromTable = true) {
+		public Tile GetTile(int _x, int _y) {
 			return tiles[_x, _y];
 		}
 

@@ -14,7 +14,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			program.gameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
+			program.GameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
 			CreateHighlight(tb_HighlightText.Text);
 			ShowPossibilities(tb_HighlightText.Text);
 			SetCount();
@@ -44,8 +44,8 @@ namespace SudokuSolver_Try1 {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 
-				List<Tile> col = program.gameBoard.GetColumn(obj.y);
-				List<Tile> row = program.gameBoard.GetRow(obj.x);
+				List<Tile> col = program.GameBoard.GetColumn(obj.y);
+				List<Tile> row = program.GameBoard.GetRow(obj.x);
 
 				for (int col_num = 0; col_num < col.Count; col_num++) {
 					if (col[col_num].hasField) {
@@ -75,12 +75,12 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
-				program.lastExec = obj;
+				program.LastExec = obj;
 			}
 		}
 
 		private void btn_ClearGrid_MouseUp(object sender, MouseEventArgs e) {
-			program.gameBoard.Clear();
+			program.GameBoard.Clear();
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
@@ -99,8 +99,8 @@ namespace SudokuSolver_Try1 {
 				CreateHighlight(tb_HighlightText.Text);
 			} else {
 				RemoveHighlight(Color.Yellow, true);
-				if (program.lastExec != null && cb_ClickHighlight.Checked) {
-					rcHighlight(program.lastExec);
+				if (program.LastExec != null && cb_ClickHighlight.Checked) {
+					rcHighlight(program.LastExec);
 				}
 			}
 		}
@@ -123,8 +123,8 @@ namespace SudokuSolver_Try1 {
 				RemoveHighlight(Color.LightBlue, true);
 				RemoveHighlight(Color.Blue, true);
 			} else {
-				if (program.lastExec != null) {
-					rcHighlight(program.lastExec);
+				if (program.LastExec != null) {
+					rcHighlight(program.LastExec);
 				}
 			}
 		}
@@ -132,8 +132,8 @@ namespace SudokuSolver_Try1 {
 		private void btn_ClearHighlight_MouseUp(object sender, MouseEventArgs e) {
 			tb_HighlightText.Text = "";
 			RemoveHighlight(Color.Yellow, true);
-			if (program.lastExec != null) {
-				rcHighlight(program.lastExec);
+			if (program.LastExec != null) {
+				rcHighlight(program.LastExec);
 			}
 
 			cb_ShowPossibilities.Checked = false;

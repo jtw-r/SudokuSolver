@@ -386,19 +386,23 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public void UpdateColorSquare(int _x, int _y, Color _color, bool thing = false) {
-			Tile obj = program.gameBoard.GetTile(_x, _y);
+			Tile obj = program.GameBoard.GetTile(_x, _y);
 			if (obj.hasField) {
 				obj.field.BackColor = _color;
 			}
 			obj.panel.BackColor = _color;
 		}
 
+		/// <summary>
+		/// Highlight any cell in yellow that equals num.
+		/// </summary>
+		/// <param name="num"></param>
 		public void CreateHighlight(string num) {
 			if (cb_FocusHighlight.Checked) {
 				RemoveHighlight(Color.Yellow, true);
-				for (int x = 0; x < program.gameBoard.Width; x++) {
-					for (int y = 0; y < program.gameBoard.Height; y++) {
-						if (program.gameBoard.GetTile(x, y).value == num && num != "") {
+				for (int x = 0; x < program.GameBoard.Width; x++) {
+					for (int y = 0; y < program.GameBoard.Height; y++) {
+						if (program.GameBoard.GetTile(x, y).value == num && num != "") {
 							UpdateColorSquare(x, y, Color.Yellow, true);
 						}
 					}
@@ -406,16 +410,21 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		public void RemoveHighlight(Color _color, bool other = false) {
-			for (int x = 0; x < program.gameBoard.Width; x++) {
-				for (int y = 0; y < program.gameBoard.Height; y++) {
-					if (program.gameBoard.GetTile(x, y).hasField) {
-						if (other) {
-							if (program.gameBoard.GetTile(x, y).field.BackColor == _color) {
+		/// <summary>
+		/// Set any squares that are the spacific colour back to white.
+		/// </summary>
+		/// <param name="_color"></param>
+		/// <param name="only"></param>
+		public void RemoveHighlight(Color _color, bool only = false) {
+			for (int x = 0; x < program.GameBoard.Width; x++) {
+				for (int y = 0; y < program.GameBoard.Height; y++) {
+					if (program.GameBoard.GetTile(x, y).hasField) {
+						if (only) {
+							if (program.GameBoard.GetTile(x, y).field.BackColor == _color) {
 								UpdateColorSquare(x, y, Color.White, true);
 							}
 						} else {
-							if (program.gameBoard.GetTile(x, y).field.BackColor != _color) {
+							if (program.GameBoard.GetTile(x, y).field.BackColor != _color) {
 								UpdateColorSquare(x, y, Color.White, true);
 							}
 						}
@@ -438,12 +447,12 @@ namespace SudokuSolver_Try1 {
 			if (cb_ShowPossibilities.Checked || thing) {
 				RemoveHighlight(Color.LightGreen, true);
 				RemoveHighlight(Color.Green, true);
-				var gb = program.gameBoard;
+				var gb = program.GameBoard;
 
 				int[,] poss = gb.GetPossibilities(pos);
 
-				for (int x = 0; x < program.gameBoard.Width; x++) {
-					for (int y = 0; y < program.gameBoard.Height; y++) {
+				for (int x = 0; x < program.GameBoard.Width; x++) {
+					for (int y = 0; y < program.GameBoard.Height; y++) {
 
 						if (poss[x, y] == 1) {
 							if (!thing) {
@@ -454,12 +463,12 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 
-				for (int x = 0; x < program.gameBoard.Width; x++) {
-					for (int y = 0; y < program.gameBoard.Height; y++) {
+				for (int x = 0; x < program.GameBoard.Width; x++) {
+					for (int y = 0; y < program.GameBoard.Height; y++) {
 						if (poss[x, y] == 1) {
-							var group = program.gameBoard.GetGroup(program.gameBoard.GetTile(x, y).group);
-							var row = program.gameBoard.GetRow(x);
-							var column = program.gameBoard.GetColumn(y);
+							var group = program.GameBoard.GetGroup(program.GameBoard.GetTile(x, y).group);
+							var row = program.GameBoard.GetRow(x);
+							var column = program.GameBoard.GetColumn(y);
 
 							int[] dummy = { 0, 0, 0 };
 
@@ -484,7 +493,7 @@ namespace SudokuSolver_Try1 {
 							for (int i = 0; i < dummy.Length; i++) {
 								if (dummy[i] == 1) {
 									if (cb_AutoFillPossibilities.Checked || thing) {
-										program.gameBoard.GetTile(x, y).field.Text = "" + pos;
+										program.GameBoard.GetTile(x, y).field.Text = "" + pos;
 									} else {
 										UpdateColorSquare(x, y, Color.Green);
 									}
@@ -513,12 +522,12 @@ namespace SudokuSolver_Try1 {
 				left.Add(i);
 			}
 
-			var gb = program.gameBoard;
-			while (program.gameBoard.FindOccurance("") != 0) {
+			var gb = program.GameBoard;
+			while (program.GameBoard.FindOccurance("") != 0) {
 				// Loop this until the puzzle is solved.
 
 				List<int> _left = new List<int>();
-				history.Add(program.gameBoard.FindOccurance(""));
+				history.Add(program.GameBoard.FindOccurance(""));
 
 				foreach (var item in left) {
 					// Basic check for possibilities.
@@ -526,7 +535,7 @@ namespace SudokuSolver_Try1 {
 
 					// Add the numbers that still need to be solved
 					// to a place holder list.
-					if (program.gameBoard.FindOccurance("" + item) < 9) {
+					if (program.GameBoard.FindOccurance("" + item) < 9) {
 						_left.Add(item);
 					}
 				}
@@ -535,7 +544,7 @@ namespace SudokuSolver_Try1 {
 				// the place holder.
 				left = _left;
 
-				if (program.gameBoard.FindOccurance("") == 0) {
+				if (program.GameBoard.FindOccurance("") == 0) {
 					// The gameboard is full! It solved it.
 					return;
 				} else if (history.Count > tollerance) {
@@ -545,12 +554,12 @@ namespace SudokuSolver_Try1 {
 						// Create a restore point incase the random guess doesn't work and
 						// finally, do a random guess to see if it will work.
 
-						string[,] restorePoint = new string[program.gameBoard.Width, program.gameBoard.Height];
+						string[,] restorePoint = new string[program.GameBoard.Width, program.GameBoard.Height];
 
-						for (int _x = 0; _x < program.gameBoard.Width; _x++) {
-							for (int _y = 0; _y < program.gameBoard.Height; _y++) {
-								if (program.gameBoard.GetTile(_x, _y).hasField) {
-									restorePoint[_x, _y] = program.gameBoard.GetTile(_x, _y).field.Text.ToString();
+						for (int _x = 0; _x < program.GameBoard.Width; _x++) {
+							for (int _y = 0; _y < program.GameBoard.Height; _y++) {
+								if (program.GameBoard.GetTile(_x, _y).hasField) {
+									restorePoint[_x, _y] = program.GameBoard.GetTile(_x, _y).field.Text.ToString();
 								} else {
 									restorePoint[_x, _y] = null;
 								}
@@ -560,8 +569,8 @@ namespace SudokuSolver_Try1 {
 						// Find the number with the least possible spaces left.
 						List<string> toSort = new List<string>();
 						for (int i = 1; i < 10; i++) {
-							if (program.gameBoard.FindOccurance(""+i) < 9) {
-								toSort.Add(9-program.gameBoard.FindOccurance(""+i) + "," + i);
+							if (program.GameBoard.FindOccurance(""+i) < 9) {
+								toSort.Add(9-program.GameBoard.FindOccurance(""+i) + "," + i);
 							}
 						}
 
@@ -575,10 +584,10 @@ namespace SudokuSolver_Try1 {
 						} else {
 							// Oh no. The random guess did not work. Reset the board to before
 							// the random guess and try again.
-							for (int _x = 0; _x < program.gameBoard.Width; _x++) {
-								for (int _y = 0; _y < program.gameBoard.Height; _y++) {
-									if (program.gameBoard.GetTile(_x, _y).hasField) {
-										program.gameBoard.GetTile(_x, _y).field.Text = restorePoint[_x, _y].ToString();
+							for (int _x = 0; _x < program.GameBoard.Width; _x++) {
+								for (int _y = 0; _y < program.GameBoard.Height; _y++) {
+									if (program.GameBoard.GetTile(_x, _y).hasField) {
+										program.GameBoard.GetTile(_x, _y).field.Text = restorePoint[_x, _y].ToString();
 									}
 								}
 							}
@@ -589,8 +598,8 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public bool GuessCycle(string[] num,int tollerance = 10) {
-			var gb = program.gameBoard;
-			for (int a = 0; a < program.gameBoard.FindOccurance("") / 20; a++) {
+			var gb = program.GameBoard;
+			for (int a = 0; a < program.GameBoard.FindOccurance("") / 20; a++) {
 				for (int i = 0; i < num.Length - 1; i++) {
 					int[,] poss = gb.GetPossibilities("" + num[i]);
 					Random rnd = new Random();
@@ -600,7 +609,7 @@ namespace SudokuSolver_Try1 {
 						int y = rnd.Next(1, 9);
 
 						if (poss[x, y] == 1) {
-							program.gameBoard.GetTile(x, y).field.Text = "" + num[i];
+							program.GameBoard.GetTile(x, y).field.Text = "" + num[i];
 							break;
 						}
 						cycle_num++;
@@ -619,23 +628,23 @@ namespace SudokuSolver_Try1 {
 				left.Add(i);
 			}
 
-			while (program.gameBoard.FindOccurance("") != 0) {
+			while (program.GameBoard.FindOccurance("") != 0) {
 
 				List<int> _left = new List<int>();
-				history.Add(program.gameBoard.FindOccurance(""));
+				history.Add(program.GameBoard.FindOccurance(""));
 
 				foreach (var item in left) {
 					// Basic check for possibilities.
 					ShowPossibilities("" + item, true);
 
-					if (program.gameBoard.FindOccurance("" + item) < 9) {
+					if (program.GameBoard.FindOccurance("" + item) < 9) {
 						_left.Add(item);
 					}
 				}
 
 				left = _left;
 
-				if (program.gameBoard.FindOccurance("") == 0) {
+				if (program.GameBoard.FindOccurance("") == 0) {
 					return true;
 				} else if (history.Count > tollerance) {
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
@@ -657,9 +666,9 @@ namespace SudokuSolver_Try1 {
 
 		public void SetCount() {
 			if (tb_HighlightText.Text != "") {
-				var gb = program.gameBoard;
+				var gb = program.GameBoard;
 
-				lb_OccuranceNumber.Text = "" + program.gameBoard.FindOccurance(tb_HighlightText.Text);
+				lb_OccuranceNumber.Text = "" + program.GameBoard.FindOccurance(tb_HighlightText.Text);
 			}
 		}
 

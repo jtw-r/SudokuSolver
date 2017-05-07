@@ -4,17 +4,25 @@ using System.Windows.Forms;
 namespace SudokuSolver_Try1 {
 	public class Program {
 
-		public Board gameBoard;
-		public Tile lastExec = null;
-		private static int[] board_size = { 9, 9 };
-
-		public int[] Board_size {
+		private Board gameBoard;
+		public Board GameBoard {
 			get {
-				return board_size;
+				return gameBoard;
 			}
 
 			set {
-				board_size = value;
+				this.gameBoard = value;
+			}
+		}
+
+		private Tile lastExec = null;
+		public Tile LastExec {
+			get {
+				return lastExec;
+			}
+
+			set {
+				this.lastExec = value;
 			}
 		}
 
@@ -30,7 +38,8 @@ namespace SudokuSolver_Try1 {
 			form.program = program;
 			form.self = form;
 
-			program.gameBoard = form.resizeBoard(board_size[0], board_size[1]);
+			// Create and resize the game board!
+			program.GameBoard = form.resizeBoard(9, 9);
 
 			Application.Run(form);
 

@@ -71,7 +71,7 @@ namespace SudokuSolver_Try1 {
 
 				string[] boardSize = fileLines[0].Replace("\r", "").Replace(" ", "").Split(',');
 
-				program.gameBoard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
+				program.GameBoard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
 
 				string[] selectedBoardData = boards[selectedBoardNum].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
 
@@ -89,7 +89,7 @@ namespace SudokuSolver_Try1 {
 								value = "";
 							}
 
-							program.gameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
+							program.GameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
 						}
 					}
 					return;
@@ -118,23 +118,22 @@ namespace SudokuSolver_Try1 {
 			string[] begining = { "/////////////////////////////////////////////////////////////", "// Sudoku Solver Puzzle                                    //", "//                             (c) 2017 Jonathan Reiterman //", "// '_' denotes a blank cell                                //", "/////////////////////////////////////////////////////////////" };
 
 			string[] lines = { "",
-							   "Size: " +program.Board_size[0]+","+program.Board_size[1],
+							   "Size: " +program.GameBoard.Width+","+program.GameBoard.Height,
 							   "Notes: "+time.ToString(new CultureInfo("en-US")),
 							   "Puzzle:"};
 
-			string[] puzzle = new string[program.Board_size[0]];
-			int[] boardSize = program.Board_size;
+			string[] puzzle = new string[program.GameBoard.Width];
 
-			for (int x = 0; x < program.gameBoard.Width; x++) {
-				for (int y = 0; y < program.gameBoard.Height; y++) {
-					if (!form1.isSqrt(x, (int)Math.Sqrt(boardSize[0])) && !form1.isSqrt(y, (int)Math.Sqrt(boardSize[1]))) {
-						var value = program.gameBoard.GetTile(x, y).field.Text;
+			for (int x = 0; x < program.GameBoard.Width; x++) {
+				for (int y = 0; y < program.GameBoard.Height; y++) {
+					if (!form1.isSqrt(x, (int)Math.Sqrt(program.GameBoard.Width)) && !form1.isSqrt(y, (int)Math.Sqrt(program.GameBoard.Height))) {
+						var value = program.GameBoard.GetTile(x, y).field.Text;
 
 						if (value == "") {
 							value = "_";
 						}
 
-						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(boardSize[0]) + 1)));
+						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(program.GameBoard.Width) + 1)));
 
 						puzzle[x - (x_offset)] += value;
 					}
