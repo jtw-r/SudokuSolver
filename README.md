@@ -1,4 +1,9 @@
-# SudokuSolver_Try1 [![Build Status](https://travis-ci.org/thejonathanr/SudokuSolver.svg?branch=master)](https://travis-ci.org/thejonathanr/SudokuSolver)
+<h1 align="center">Sudoku Solver <img src="https://travis-ci.org/thejonathanr/SudokuSolver.svg?branch=master"></h1><br>
+<p align="center">
+  <a>
+    <img src="https://github.com/thejonathanr/SudokuSolver/blob/master/SudokuSolverScreenView.PNG", align="center">
+  </a>
+</p>
 
 ### Quick Links:
 - [About](#about)
