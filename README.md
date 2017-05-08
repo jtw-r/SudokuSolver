@@ -47,7 +47,7 @@ You may be thinking "*Well that takes the fun out of it*" and yes, you would be 
 <a id="download"></a>
 
 ### *All of this sounds great*, where do I **download** it?
-Good question, [How about here!](https://github.com/thejonathanr/SudokuSolver/releases/latest)
+Good question, [how about here!](https://github.com/thejonathanr/SudokuSolver/releases/latest)
 
 <br>
 
