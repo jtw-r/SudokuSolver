@@ -1,9 +1,14 @@
-<h1 align="center">Sudoku Solver <img src="https://travis-ci.org/thejonathanr/SudokuSolver.svg?branch=master"></h1><br>
+<h1 align="center">Sudoku Solver</h1><br>
 <p align="center">
   <a>
     <img src="https://github.com/thejonathanr/SudokuSolver/blob/master/SudokuSolverScreenView.PNG", align="center">
   </a>
-</p>
+  <br>
+  <br><b>Master: </b><img src="https://travis-ci.org/thejonathanr/SudokuSolver.svg?branch=master">
+  <br><b>Dev: </b><img src="https://travis-ci.org/thejonathanr/SudokuSolver.svg?branch=Dev">
+</p><br>
+
+---
 
 ### Quick Links:
 - [About](#about)
