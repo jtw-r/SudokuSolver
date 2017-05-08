@@ -23,7 +23,7 @@
 ### About:
 #### SudokuSolver_Try1 is my first, and *only*, attempt at making a working sudoku puzzle solver.
 
-You may be thinking "*Well that takes the fun out of it*" and yes, you would be right, but this application also has tools to help you solve it!
+You may be thinking "*Well that takes the fun out of it*" and yes, you would be right, but this application also has tools to help you solve puzzles by yourself!
 
 <br>
 
