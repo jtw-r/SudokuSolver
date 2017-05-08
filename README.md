@@ -37,7 +37,7 @@ You may be thinking "*Well that takes the fun out of it*" and yes, you would be 
 - Option to highlight/search and find occurances of numbers on the board (`focus highlight.`)
 - Option to highlight possible spaces for a number.
 - Option to autofill single possibilites.
-- Option to solve it for you (`auto cycle.`)
+- Option to solve it for you.
 - Plus a few other things not listed.
 
 <br>
