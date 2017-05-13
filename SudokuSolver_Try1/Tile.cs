@@ -4,31 +4,37 @@ using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
 	public class Tile {
-		public enum TileType {
-			Empty,
-			InProgress,
-			Solved
-		};
-
-		public int x;
-		public int y;
+		private int x;
+		private int y;
 		
 		public int group;
-		
-		public string value = "";
-		public List<string> ideas = new List<string>();
 		public TextBox field;
 		public Panel panel;
 		public bool hasField = false;
 
-		public TileType tileType = TileType.Empty;
+		public int X {
+			get {
+				return x;
+			}
 
-		public Tile(int _x, int _y, TileType _TileType, string _value, List<string> _ideas, TextBox _field, Panel _panel, bool _hasField, int _w, int _h ) {
+			set {
+				this.x = value;
+			}
+		}
+
+		public int Y {
+			get {
+				return y;
+			}
+
+			set {
+				this.y = value;
+			}
+		}
+
+		public Tile(int _x, int _y, TextBox _field, Panel _panel, bool _hasField, int _w, int _h ) {
 			this.x = _x;
 			this.y = _y;
-			this.tileType = _TileType;
-			this.value = _value;
-			this.ideas = _ideas;
 			this.field = _field;
 			this.panel = _panel;
 			this.hasField = _hasField;

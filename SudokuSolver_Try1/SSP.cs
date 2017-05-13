@@ -71,7 +71,7 @@ namespace SudokuSolver_Try1 {
 
 				string[] boardSize = fileLines[0].Replace("\r", "").Replace(" ", "").Split(',');
 
-				program.GameBoard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
+				program.UIboard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
 
 				string[] selectedBoardData = boards[selectedBoardNum].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
 
@@ -89,7 +89,7 @@ namespace SudokuSolver_Try1 {
 								value = "";
 							}
 
-							program.GameBoard.GetTile(x + x_offset, y + y_offset).field.Text = value;
+							program.UIboard.GetTile(x + x_offset, y + y_offset).field.Text = value;
 						}
 					}
 					return;
@@ -118,22 +118,22 @@ namespace SudokuSolver_Try1 {
 			string[] begining = { "/////////////////////////////////////////////////////////////", "// Sudoku Solver Puzzle                                    //", "//                             (c) 2017 Jonathan Reiterman //", "// '_' denotes a blank cell                                //", "/////////////////////////////////////////////////////////////" };
 
 			string[] lines = { "",
-							   "Size: " +program.GameBoard.Width+","+program.GameBoard.Height,
+							   "Size: " +program.UIboard.Width+","+program.UIboard.Height,
 							   "Notes: "+time.ToString(new CultureInfo("en-US")),
 							   "Puzzle:"};
 
-			string[] puzzle = new string[program.GameBoard.Width];
+			string[] puzzle = new string[program.UIboard.Width];
 
-			for (int x = 0; x < program.GameBoard.Width; x++) {
-				for (int y = 0; y < program.GameBoard.Height; y++) {
-					if (!form1.isSqrt(x, (int)Math.Sqrt(program.GameBoard.Width)) && !form1.isSqrt(y, (int)Math.Sqrt(program.GameBoard.Height))) {
-						var value = program.GameBoard.GetTile(x, y).field.Text;
+			for (int x = 0; x < program.UIboard.Width; x++) {
+				for (int y = 0; y < program.UIboard.Height; y++) {
+					if (!form1.isSqrt(x, (int)Math.Sqrt(program.UIboard.Width)) && !form1.isSqrt(y, (int)Math.Sqrt(program.UIboard.Height))) {
+						var value = program.UIboard.GetTile(x, y).field.Text;
 
 						if (value == "") {
 							value = "_";
 						}
 
-						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(program.GameBoard.Width) + 1)));
+						int x_offset = (int)Math.Floor((float)((x + 1) / (Math.Sqrt(program.UIboard.Width) + 1)));
 
 						puzzle[x - (x_offset)] += value;
 					}

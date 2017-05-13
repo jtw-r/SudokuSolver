@@ -14,10 +14,11 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			program.GameBoard.GetTile(obj.x, obj.y).value = obj.field.Text;
-			CreateHighlight(tb_HighlightText.Text);
-			ShowPossibilities(tb_HighlightText.Text);
-			SetCount();
+			program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
+			ShowPossibilities();
+			if (cb_FocusHighlight.Checked) {
+				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+			}
 		}
 
 		private void Form1_Load(object sender, EventArgs e) {
@@ -25,62 +26,26 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_ShowHighlight_MouseUp(object sender, MouseEventArgs e) {
-			CreateHighlight(tb_HighlightText.Text);
+			if (cb_FocusHighlight.Checked) {
+				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+			}
 		}
 
 		private void highlightText_TextChanged(object sender, EventArgs e) {
-			CreateHighlight(tb_HighlightText.Text);
+			if (cb_FocusHighlight.Checked) {
+				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+			}
 			ShowPossibilities(tb_HighlightText.Text);
-			SetCount();
+			//SetCount();
 
 		}
 
 		private void highlight_Click(object sender, Tile obj, EventArgs e) {
-			rcHighlight(obj);
-		}
-
-		public void rcHighlight(Tile obj) {
-			if (cb_ClickHighlight.Checked) {
-				RemoveHighlight(Color.LightBlue, true);
-				RemoveHighlight(Color.Blue, true);
-
-				List<Tile> col = program.GameBoard.GetColumn(obj.y);
-				List<Tile> row = program.GameBoard.GetRow(obj.x);
-
-				for (int col_num = 0; col_num < col.Count; col_num++) {
-					if (col[col_num].hasField) {
-						if (col[col_num].panel.BackColor == Color.White) {
-							if (col[col_num].x != obj.x) {
-								col[col_num].panel.BackColor = Color.LightBlue;
-								col[col_num].field.BackColor = Color.LightBlue;
-							} else {
-								col[col_num].panel.BackColor = Color.Blue;
-								col[col_num].field.BackColor = Color.Blue;
-							}
-						}
-					}
-				}
-
-				for (int row_num = 0; row_num < row.Count; row_num++) {
-					if (row[row_num].hasField) {
-						if (row[row_num].panel.BackColor == Color.White) {
-							if (row[row_num].y != obj.y) {
-								row[row_num].panel.BackColor = Color.LightBlue;
-								row[row_num].field.BackColor = Color.LightBlue;
-							} else {
-								row[row_num].panel.BackColor = Color.Blue;
-								row[row_num].field.BackColor = Color.Blue;
-							}
-						}
-					}
-				}
-
-				program.LastExec = obj;
-			}
+			//rcHighlight(obj);
 		}
 
 		private void btn_ClearGrid_MouseUp(object sender, MouseEventArgs e) {
-			program.GameBoard.Clear();
+			//program.UIboard.Clear();
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
@@ -91,16 +56,18 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
-			MasterCycle();
+			//MasterCycle();
 		}
 
 		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {
 			if (cb_FocusHighlight.Checked) {
-				CreateHighlight(tb_HighlightText.Text);
+				if (cb_FocusHighlight.Checked) {
+					program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+				}
 			} else {
-				RemoveHighlight(Color.Yellow, true);
+				//program.UIboard.highlight.RemoveHighlight(Color.Yellow, true);
 				if (program.LastExec != null && cb_ClickHighlight.Checked) {
-					rcHighlight(program.LastExec);
+					//rcHighlight(program.LastExec);
 				}
 			}
 		}
@@ -112,28 +79,28 @@ namespace SudokuSolver_Try1 {
 			if (cb_ShowPossibilities.Checked) {
 				ShowPossibilities(tb_HighlightText.Text);
 			} else {
-				RemoveHighlight(Color.LightGreen, true);
-				RemoveHighlight(Color.Green, true);
-				RemoveHighlight(Color.Red, true);
+				//program.UIboard.highlight.RemoveHighlight(Color.LightGreen, true);
+				//program.UIboard.highlight.RemoveHighlight(Color.Green, true);
+				//RemoveHighlight(Color.Red, true);
 			}
 		}
 
 		private void clickHighlight_CheckedChanged(object sender, EventArgs e) {
 			if(!cb_ClickHighlight.Checked) {
-				RemoveHighlight(Color.LightBlue, true);
-				RemoveHighlight(Color.Blue, true);
+				//RemoveHighlight(Color.LightBlue, true);
+				//RemoveHighlight(Color.Blue, true);
 			} else {
 				if (program.LastExec != null) {
-					rcHighlight(program.LastExec);
+					//rcHighlight(program.LastExec);
 				}
 			}
 		}
 
 		private void btn_ClearHighlight_MouseUp(object sender, MouseEventArgs e) {
 			tb_HighlightText.Text = "";
-			RemoveHighlight(Color.Yellow, true);
+			//RemoveHighlight(Color.Yellow, true);
 			if (program.LastExec != null) {
-				rcHighlight(program.LastExec);
+				//rcHighlight(program.LastExec);
 			}
 
 			cb_ShowPossibilities.Checked = false;
