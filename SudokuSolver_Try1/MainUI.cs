@@ -13,12 +13,16 @@ namespace SudokuSolver_Try1 {
 			InitializeComponent();
 		}
 
-		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
-			ShowPossibilities();
+		private new void TextChanged(object sender, Tile obj, EventArgs e, bool loop = false) {
+			//program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
+			/*ShowPossibilities();
 			if (cb_FocusHighlight.Checked) {
 				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
 			}
+			if (loop == true) {
+				UpdateEntry(obj.X, obj.Y, obj.field.Text);
+			}*/
+			program.Gameboard.UpdateFromTextbox(obj);
 		}
 
 		private void Form1_Load(object sender, EventArgs e) {
@@ -27,13 +31,13 @@ namespace SudokuSolver_Try1 {
 
 		private void btn_ShowHighlight_MouseUp(object sender, MouseEventArgs e) {
 			if (cb_FocusHighlight.Checked) {
-				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
 		}
 
 		private void highlightText_TextChanged(object sender, EventArgs e) {
 			if (cb_FocusHighlight.Checked) {
-				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
 			ShowPossibilities(tb_HighlightText.Text);
 			//SetCount();
@@ -62,7 +66,7 @@ namespace SudokuSolver_Try1 {
 		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {
 			if (cb_FocusHighlight.Checked) {
 				if (cb_FocusHighlight.Checked) {
-					program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+					program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 				}
 			} else {
 				//program.UIboard.highlight.RemoveHighlight(Color.Yellow, true);
@@ -117,6 +121,10 @@ namespace SudokuSolver_Try1 {
 			SSP ssp = new SSP(program, self);
 
 			ssp.Save();
+		}
+
+		private void tb_HighlightText_KeyPress(object sender, KeyPressEventArgs e) {
+
 		}
 	}
 }

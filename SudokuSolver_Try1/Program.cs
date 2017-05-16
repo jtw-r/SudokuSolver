@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace SudokuSolver_Try1 {
 	public class Program {
 
-		private UIBoard uiBoard;
+		/*private UIBoard uiBoard;
 		public UIBoard UIboard{
 			get {
 				return uiBoard;
@@ -24,7 +24,7 @@ namespace SudokuSolver_Try1 {
 			set {
 				this.databoard = value;
 			}
-		}
+		}*/
 
 		private Tile lastExec = null;
 		public Tile LastExec {
@@ -34,6 +34,17 @@ namespace SudokuSolver_Try1 {
 
 			set {
 				this.lastExec = value;
+			}
+		}
+
+		private GameBoard gameboard;
+		public GameBoard Gameboard {
+			get {
+				return gameboard;
+			}
+
+			set {
+				this.gameboard = value;
 			}
 		}
 
@@ -48,9 +59,10 @@ namespace SudokuSolver_Try1 {
 			Program program = new Program();
 			form.program = program;
 			form.self = form;
+			program.gameboard = new GameBoard(9,9);
 
 			// Create and resize the game board!
-			program.UIboard = form.resizeBoard(9, 9);
+			form.resizeBoard(9, 9);
 
 			Application.Run(form);
 

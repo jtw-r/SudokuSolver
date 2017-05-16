@@ -106,6 +106,7 @@
     <Compile Include="ConfirmationUI.Designer.cs">
       <DependentUpon>ConfirmationUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameBoard.cs" />
     <Compile Include="Highlight.cs" />
     <Compile Include="SelectBoardUI.cs">
       <SubType>Form</SubType>

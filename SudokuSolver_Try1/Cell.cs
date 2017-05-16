@@ -56,6 +56,7 @@ namespace SudokuSolver_Try1 {
 			var y_g = ((int)(_y / Math.Sqrt(_w + 1)));
 
 			this.group = (x_g * (int)Math.Sqrt(_h)) + (y_g);
+
 		}
 
 	}
