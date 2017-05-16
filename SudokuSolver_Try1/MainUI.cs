@@ -13,7 +13,7 @@ namespace SudokuSolver_Try1 {
 			InitializeComponent();
 		}
 
-		private new void TextChanged(object sender, Tile obj, EventArgs e, bool loop = false) {
+		private new void TextChanged(object sender, Tile obj, EventArgs e) {
 			//program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
 			/*ShowPossibilities();
 			if (cb_FocusHighlight.Checked) {
@@ -22,6 +22,7 @@ namespace SudokuSolver_Try1 {
 			if (loop == true) {
 				UpdateEntry(obj.X, obj.Y, obj.field.Text);
 			}*/
+			Console.WriteLine(obj.field.Text);
 			program.Gameboard.UpdateFromTextbox(obj);
 		}
 

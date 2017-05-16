@@ -5,6 +5,17 @@ using System.Windows.Forms;
 namespace SudokuSolver_Try1 {
 	public class GameBoard {
 
+		private int[] fauxDimensions;
+		public int[] FauxDimensions {
+			get {
+				return fauxDimensions;
+			}
+
+			set {
+				this.fauxDimensions = value;
+			}
+		}
+
 		// Array containing all of the data.
 		private DataBoard databoard;
 		public DataBoard Databoard {
@@ -43,6 +54,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		public GameBoard(int _w, int _h) {
+			this.fauxDimensions = new[] { _w, _h};
 			this.databoard = new DataBoard(_w, _h);
 			this.uiboard = new UIBoard(_w, _h);
 			this.uiHighlight = this.uiboard.highlight;

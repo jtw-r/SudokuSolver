@@ -32,7 +32,6 @@ namespace SudokuSolver_Try1 {
 					cells[x, y] = new Cell(x, y, Width, Height, "");
 				}
 			}
-
 		}
 
 		public Cell GetCell(int _x, int _y) { return cells[_x, _y]; }

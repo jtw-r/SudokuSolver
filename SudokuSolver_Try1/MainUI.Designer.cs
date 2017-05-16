@@ -349,9 +349,7 @@ namespace SudokuSolver_Try1 {
 
 						obj.panel.Controls.Add(obj.field);
 
-						//obj.field.Text = "" + program.Databoard.GetCell(x, y).Group;
-
-						obj.field.KeyPress += (sender, e) => TextChanged(sender, obj, e, true);
+						obj.field.KeyUp += (sender, e) => TextChanged(sender, obj, e);
 						obj.field.Click += (sender, e) => highlight_Click(sender, obj, e);
 
 						obj.hasField = true;
