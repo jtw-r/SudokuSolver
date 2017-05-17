@@ -41,8 +41,8 @@ namespace SudokuSolver_Try1 {
 
 		private Color[,,] colorBoard;
 
-		//public enum DepthType { Focus, Possibilities, Click, Standard, Other};
-		public enum DepthType { Other, Focus, Possibilities, Click, Standard};
+		public enum DepthType { Standard, Click, Possibilities, Focus, Other};
+		//public enum DepthType { Other, Focus, Possibilities, Click, Standard};
 
 		private Action updateMethod;
 
@@ -109,6 +109,14 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 			return occ;
+		}
+
+		public void ClearLayer(DepthType _d) {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					SetColorSquare(x, y, _d, Color.Empty, false);
+				}
+			}
 		}
 	}
 }

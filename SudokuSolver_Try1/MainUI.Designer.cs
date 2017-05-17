@@ -312,6 +312,7 @@ namespace SudokuSolver_Try1 {
 			//UIBoard program.Gameboard.Uiboard = new UIBoard(boardGrid.ColumnCount, boardGrid.RowCount);
 			//program.Databoard = new DataBoard(boardGrid.ColumnCount, boardGrid.RowCount);
 			program.Gameboard.UIboard = new UIBoard(boardGrid.ColumnCount, boardGrid.RowCount);
+			program.Gameboard.UIHighlight = program.Gameboard.UIboard.highlight;
 			program.Gameboard.Databoard = new DataBoard(boardGrid.ColumnCount, boardGrid.RowCount);
 
 			// Start the design process for the grid.
@@ -354,7 +355,7 @@ namespace SudokuSolver_Try1 {
 
 						obj.hasField = true;
 					}
-					program.Gameboard.UIboard.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.White);
+					program.Gameboard.UIboard.highlight.SetColorSquare(x, y, Highlight.DepthType.Standard, Color.White, false);
 				}
 			}
 
@@ -369,7 +370,7 @@ namespace SudokuSolver_Try1 {
 
 					for (int _x = 0; _x < col.Count; _x++) {
 						//col[_x].panel.BackColor = Color.Black;
-						program.Gameboard.UIboard.highlight.SetColorSquare(_x, a, Highlight.DepthType.Possibilities, Color.Black, false);
+						program.Gameboard.UIboard.highlight.SetColorSquare(_x, a, Highlight.DepthType.Standard, Color.Black, false);
 					}
 
 				}
@@ -387,7 +388,7 @@ namespace SudokuSolver_Try1 {
 					var row = program.Gameboard.UIboard.GetRow(b);
 
 					for (int _y = 0; _y < row.Count; _y++) {
-						program.Gameboard.UIboard.highlight.SetColorSquare(b, _y, Highlight.DepthType.Possibilities, Color.Black, false);
+						program.Gameboard.UIboard.highlight.SetColorSquare(b, _y, Highlight.DepthType.Standard, Color.Black, false);
 					}
 				}
 				boardGrid.RowStyles.Add(rs);
@@ -418,10 +419,13 @@ namespace SudokuSolver_Try1 {
 				var gb = program.Gameboard.UIboard;
 				var data = program.Gameboard.Databoard;
 
+				//gb.highlight.ClearLayer(Highlight.DepthType.Possibilities);
+
 				// Check if (x,y) is == 1, then paint it green.
+				var i = data.GetPossibilities(pos);
 				for (int x = 0; x < gb.Width; x++) {
 					for (int y = 0; y < gb.Height; y++) {
-						var i = data.GetPossibilities(pos);
+						
 						if (!isSqrt(x, (int)Math.Sqrt(gb.Width)) && !isSqrt(y, (int)Math.Sqrt(gb.Height))) {
 							switch (i[x, y]) {
 								case -1:

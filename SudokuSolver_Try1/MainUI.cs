@@ -15,12 +15,13 @@ namespace SudokuSolver_Try1 {
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
 			//program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
-			ShowPossibilities();
 			if (cb_FocusHighlight.Checked) {
 				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
-			Console.WriteLine(obj.field.Text);
 			program.Gameboard.UpdateFromTextbox(obj);
+
+			// Should always come last.
+			ShowPossibilities();
 		}
 
 		private void Form1_Load(object sender, EventArgs e) {

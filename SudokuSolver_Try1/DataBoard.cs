@@ -98,7 +98,8 @@ namespace SudokuSolver_Try1 {
 			return occ;
 		}
 
-		private bool isSqrt(int val, int sq) {
+		private bool isSqrt(int val, int _sq) {
+			var sq = (int)Math.Sqrt(_sq);
 			int floor = (int)Math.Floor((float)((val + 1) / (sq + 1)));
 			float nonfloor = ((float)(val + 1) / (sq + 1));
 
@@ -119,7 +120,10 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < Width; x++) {
 				for (int y = 0; y < Height; y++) {
-					if (!isSqrt(x, Width) && !isSqrt(y, height)) {
+					
+					if (isSqrt(x, Width) == true || isSqrt(y, Height) == true) {
+						possibilities[x, y] = 0;
+					} else {
 						if (GetCell(x, y).Value == "") {
 							var column = GetColumn(y);
 							var row = GetRow(x);
@@ -145,8 +149,6 @@ namespace SudokuSolver_Try1 {
 								}
 							}
 						}
-					} else {
-						possibilities[x, y] = 0;
 					}
 				}
 			}

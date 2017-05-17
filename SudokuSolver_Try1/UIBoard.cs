@@ -79,7 +79,7 @@ namespace SudokuSolver_Try1 {
 						if (tiles[x, y].hasField) {
 							tiles[x, y].field.BackColor = Color.White;
 						}
-						for (int d = highlight.Depth - 1; d > 0; d--) {
+						for (int d = 0; d < highlight.Depth; d++) {
 							if (highlight.GetColorSquare(x, y, d) != Color.Empty) {
 								tiles[x, y].panel.BackColor = highlight.GetColorSquare(x, y, d);
 								if (tiles[x, y].hasField) {
