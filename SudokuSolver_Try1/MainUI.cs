@@ -15,13 +15,10 @@ namespace SudokuSolver_Try1 {
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
 			//program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
-			/*ShowPossibilities();
+			ShowPossibilities();
 			if (cb_FocusHighlight.Checked) {
-				program.UIboard.highlight.CreateFocusHighlight(program.Databoard, tb_HighlightText.Text);
+				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
-			if (loop == true) {
-				UpdateEntry(obj.X, obj.Y, obj.field.Text);
-			}*/
 			Console.WriteLine(obj.field.Text);
 			program.Gameboard.UpdateFromTextbox(obj);
 		}
@@ -61,7 +58,7 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void btn_autoCycle_MouseUp(object sender, MouseEventArgs e) {
-			//MasterCycle();
+			program.Gameboard.MasterCycle();
 		}
 
 		private void focusHighlight_CheckedChanged(object sender, EventArgs e) {

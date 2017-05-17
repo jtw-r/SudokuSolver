@@ -4,28 +4,6 @@ using System.Windows.Forms;
 namespace SudokuSolver_Try1 {
 	public class Program {
 
-		/*private UIBoard uiBoard;
-		public UIBoard UIboard{
-			get {
-				return uiBoard;
-			}
-
-			set {
-				this.uiBoard = value;
-			}
-		}
-
-		private DataBoard databoard;
-		public DataBoard Databoard {
-			get {
-				return databoard;
-			}
-
-			set {
-				this.databoard = value;
-			}
-		}*/
-
 		private Tile lastExec = null;
 		public Tile LastExec {
 			get {
