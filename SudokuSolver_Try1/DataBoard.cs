@@ -153,9 +153,13 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 
-			for (int x = 0; x < Width; x++) {
-				for (int y = 0; y < Height; y++) {
-					if (possibilities[x, y] == 1) {
+			return ProcessPossibilities(possibilities);
+		}
+
+		private int[,] ProcessPossibilities(int[,] array) {
+			for (int x = 0; x < array.GetLength(0); x++) {
+				for (int y = 0; y < array.GetLength(1); y++) {
+					if (array[x, y] == 1) {
 						var group = GetGroup(GetCell(x, y).Group);
 						var row = GetRow(x);
 						var column = GetColumn(y);
@@ -163,33 +167,35 @@ namespace SudokuSolver_Try1 {
 						int[] dummy = { 0, 0, 0 };
 
 						for (int i = 0; i < group.Count; i++) {
-							if (possibilities[group[i].X, group[i].Y] == 1) {
+							if (array[group[i].X, group[i].Y] == 1 || array[group[i].X, group[i].Y] == -1) {
 								dummy[0]++;
 							}
 						}
 
 						for (int i = 0; i < row.Count; i++) {
-							if (possibilities[i, y] == 1) {
+							if (array[i, y] == 1 || array[i, y] == -1) {
 								dummy[1]++;
 							}
 						}
 
-						for (int i = 0; i < column.Count; i++) {
-							if (possibilities[x, i] == 1) {
+						for (int _i = 0; _i < column.Count; _i++) {
+							if (array[x, _i] == 1 || array[x, _i] == -1) {
 								dummy[2]++;
 							}
 						}
 
 						for (int i = 0; i < dummy.Length; i++) {
 							if (dummy[i] == 1) {
-								possibilities[x, y] = -1;
+								array[x, y] = -1;
+								//Console.WriteLine("(" + x + "," + y + ") " + dummy[0] + dummy[1] + dummy[2]);
 							}
 						}
 					}
 				}
 			}
 
-			return possibilities;
+			return array;
+
 		}
 
 	}

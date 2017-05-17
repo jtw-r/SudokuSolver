@@ -425,11 +425,15 @@ namespace SudokuSolver_Try1 {
 				var i = data.GetPossibilities(pos);
 				for (int x = 0; x < gb.Width; x++) {
 					for (int y = 0; y < gb.Height; y++) {
-						
+
 						if (!isSqrt(x, (int)Math.Sqrt(gb.Width)) && !isSqrt(y, (int)Math.Sqrt(gb.Height))) {
 							switch (i[x, y]) {
 								case -1:
-								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Green);
+								if (cb_AutoFillPossibilities.Checked) {
+									program.Gameboard.UpdateFromData(x, y, pos);
+								} else {
+									gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Green);
+								}
 								break;
 								case 0:
 								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.White);
@@ -597,15 +601,13 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 			return true;
-		}
+		}*/
 
 		public void SetCount() {
 			if (tb_HighlightText.Text != "") {
-				var gb = program.UIboard;
-
-				lb_OccuranceNumber.Text = "" + program.UIboard.FindOccurance(tb_HighlightText.Text);
+				lb_OccuranceNumber.Text = "" + program.Gameboard.Databoard.FindOccurance(tb_HighlightText.Text);
 			}
-		}*/
+		}
 
 		public TextBox tb_HighlightText;
 		public TableLayoutPanel OptionsTable;

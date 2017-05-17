@@ -238,6 +238,7 @@ namespace SudokuSolver_Try1 {
 				for (int y = 0; y < databoard.Height; y++) {
 					if (!isSqrt(x, (int)Math.Sqrt(databoard.Width)) && !isSqrt(y, (int)Math.Sqrt(databoard.Height))) {
 						if(i[x,y] == -1) {
+							//databoard.GetCell(x, y).Value = num;
 							UpdateFromData(x, y, num);
 						}
 					}
@@ -336,24 +337,28 @@ namespace SudokuSolver_Try1 {
 
 		public bool GuessCycle(string[] num, int tollerance = 10) {
 			Console.WriteLine("Started Guess. " + Databoard.FindOccurance(""));
-			for (int a = 0; a < Databoard.FindOccurance("") / 20; a++) {
+			for (int a = 0; a < Databoard.FindOccurance("") / 50; a++) {
 				for (int i = 0; i < num.Length - 1; i++) {
 					int[,] poss = Databoard.GetPossibilities("" + num[i]);
 					Random rnd = new Random();
 					int cycle_num = 0;
+					bool t = false;
 					while (true) {
 						int x = rnd.Next(1, 9);
 						int y = rnd.Next(1, 9);
 
-						if (poss[x, y] == 1) {
-							Databoard.GetCell(x, y).Value = "" + num[i];
-							break;
-						}
 						cycle_num++;
 						if (cycle_num > 100) {
 							// If this has searched through 100 random positions and
 							// none of them work, stop the loop.
+							//Console.WriteLine(Databoard.FindOccurance(""));
+							//return false;
 							break;
+						}
+						if (poss[x, y] == 1) {
+							Databoard.GetCell(x, y).Value = "" + num[i];
+							break;
+							
 						}
 					}
 				}
@@ -393,6 +398,7 @@ namespace SudokuSolver_Try1 {
 						}
 
 						if (canBreak) {
+							Console.WriteLine(Databoard.FindOccurance(""));
 							return false;
 						}
 					}

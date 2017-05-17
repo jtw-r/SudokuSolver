@@ -22,6 +22,7 @@ namespace SudokuSolver_Try1 {
 
 			// Should always come last.
 			ShowPossibilities();
+			SetCount();
 		}
 
 		private void Form1_Load(object sender, EventArgs e) {
@@ -38,8 +39,8 @@ namespace SudokuSolver_Try1 {
 			if (cb_FocusHighlight.Checked) {
 				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
-			ShowPossibilities(tb_HighlightText.Text);
-			//SetCount();
+			ShowPossibilities();
+			SetCount();
 
 		}
 
