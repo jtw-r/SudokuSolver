@@ -93,6 +93,16 @@ namespace SudokuSolver_Try1 {
 			updateMethod();
 		}
 
+		public void SetColorSquare(int _x, int _y, int _d, Color _color, bool _safeMode = true) {
+			if (_safeMode) {
+				if (_d == 0) {
+					_d = 1;
+				}
+			}
+			colorBoard[_x, _y, _d] = _color;
+			updateMethod();
+		}
+
 		public Color GetColorSquare(int _x, int _y, DepthType _d) {
 			return colorBoard[_x, _y, Convert.ToInt32(_d)];
 		}
@@ -115,6 +125,20 @@ namespace SudokuSolver_Try1 {
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
 					SetColorSquare(x, y, _d, Color.Empty, false);
+				}
+			}
+		}
+
+		public void Clear(bool _safe = true) {
+			var _depth = 0;
+			if (_safe) {
+				_depth = 1;
+			}
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < height; y++) {
+					for (int d = _depth; d < depth; d++) {
+						SetColorSquare(x, y, d, Color.Empty);
+					}
 				}
 			}
 		}

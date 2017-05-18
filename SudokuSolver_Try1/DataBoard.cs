@@ -29,7 +29,11 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < Width; x++) {
 				for (int y = 0; y < Height; y++) {
-					cells[x, y] = new Cell(x, y, Width, Height, "");
+					if (isSqrt(x, Width) == true || isSqrt(y, Height) == true) {
+						cells[x, y] = new Cell(x, y, Width, Height, null);
+					} else {
+						cells[x, y] = new Cell(x, y, Width, Height, "");
+					}
 				}
 			}
 		}

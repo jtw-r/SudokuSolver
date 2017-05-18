@@ -431,6 +431,7 @@ namespace SudokuSolver_Try1 {
 								case -1:
 								if (cb_AutoFillPossibilities.Checked) {
 									program.Gameboard.UpdateFromData(x, y, pos);
+									ShowPossibilities();
 								} else {
 									gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Green);
 								}

@@ -127,7 +127,8 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < program.Gameboard.UIboard.Width; x++) {
 				for (int y = 0; y < program.Gameboard.UIboard.Height; y++) {
-					if (!form1.isSqrt(x, (int)Math.Sqrt(program.Gameboard.UIboard.Width)) && !form1.isSqrt(y, (int)Math.Sqrt(program.Gameboard.UIboard.Height))) {
+					//if (!form1.isSqrt(x, (int)Math.Sqrt(program.Gameboard.UIboard.Width)) && !form1.isSqrt(y, (int)Math.Sqrt(program.Gameboard.UIboard.Height))) {
+					if (program.Gameboard.Databoard.GetCell(x,y) != null) {
 						var value = program.Gameboard.Databoard.GetCell(x, y).Value;
 
 						if (value == "") {
