@@ -68,6 +68,15 @@ namespace SudokuSolver_Try1 {
 		////////////////////
 
 		/// <summary>
+		/// Resets everything to its natural state.
+		/// </summary>
+		public void ResetAll() {
+			Databoard.Reset();
+			UIHighlight.Clear();
+			MassUpdateFromData();
+		}
+
+		/// <summary>
 		/// Aligns the data array with the textboxes.
 		/// </summary>
 		public void UpdateFromTextbox(Tile obj) {
@@ -100,6 +109,18 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
+		/// <summary>
+		/// Aligns all of the textboxes with the data array insted of only one.
+		/// </summary>
+		public void MassUpdateFromData() {
+			for (int x = 0; x < Databoard.Width; x++) {
+				for (int y = 0; y < Databoard.Height; y++) {
+					UpdateFromData(x, y);
+					uiboard.UpdateHighlights();
+				}
+			}
+		}
+
 		/////////////////////
 		// SOLVING METHODS //
 		/////////////////////
@@ -114,14 +135,17 @@ namespace SudokuSolver_Try1 {
 			return false;
 		}
 
-		public void ActUponPossibilities(string num) {
-			var i = databoard.GetPossibilities(num);
+		/// <summary>
+		/// Fills in all of the single possibilities for a string.
+		/// </summary>
+		/// <param name="str"></param>
+		public void FillInPossibilities(string str) {
+			var i = databoard.GetPossibilities(str);
 			for (int x = 0; x < databoard.Width; x++) {
 				for (int y = 0; y < databoard.Height; y++) {
 					if (!isSqrt(x, (int)Math.Sqrt(databoard.Width)) && !isSqrt(y, (int)Math.Sqrt(databoard.Height))) {
 						if(i[x,y] == -1) {
-							//databoard.GetCell(x, y).Value = num;
-							UpdateFromData(x, y, num);
+							UpdateFromData(x, y, str);
 						}
 					}
 				}
@@ -132,7 +156,7 @@ namespace SudokuSolver_Try1 {
 			int tollerance = 10;
 			// Do cycles of checking for possibilities.
 			// If it gets stuck:
-			//	Start a random guess, see it through, and if it doesn't work, re-guess.
+			//	Start a random guess, see it through, if it doesn't work: reset, and guess again.
 
 			// Numbers that are not fully solved yet.
 			List<int> left = new List<int>();
@@ -144,8 +168,7 @@ namespace SudokuSolver_Try1 {
 			for (int i = 1; i < 10; i++) {
 				left.Add(i);
 			}
-
-			var gb = UIboard;
+			
 			while (Databoard.FindOccurance("") != 0) {
 				// Loop this until the puzzle is solved.
 
@@ -153,11 +176,8 @@ namespace SudokuSolver_Try1 {
 				history.Add(Databoard.FindOccurance(""));
 
 				foreach (var item in left) {
-					// Basic check for possibilities.
-
-					// So basicly, we don't want this to be ShowPossibilities();
-					// More like ActUponPossibilities();
-					ActUponPossibilities("" + item);
+					// Basic fill in possibilities.
+					FillInPossibilities("" + item);
 
 					// Add the numbers that still need to be solved
 					// to a place holder list.
@@ -171,10 +191,10 @@ namespace SudokuSolver_Try1 {
 				left = _left;
 
 				if (Databoard.FindOccurance("") == 0) {
-					// The gameboard is full! It solved it.
+					// The gameboard is full. It solved it!
 					return;
 				} else if (history.Count > tollerance) {
-					// Test if nothing has happened in '10' cycles.
+					// Test if nothing has happened in a given amount of cycles.
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
 						// By this point, the program has gotten stuck so it needs some help.
 						// Create a restore point incase the random guess doesn't work and
@@ -229,9 +249,10 @@ namespace SudokuSolver_Try1 {
 			for (int a = 0; a < Databoard.FindOccurance("") / 20; a++) {
 				for (int i = 0; i < num.Length - 1; i++) {
 					int[,] poss = Databoard.GetPossibilities("" + num[i]);
+
 					Random rnd = new Random();
 					int cycle_num = 0;
-					bool t = false;
+
 					while (true) {
 						int x = rnd.Next(1, 9);
 						int y = rnd.Next(1, 9);
@@ -264,7 +285,7 @@ namespace SudokuSolver_Try1 {
 
 				foreach (var item in left) {
 					// Basic check for possibilities.
-					ActUponPossibilities("" + item);
+					FillInPossibilities("" + item);
 
 					if (Databoard.FindOccurance("" + item) < 9) {
 						_left.Add(item);

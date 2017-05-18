@@ -31,6 +31,7 @@ namespace SudokuSolver_Try1 {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
 			this.tb_HighlightText = new System.Windows.Forms.TextBox();
 			this.OptionsTable = new System.Windows.Forms.TableLayoutPanel();
 			this.lb_Occurances = new System.Windows.Forms.Label();
@@ -267,11 +268,13 @@ namespace SudokuSolver_Try1 {
 			this.ClientSize = new System.Drawing.Size(266, 305);
 			this.Controls.Add(this.OptionsTable);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
 			this.Name = "MainUI";
 			this.Padding = new System.Windows.Forms.Padding(12);
-			this.ShowIcon = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Sudoku Solver";
-			this.Load += new System.EventHandler(this.Form1_Load);
 			this.OptionsTable.ResumeLayout(false);
 			this.OptionsTable.PerformLayout();
 			this.ResumeLayout(false);
@@ -281,11 +284,7 @@ namespace SudokuSolver_Try1 {
 
 		#endregion
 
-		public void UpdateEntry(int _x, int _y, string str) {
-
-		}
-
-		public UIBoard resizeBoard(int _w, int _h) {
+		public void resizeBoard(int _w, int _h) {
 
 			// Remove any pre-existing grids.
 			var d = this.Controls.Find("boardGrid", false);
@@ -296,11 +295,18 @@ namespace SudokuSolver_Try1 {
 			// Create a new grid.
 			TableLayoutPanel boardGrid = new TableLayoutPanel();
 			boardGrid.Name = "boardGrid";
+
+			// Set the grids location.
 			boardGrid.Location = new Point(12, 12);
 			boardGrid.AutoSize = AutoSize;
+
+			// Set the cell border style.
 			boardGrid.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
 
+			// Add the grid to the form.
 			this.Controls.Add(boardGrid);
+
+			// Set the sqrts.
 			int w_sq = (int)Math.Sqrt(_w);
 			int h_sq = (int)Math.Sqrt(_h);
 
@@ -308,9 +314,7 @@ namespace SudokuSolver_Try1 {
 			boardGrid.ColumnCount = _w + (w_sq - 1);
 			boardGrid.RowCount = _h + (h_sq - 1);
 
-			// Create all of the nessicary arrays.
-			//UIBoard program.Gameboard.Uiboard = new UIBoard(boardGrid.ColumnCount, boardGrid.RowCount);
-			//program.Databoard = new DataBoard(boardGrid.ColumnCount, boardGrid.RowCount);
+			// Create all of the necessary arrays.
 			program.Gameboard.UIboard = new UIBoard(boardGrid.ColumnCount, boardGrid.RowCount);
 			program.Gameboard.UIHighlight = program.Gameboard.UIboard.highlight;
 			program.Gameboard.Databoard = new DataBoard(boardGrid.ColumnCount, boardGrid.RowCount);
@@ -323,6 +327,7 @@ namespace SudokuSolver_Try1 {
 
 			for (var x = 0; x < program.Gameboard.UIboard.Width; x++) {
 				for (var y = 0; y < program.Gameboard.UIboard.Height; y++) {
+					// Create all of the tiles that go in the ui array.
 					Tile obj = program.Gameboard.UIboard.GetTile(x, y);
 
 					obj.panel = new Panel() {
@@ -397,9 +402,6 @@ namespace SudokuSolver_Try1 {
 			boardGrid.ResumeLayout();
 
 			OptionsTable.Location = new Point(boardGrid.Size.Width + Padding.Left * 2, 5 + Padding.Top);
-
-			return program.Gameboard.UIboard;
-
 		}
 
 		public bool isSqrt(int val, int sq) {
@@ -412,6 +414,7 @@ namespace SudokuSolver_Try1 {
 			return false;
 		}
 
+		// Shows the possible spaces for a string.
 		public void ShowPossibilities(string pos = "/") {
 			if (pos == "/") { pos = tb_HighlightText.Text; }
 			if (cb_ShowPossibilities.Checked && pos != "") {
@@ -437,7 +440,7 @@ namespace SudokuSolver_Try1 {
 								}
 								break;
 								case 0:
-								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.White);
+								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Empty);
 								break;
 								case 1:
 								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.LightGreen);
@@ -446,167 +449,16 @@ namespace SudokuSolver_Try1 {
 						}
 					}
 				}
+			} else {
+				program.Gameboard.UIHighlight.ClearLayer(Highlight.DepthType.Possibilities);
 			}
 		}
-
-		
-
-		/*public void MasterCycle() {
-			int tollerance = 10;
-			// Do cycles of checking for possibilities.
-			// If it gets stuck:
-			//	Start a random guess, see it through, and if it doesn't work, re-guess.
-
-			// Numbers that are not fully solved yet.
-			List<int> left = new List<int>();
-
-			// The history of what has happened.
-			List<int> history = new List<int>();
-
-			// At the start, add all values to left.
-			for (int i = 1; i < 10; i++) {
-				left.Add(i);
-			}
-
-			var gb = program.UIboard;
-			while (program.UIboard.FindOccurance("") != 0) {
-				// Loop this until the puzzle is solved.
-
-				List<int> _left = new List<int>();
-				history.Add(program.UIboard.FindOccurance(""));
-
-				foreach (var item in left) {
-					// Basic check for possibilities.
-					ShowPossibilities("" + item, true);
-
-					// Add the numbers that still need to be solved
-					// to a place holder list.
-					if (program.UIboard.FindOccurance("" + item) < 9) {
-						_left.Add(item);
-					}
-				}
-
-				// After everything is done set the main list to be
-				// the place holder.
-				left = _left;
-
-				if (program.UIboard.FindOccurance("") == 0) {
-					// The gameboard is full! It solved it.
-					return;
-				} else if (history.Count > tollerance) {
-					// Test if nothing has happened in '10' cycles.
-					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
-						// By this point, the program has gotten stuck so it needs some help.
-						// Create a restore point incase the random guess doesn't work and
-						// finally, do a random guess to see if it will work.
-
-						string[,] restorePoint = new string[program.UIboard.Width, program.UIboard.Height];
-
-						for (int _x = 0; _x < program.UIboard.Width; _x++) {
-							for (int _y = 0; _y < program.UIboard.Height; _y++) {
-								restorePoint[_x, _y] = program.UIboard.GetCell(_x, _y).Value.ToString();
-							}
-						}
-
-						// Find the number with the least possible spaces left.
-						List<string> toSort = new List<string>();
-						for (int i = 1; i < 10; i++) {
-							if (program.UIboard.FindOccurance(""+i) < 9) {
-								toSort.Add(9-program.UIboard.FindOccurance(""+i) + "," + i);
-							}
-						}
-
-						toSort.Sort();
-						string[] num = toSort[0].Split(',');
-
-						if (GuessCycle(num)) {
-							// Yay! The random guess worked and the program was able to
-							// completly solve the sudoku puzzle. Exit the while loop.
-							return;
-						} else {
-							// Oh no. The random guess did not work. Reset the board to before
-							// the random guess and try again.
-							for (int _x = 0; _x < program.UIboard.Width; _x++) {
-								for (int _y = 0; _y < program.UIboard.Height; _y++) {
-									program.UIboard.GetCell(_x, _y).Value = restorePoint[_x, _y].ToString();
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public bool GuessCycle(string[] num,int tollerance = 10) {
-			var gb = program.UIboard;
-			for (int a = 0; a < program.UIboard.FindOccurance("") / 20; a++) {
-				for (int i = 0; i < num.Length - 1; i++) {
-					int[,] poss = gb.GetPossibilities("" + num[i]);
-					Random rnd = new Random();
-					int cycle_num = 0;
-					while (true) {
-						int x = rnd.Next(1, 9);
-						int y = rnd.Next(1, 9);
-
-						if (poss[x, y] == 1) {
-							program.UIboard.GetCell(x, y).Value = "" + num[i];
-							break;
-						}
-						cycle_num++;
-						if (cycle_num > 100) {
-							// If this has searched through 100 random positions and
-							// none of them work, stop the loop.
-							break;
-						}
-					}
-				}
-			}
-
-			List<int> left = new List<int>();
-			List<int> history = new List<int>();
-			for (int i = 1; i < 10; i++) {
-				left.Add(i);
-			}
-
-			while (program.UIboard.FindOccurance("") != 0) {
-
-				List<int> _left = new List<int>();
-				history.Add(program.UIboard.FindOccurance(""));
-
-				foreach (var item in left) {
-					// Basic check for possibilities.
-					ShowPossibilities("" + item, true);
-
-					if (program.UIboard.FindOccurance("" + item) < 9) {
-						_left.Add(item);
-					}
-				}
-
-				left = _left;
-
-				if (program.UIboard.FindOccurance("") == 0) {
-					return true;
-				} else if (history.Count > tollerance) {
-					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
-						bool canBreak = true;
-						for (int i = history[history.Count - (tollerance + 1)]; i < history[history.Count - 1]; i++) {
-							if (history[i] != history[history.Count - 1]) {
-								canBreak = false;
-							}
-						}
-
-						if (canBreak) {
-							return false;
-						}
-					}
-				}
-			}
-			return true;
-		}*/
 
 		public void SetCount() {
 			if (tb_HighlightText.Text != "") {
 				lb_OccuranceNumber.Text = "" + program.Gameboard.Databoard.FindOccurance(tb_HighlightText.Text);
+			} else {
+				lb_OccuranceNumber.Text = "0";
 			}
 		}
 
@@ -626,4 +478,3 @@ namespace SudokuSolver_Try1 {
 		public Button btn_SaveBoard;
 	}
 }
-

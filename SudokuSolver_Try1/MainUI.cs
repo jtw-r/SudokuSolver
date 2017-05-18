@@ -14,7 +14,6 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private new void TextChanged(object sender, Tile obj, EventArgs e) {
-			//program.Databoard.GetCell(obj.X, obj.Y).Value = obj.field.Text;
 			if (cb_FocusHighlight.Checked) {
 				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
@@ -23,10 +22,6 @@ namespace SudokuSolver_Try1 {
 			// Should always come last.
 			ShowPossibilities();
 			SetCount();
-		}
-
-		private void Form1_Load(object sender, EventArgs e) {
-
 		}
 
 		private void btn_ShowHighlight_MouseUp(object sender, MouseEventArgs e) {
@@ -45,11 +40,13 @@ namespace SudokuSolver_Try1 {
 		}
 
 		private void highlight_Click(object sender, Tile obj, EventArgs e) {
-			//rcHighlight(obj);
+			if (cb_ClickHighlight.Checked) {
+				program.Gameboard.UIHighlight.CreateClickHighlight(program.Gameboard.Databoard, obj.X, obj.Y);
+			}
 		}
 
 		private void btn_ClearGrid_MouseUp(object sender, MouseEventArgs e) {
-			//program.UIboard.Clear();
+			program.Gameboard.ResetAll();
 		}
 
 		private void btn_LoadPreset_MouseUp(object sender, MouseEventArgs e) {
@@ -84,12 +81,7 @@ namespace SudokuSolver_Try1 {
 
 		private void clickHighlight_CheckedChanged(object sender, EventArgs e) {
 			if(!cb_ClickHighlight.Checked) {
-				//RemoveHighlight(Color.LightBlue, true);
-				//RemoveHighlight(Color.Blue, true);
-			} else {
-				if (program.LastExec != null) {
-					//rcHighlight(program.LastExec);
-				}
+				program.Gameboard.UIHighlight.ClearLayer(Highlight.DepthType.Click);
 			}
 		}
 

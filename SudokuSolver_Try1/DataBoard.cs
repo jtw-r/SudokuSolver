@@ -26,7 +26,11 @@ namespace SudokuSolver_Try1 {
 			this.height = x_length;
 
 			cells = new Cell[Width, Height];
+			Reset();
+			
+		}
 
+		public void Reset() {
 			for (int x = 0; x < Width; x++) {
 				for (int y = 0; y < Height; y++) {
 					if (isSqrt(x, Width) == true || isSqrt(y, Height) == true) {

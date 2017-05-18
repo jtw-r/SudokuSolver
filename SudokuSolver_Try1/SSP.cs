@@ -71,7 +71,7 @@ namespace SudokuSolver_Try1 {
 
 				string[] boardSize = fileLines[0].Replace("\r", "").Replace(" ", "").Split(',');
 
-				program.Gameboard.UIboard = form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
+				form1.resizeBoard(Convert.ToInt32(boardSize[0]), Convert.ToInt32(boardSize[1]));
 
 				string[] selectedBoardData = boards[selectedBoardNum].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
 

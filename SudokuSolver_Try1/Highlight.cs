@@ -54,14 +54,18 @@ namespace SudokuSolver_Try1 {
 
 			this.colorBoard = new Color[Width, Height, Depth];
 
-			for (int x = 0; x < _width; x++) {
-				for (int y = 0; y < _height; y++) {
-					for (int d = 0; d < _depth; d++) {
+			Reset();
+
+		}
+
+		private void Reset() {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					for (int d = 0; d < depth; d++) {
 						colorBoard[x, y, d] = Color.Empty;
 					}
 				}
 			}
-
 		}
 
 
@@ -80,13 +84,53 @@ namespace SudokuSolver_Try1 {
 						}
 					}
 				}
+			} else {
+				ClearLayer(DepthType.Focus);
 			}
+		}
+
+		public void CreateClickHighlight(DataBoard array, int _x, int _y) {
+			ClearLayer(Highlight.DepthType.Click);
+
+			var col = array.GetColumn(_y);
+			var row = array.GetRow(_x);
+
+			for (int col_num = 0; col_num < col.Count; col_num++) {
+				if (col[col_num].Value != null) {
+					if (col[col_num].X != _x) {
+						SetColorSquare(col[col_num].X, col[col_num].Y, Highlight.DepthType.Click, Color.LightBlue);
+					} else {
+						SetColorSquare(col[col_num].X, col[col_num].Y, Highlight.DepthType.Click, Color.Blue);
+					}
+				}
+			}
+
+			for (int row_num = 0; row_num < row.Count; row_num++) {
+				if (row[row_num].Value != null) {
+					if (row[row_num].Y != _y) {
+						SetColorSquare(row[row_num].X, row[row_num].Y, Highlight.DepthType.Click, Color.LightBlue);
+					} else {
+						SetColorSquare(row[row_num].X, row[row_num].Y, Highlight.DepthType.Click, Color.Blue);
+					}
+				}
+			}
+		}
+
+		private bool isSqrt(int val, int _sq) {
+			var sq = (int)Math.Sqrt(_sq);
+			int floor = (int)Math.Floor((float)((val + 1) / (sq + 1)));
+			float nonfloor = ((float)(val + 1) / (sq + 1));
+
+			if (floor == nonfloor) {
+				return true;
+			}
+			return false;
 		}
 
 		public void SetColorSquare(int _x, int _y, DepthType _d, Color _color, bool _safeMode = true) {
 			if (_safeMode) {
 				if (_d == DepthType.Standard) {
-					_d = DepthType.Click;
+					_d = DepthType.Other;
 				}
 			}
 			colorBoard[_x, _y, Convert.ToInt32(_d)] = _color;
