@@ -145,7 +145,7 @@ namespace SudokuSolver_Try1 {
 				for (int y = 0; y < databoard.Height; y++) {
 					if (!isSqrt(x, (int)Math.Sqrt(databoard.Width)) && !isSqrt(y, (int)Math.Sqrt(databoard.Height))) {
 						if(i[x,y] == -1) {
-							UpdateFromData(x, y, str);
+							databoard.GetCell(x, y).Value = str;
 						}
 					}
 				}
@@ -226,6 +226,7 @@ namespace SudokuSolver_Try1 {
 						if (GuessCycle(num)) {
 							// Yay! The random guess worked and the program was able to
 							// completly solve the sudoku puzzle. Exit the while loop.
+							MassUpdateFromData();
 							return;
 						} else {
 							// Oh no. The random guess did not work. Reset the board to before

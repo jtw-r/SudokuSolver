@@ -37,7 +37,7 @@ namespace SudokuSolver_Try1 {
 			Program program = new Program();
 			form.program = program;
 			form.self = form;
-			var size = new int[] { 9, 16 };
+			var size = new int[] { 9, 9 };
 			program.gameboard = new GameBoard(size[0],size[1]);
 
 			// Create and resize the game board!
