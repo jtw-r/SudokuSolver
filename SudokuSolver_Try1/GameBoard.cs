@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
 	public class GameBoard {
+		// The class that brings both the data, ui, and highlight together.
 
 		// Dimesions of the usable space on the data array. Ex: 11x11 -> 9x9.
 		private int[] fauxDimensions;
@@ -125,6 +126,12 @@ namespace SudokuSolver_Try1 {
 		// SOLVING METHODS //
 		/////////////////////
 
+		/// <summary>
+		/// Checks if the current value is divisible by the sqrt.
+		/// </summary>
+		/// <param name="val"></param>
+		/// <param name="sq"></param>
+		/// <returns></returns>
 		public bool isSqrt(int val, int sq) {
 			int floor = (int)Math.Floor((float)((val + 1) / (sq + 1)));
 			float nonfloor = ((float)(val + 1) / (sq + 1));
@@ -152,6 +159,9 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
+		/// <summary>
+		/// Main cycle for solving.
+		/// </summary>
 		public void MasterCycle() {
 			int tollerance = 10;
 			// Do cycles of checking for possibilities.
@@ -159,20 +169,29 @@ namespace SudokuSolver_Try1 {
 			//	Start a random guess, see it through, if it doesn't work: reset, and guess again.
 
 			// Numbers that are not fully solved yet.
-			List<int> left = new List<int>();
+			List<string> left = new List<string>();
 
 			// The history of what has happened.
 			List<int> history = new List<int>();
 
+			int left_num = 0;
+			if (FauxDimensions[0] > FauxDimensions[1]) {
+				left_num = FauxDimensions[0];
+			} else {
+				left_num = FauxDimensions[1];
+			}
+
+			List<char> left_chars = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+
 			// At the start, add all values to left.
-			for (int i = 1; i < 10; i++) {
-				left.Add(i);
+			for (int i = 0; i < left_num; i++) {
+				left.Add(Convert.ToString(left_chars[i]));
 			}
 			
 			while (Databoard.FindOccurance("") != 0) {
 				// Loop this until the puzzle is solved.
 
-				List<int> _left = new List<int>();
+				List<string> _left = new List<string>();
 				history.Add(Databoard.FindOccurance(""));
 
 				foreach (var item in left) {
@@ -181,7 +200,7 @@ namespace SudokuSolver_Try1 {
 
 					// Add the numbers that still need to be solved
 					// to a place holder list.
-					if (Databoard.FindOccurance("" + item) < 9) {
+					if (Databoard.FindOccurance("" + item) < left_num) {
 						_left.Add(item);
 					}
 				}
@@ -246,6 +265,12 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
+		/// <summary>
+		/// The guess cycle. Where the program will guess and check.
+		/// </summary>
+		/// <param name="num"></param>
+		/// <param name="tollerance"></param>
+		/// <returns></returns>
 		public bool GuessCycle(string[] num, int tollerance = 10) {
 			for (int a = 0; a < Databoard.FindOccurance("") / 20; a++) {
 				for (int i = 0; i < num.Length - 1; i++) {
@@ -273,15 +298,26 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 
-			List<int> left = new List<int>();
+			List<string> left = new List<string>();
 			List<int> history = new List<int>();
-			for (int i = 1; i < 10; i++) {
-				left.Add(i);
+
+			int left_num = 0;
+			if (FauxDimensions[0] > FauxDimensions[1]) {
+				left_num = FauxDimensions[0];
+			} else {
+				left_num = FauxDimensions[1];
+			}
+
+			List<char> left_chars = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+
+			// At the start, add all values to left.
+			for (int i = 0; i < left_num; i++) {
+				left.Add(Convert.ToString(left_chars[i]));
 			}
 
 			while (Databoard.FindOccurance("") != 0) {
 
-				List<int> _left = new List<int>();
+				List<string> _left = new List<string>();
 				history.Add(Databoard.FindOccurance(""));
 
 				foreach (var item in left) {

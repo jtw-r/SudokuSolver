@@ -12,42 +12,22 @@ namespace SudokuSolver_Try1 {
 
 		protected Tile[,] tiles;
 
-		private int width;
-		private int height;
-
-		public int Width {
-			get {
-				return width;
-			}
-
-			set {
-				this.width = value;
-			}
-		}
-
-		public int Height {
-			get {
-				return height;
-			}
-
-			set {
-				this.height = value;
-			}
-		}
+		public int Width { get; }
+		public int Height { get; }
 
 		public UIBoard(int x_length, int y_length) {
-			this.width = y_length;
-			this.height = x_length;
+			this.Width = y_length;
+			this.Height = x_length;
 
-			tiles = new Tile[width, height];
+			tiles = new Tile[Width, Height];
 
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					tiles[x, y] = new Tile(x, y, null, null, false, width, height);
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < Height; y++) {
+					tiles[x, y] = new Tile(x, y, null, null, false, Width, Height);
 				}
 			}
 
-			highlight = new Highlight(width,height, () => UpdateHighlights());
+			highlight = new Highlight(Width,Height, () => UpdateHighlights());
 		}
 
 		public Tile GetTile(int _x, int _y) {
@@ -70,10 +50,21 @@ namespace SudokuSolver_Try1 {
 			return TileColumn;
 		}
 
+		public List<Tile> GetGroup(int _group) {
+			List<Tile> TileGroup = new List<Tile>();
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < Height; y++) {
+					if (tiles[x, y].group == _group) {
+						TileGroup.Add(tiles[x, y]);
+					}
+				}
+			}
+			return TileGroup;
+		}
+
 		public void UpdateHighlights() {
-			//PartialClear();
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < Height; y++) {
 					if (tiles[x, y].panel != null) {
 						tiles[x, y].panel.BackColor = Color.White;
 						if (tiles[x, y].hasField) {
@@ -91,29 +82,5 @@ namespace SudokuSolver_Try1 {
 				}
 			}
 		}
-
-		public void PartialClear() {
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					tiles[x, y].panel.BackColor = Color.White;
-					if (tiles[x, y].hasField) {
-						tiles[x, y].field.BackColor = Color.White;
-					}
-				}
-			}
-		}
-
-		/*public List<Tile> GetGroup(int _group) {
-			List<Tile> TileGroup = new List<Tile>();
-			for (int x = 0; x < Width; x++) {
-				for (int y = 0; y < Height; y++) {
-					if (tiles[x, y].Group == _group) {
-						TileGroup.Add(tiles[x, y]);
-					}
-				}
-			}
-			return TileGroup;
-		}*/
-
 	}
 }

@@ -4,37 +4,31 @@ using System.Windows.Forms;
 
 namespace SudokuSolver_Try1 {
 	public class Tile {
-		private int x;
-		private int y;
+		// Basic class for each tile in the UI grid.
+		// Should only be used in UIBoard.cs
 		
-		public int group;
 		public TextBox field;
+
+		// Backing that the text box is attached to.
+		// Mostly used for changing the colour of the cell.
 		public Panel panel;
-		public bool hasField = false;
 
-		public int X {
-			get {
-				return x;
-			}
+		public int X { get; }
+		public int Y { get; }
 
-			set {
-				this.x = value;
-			}
-		}
+		// Each board is seperated into groups,
+		// each group is Sqrt(original width) by Sqrt(original height).
+		// 9x9: Each group is 3x3 so 9 tiles. This is the same with Cell.cs
+		// 1 2 3
+		// 4 5 6
+		// 7 8 9
+		public int group { get; }
 
-		public int Y {
-			get {
-				return y;
-			}
-
-			set {
-				this.y = value;
-			}
-		}
+		public bool hasField { get; set; }
 
 		public Tile(int _x, int _y, TextBox _field, Panel _panel, bool _hasField, int _w, int _h ) {
-			this.x = _x;
-			this.y = _y;
+			this.X = _x;
+			this.Y = _y;
 			this.field = _field;
 			this.panel = _panel;
 			this.hasField = _hasField;
