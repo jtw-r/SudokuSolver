@@ -37,10 +37,11 @@ namespace SudokuSolver_Try1 {
 			Program program = new Program();
 			form.program = program;
 			form.self = form;
-			program.gameboard = new GameBoard(9,9);
+			var size = new int[] { 9, 16 };
+			program.gameboard = new GameBoard(size[0],size[1]);
 
 			// Create and resize the game board!
-			form.resizeBoard(9, 9);
+			form.resizeBoard(size[0], size[1]);
 
 			Application.Run(form);
 
