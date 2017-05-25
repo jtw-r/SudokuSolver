@@ -111,6 +111,12 @@
     </Compile>
     <Compile Include="GameBoard.cs" />
     <Compile Include="Highlight.cs" />
+    <Compile Include="ResizeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResizeUI.Designer.cs">
+      <DependentUpon>ResizeUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectBoardUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ResizeUI.resx">
+      <DependentUpon>ResizeUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SelectBoardUI.resx">
       <DependentUpon>SelectBoardUI.cs</DependentUpon>
     </EmbeddedResource>

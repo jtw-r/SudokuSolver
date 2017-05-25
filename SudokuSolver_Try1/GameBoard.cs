@@ -57,11 +57,18 @@ namespace SudokuSolver_Try1 {
 			}
 		}
 
-		public GameBoard(int _w, int _h) {
+		public MainUI mainUI { get; set; }
+
+		public List<char> possibleCharacters = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+		public GameBoard(int _w, int _h, MainUI _mainUI = null) {
 			this.fauxDimensions = new[] { _w, _h};
 			this.databoard = new DataBoard(_w, _h);
 			this.uiboard = new UIBoard(_w, _h);
 			this.uiHighlight = this.uiboard.highlight;
+			if(_mainUI != null) {
+				this.mainUI = _mainUI;
+			}
 		}
 
 		////////////////////
@@ -146,7 +153,7 @@ namespace SudokuSolver_Try1 {
 		/// Fills in all of the single possibilities for a string.
 		/// </summary>
 		/// <param name="str"></param>
-		public void FillInPossibilities(string str) {
+		public void FillInPossibilities(string str, bool solving = true) {
 			var i = databoard.GetPossibilities(str);
 			for (int x = 0; x < databoard.Width; x++) {
 				for (int y = 0; y < databoard.Height; y++) {
@@ -156,6 +163,51 @@ namespace SudokuSolver_Try1 {
 						}
 					}
 				}
+			}
+			
+			// This possibly speeds up the solving process?
+			// Makes it so that it does not have to update the
+			// ui array everytime.
+			if (solving == false) {
+				MassUpdateFromData();
+				UIHighlight.CreateFocusHighlight(databoard, str);
+			}
+		}
+
+		// Shows the possible spaces for a string.
+		public void ShowPossibilities(string pos = "/") {
+			if (pos == "/") { pos = mainUI.tb_HighlightText.Text; }
+			if (mainUI.cb_ShowPossibilities.Checked && pos != "") {
+				if (mainUI.cb_AutoFillPossibilities.Checked) {
+					FillInPossibilities(pos, false);
+				}
+
+				// Check if (x,y) is == 1, then paint it green.
+				var i = Databoard.GetPossibilities(pos);
+				for (int x = 0; x < UIboard.Width; x++) {
+					for (int y = 0; y < UIboard.Height; y++) {
+
+						if (!isSqrt(x, (int)Math.Sqrt(UIboard.Width)) && !isSqrt(y, (int)Math.Sqrt(UIboard.Height))) {
+							switch (i[x, y]) {
+								case -1:
+								if (mainUI.cb_AutoFillPossibilities.Checked) {
+									FillInPossibilities(pos);
+								} else {
+									UIHighlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Green);
+								}
+								break;
+								case 0:
+								UIHighlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Empty);
+								break;
+								case 1:
+								UIHighlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.LightGreen);
+								break;
+							}
+						}
+					}
+				}
+			} else {
+				UIHighlight.ClearLayer(Highlight.DepthType.Possibilities);
 			}
 		}
 
@@ -169,49 +221,47 @@ namespace SudokuSolver_Try1 {
 			//	Start a random guess, see it through, if it doesn't work: reset, and guess again.
 
 			// Numbers that are not fully solved yet.
-			List<string> left = new List<string>();
+			List<string> charactersLeft = new List<string>();
 
 			// The history of what has happened.
 			List<int> history = new List<int>();
 
-			int left_num = 0;
+			int maxDimension = 0;
 			if (FauxDimensions[0] > FauxDimensions[1]) {
-				left_num = FauxDimensions[0];
+				maxDimension = FauxDimensions[0];
 			} else {
-				left_num = FauxDimensions[1];
+				maxDimension = FauxDimensions[1];
 			}
 
-			List<char> left_chars = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-
 			// At the start, add all values to left.
-			for (int i = 0; i < left_num; i++) {
-				left.Add(Convert.ToString(left_chars[i]));
+			for (int i = 0; i < maxDimension; i++) {
+				charactersLeft.Add(Convert.ToString(possibleCharacters[i]));
 			}
 			
 			while (Databoard.FindOccurance("") != 0) {
 				// Loop this until the puzzle is solved.
 
-				List<string> _left = new List<string>();
+				List<string> newLeft = new List<string>();
 				history.Add(Databoard.FindOccurance(""));
 
-				foreach (var item in left) {
+				foreach (var item in charactersLeft) {
 					// Basic fill in possibilities.
 					FillInPossibilities("" + item);
 
 					// Add the numbers that still need to be solved
 					// to a place holder list.
-					if (Databoard.FindOccurance("" + item) < left_num) {
-						_left.Add(item);
+					if (Databoard.FindOccurance("" + item) < maxDimension) {
+						newLeft.Add(item);
 					}
 				}
 
 				// After everything is done set the main list to be
 				// the place holder.
-				left = _left;
+				charactersLeft = newLeft;
 
 				if (Databoard.FindOccurance("") == 0) {
 					// The gameboard is full. It solved it!
-					return;
+					break;
 				} else if (history.Count > tollerance) {
 					// Test if nothing has happened in a given amount of cycles.
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
@@ -245,8 +295,7 @@ namespace SudokuSolver_Try1 {
 						if (GuessCycle(num)) {
 							// Yay! The random guess worked and the program was able to
 							// completly solve the sudoku puzzle. Exit the while loop.
-							MassUpdateFromData();
-							return;
+							break;
 						} else {
 							// Oh no. The random guess did not work. Reset the board to before
 							// the random guess and try again.
@@ -263,6 +312,7 @@ namespace SudokuSolver_Try1 {
 					}
 				}
 			}
+			MassUpdateFromData();
 		}
 
 		/// <summary>
@@ -302,17 +352,17 @@ namespace SudokuSolver_Try1 {
 			List<int> history = new List<int>();
 
 			int left_num = 0;
+			
+			// Check which dimension is larger and use it.
 			if (FauxDimensions[0] > FauxDimensions[1]) {
 				left_num = FauxDimensions[0];
 			} else {
 				left_num = FauxDimensions[1];
 			}
 
-			List<char> left_chars = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-
 			// At the start, add all values to left.
 			for (int i = 0; i < left_num; i++) {
-				left.Add(Convert.ToString(left_chars[i]));
+				left.Add(Convert.ToString(possibleCharacters[i]));
 			}
 
 			while (Databoard.FindOccurance("") != 0) {
@@ -332,6 +382,7 @@ namespace SudokuSolver_Try1 {
 				left = _left;
 
 				if (Databoard.FindOccurance("") == 0) {
+					// Yay, the guess worked!
 					return true;
 				} else if (history.Count > tollerance) {
 					if (history[history.Count - (tollerance + 1)] == history[history.Count - 1]) {
@@ -343,6 +394,7 @@ namespace SudokuSolver_Try1 {
 						}
 
 						if (canBreak) {
+							// The guess that the program made failed :(
 							return false;
 						}
 					}

@@ -46,7 +46,30 @@ namespace SudokuSolver_Try1 {
 			this.btn_LoadBoard = new System.Windows.Forms.Button();
 			this.btn_SaveBoard = new System.Windows.Forms.Button();
 			this.lb_FocusNumber = new System.Windows.Forms.Label();
+			this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
+			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.newToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.printPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.OptionsTable.SuspendLayout();
+			this.MainMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tb_HighlightText
@@ -78,7 +101,7 @@ namespace SudokuSolver_Try1 {
 			this.OptionsTable.Controls.Add(this.btn_LoadBoard, 1, 7);
 			this.OptionsTable.Controls.Add(this.btn_SaveBoard, 1, 8);
 			this.OptionsTable.Controls.Add(this.lb_FocusNumber, 0, 0);
-			this.OptionsTable.Location = new System.Drawing.Point(15, 15);
+			this.OptionsTable.Location = new System.Drawing.Point(3, 27);
 			this.OptionsTable.Name = "OptionsTable";
 			this.OptionsTable.RowCount = 12;
 			this.OptionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -258,6 +281,171 @@ namespace SudokuSolver_Try1 {
 			this.lb_FocusNumber.Text = "Focus Number:";
 			this.lb_FocusNumber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// MainMenuStrip
+			// 
+			this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.toolsToolStripMenuItem});
+			this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
+			this.MainMenuStrip.Name = "MainMenuStrip";
+			this.MainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+			this.MainMenuStrip.Size = new System.Drawing.Size(276, 24);
+			this.MainMenuStrip.TabIndex = 3;
+			this.MainMenuStrip.Text = "MainMenuStrip";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripItem,
+            this.saveToolStripItem,
+            this.toolStripSeparator5,
+            this.newToolStripItem});
+			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.fileToolStripMenuItem.Text = "&File";
+			// 
+			// loadToolStripItem
+			// 
+			this.loadToolStripItem.Name = "loadToolStripItem";
+			this.loadToolStripItem.Size = new System.Drawing.Size(152, 22);
+			this.loadToolStripItem.Text = "Load Board";
+			this.loadToolStripItem.Click += new System.EventHandler(this.loadToolStripItem_Click);
+			// 
+			// saveToolStripItem
+			// 
+			this.saveToolStripItem.Name = "saveToolStripItem";
+			this.saveToolStripItem.Size = new System.Drawing.Size(152, 22);
+			this.saveToolStripItem.Text = "Save Board";
+			this.saveToolStripItem.Click += new System.EventHandler(this.saveToolStripItem_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+			// 
+			// newToolStripItem
+			// 
+			this.newToolStripItem.Name = "newToolStripItem";
+			this.newToolStripItem.Size = new System.Drawing.Size(152, 22);
+			this.newToolStripItem.Text = "New Board";
+			this.newToolStripItem.Click += new System.EventHandler(this.newToolStripItem_Click);
+			// 
+			// editToolStripMenuItem
+			// 
+			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.editToolStripMenuItem.Text = "&Edit";
+			// 
+			// undoToolStripMenuItem
+			// 
+			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.undoToolStripMenuItem.Text = "&Undo";
+			// 
+			// redoToolStripMenuItem
+			// 
+			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.redoToolStripMenuItem.Text = "&Redo";
+			// 
+			// toolsToolStripMenuItem
+			// 
+			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.customizeToolStripMenuItem,
+            this.optionsToolStripMenuItem});
+			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+			this.toolsToolStripMenuItem.Text = "&Tools";
+			// 
+			// customizeToolStripMenuItem
+			// 
+			this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
+			this.customizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.customizeToolStripMenuItem.Text = "&Customize";
+			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.optionsToolStripMenuItem.Text = "&Options";
+			// 
+			// newToolStripMenuItem
+			// 
+			this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
+			this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.newToolStripMenuItem.Text = "&New";
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
+			this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.openToolStripMenuItem.Text = "&Open";
+			// 
+			// toolStripSeparator
+			// 
+			this.toolStripSeparator.Name = "toolStripSeparator";
+			this.toolStripSeparator.Size = new System.Drawing.Size(6, 6);
+			// 
+			// saveToolStripMenuItem
+			// 
+			this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
+			this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+			this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.saveToolStripMenuItem.Text = "&Save";
+			// 
+			// saveAsToolStripMenuItem
+			// 
+			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.saveAsToolStripMenuItem.Text = "Save &As";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 6);
+			// 
+			// printToolStripMenuItem
+			// 
+			this.printToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripMenuItem.Image")));
+			this.printToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+			this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.printToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.printToolStripMenuItem.Text = "&Print";
+			// 
+			// printPreviewToolStripMenuItem
+			// 
+			this.printPreviewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("printPreviewToolStripMenuItem.Image")));
+			this.printPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.printPreviewToolStripMenuItem.Name = "printPreviewToolStripMenuItem";
+			this.printPreviewToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.printPreviewToolStripMenuItem.Text = "Print Pre&view";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 6);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+			this.exitToolStripMenuItem.Text = "E&xit";
+			// 
 			// MainUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,18 +453,21 @@ namespace SudokuSolver_Try1 {
 			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(266, 305);
+			this.ClientSize = new System.Drawing.Size(276, 331);
 			this.Controls.Add(this.OptionsTable);
+			this.Controls.Add(this.MainMenuStrip);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "MainUI";
-			this.Padding = new System.Windows.Forms.Padding(12);
+			this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Sudoku Solver";
+			this.Text = "`";
 			this.OptionsTable.ResumeLayout(false);
 			this.OptionsTable.PerformLayout();
+			this.MainMenuStrip.ResumeLayout(false);
+			this.MainMenuStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -297,7 +488,7 @@ namespace SudokuSolver_Try1 {
 			boardGrid.Name = "boardGrid";
 
 			// Set the grids location.
-			boardGrid.Location = new Point(12, 12);
+			boardGrid.Location = new Point(12, 26);
 			boardGrid.AutoSize = AutoSize;
 
 			// Set the cell border style.
@@ -403,7 +594,7 @@ namespace SudokuSolver_Try1 {
 
 			boardGrid.ResumeLayout();
 
-			OptionsTable.Location = new Point(boardGrid.Size.Width + Padding.Left * 2, 5 + Padding.Top);
+			OptionsTable.Location = new Point(boardGrid.Size.Width + 12 * 2, 5 + 24);
 		}
 
 		public bool isSqrt(int val, int sq) {
@@ -414,46 +605,6 @@ namespace SudokuSolver_Try1 {
 				return true;
 			}
 			return false;
-		}
-
-		// Shows the possible spaces for a string.
-		public void ShowPossibilities(string pos = "/") {
-			if (pos == "/") { pos = tb_HighlightText.Text; }
-			if (cb_ShowPossibilities.Checked && pos != "") {
-				// Somehow get the data from DataBoard.cs
-				var gb = program.Gameboard.UIboard;
-				var data = program.Gameboard.Databoard;
-
-				//gb.highlight.ClearLayer(Highlight.DepthType.Possibilities);
-
-				// Check if (x,y) is == 1, then paint it green.
-				var i = data.GetPossibilities(pos);
-				for (int x = 0; x < gb.Width; x++) {
-					for (int y = 0; y < gb.Height; y++) {
-
-						if (!isSqrt(x, (int)Math.Sqrt(gb.Width)) && !isSqrt(y, (int)Math.Sqrt(gb.Height))) {
-							switch (i[x, y]) {
-								case -1:
-								if (cb_AutoFillPossibilities.Checked) {
-									program.Gameboard.UpdateFromData(x, y, pos);
-									ShowPossibilities();
-								} else {
-									gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Green);
-								}
-								break;
-								case 0:
-								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.Empty);
-								break;
-								case 1:
-								gb.highlight.SetColorSquare(x, y, Highlight.DepthType.Possibilities, Color.LightGreen);
-								break;
-							}
-						}
-					}
-				}
-			} else {
-				program.Gameboard.UIHighlight.ClearLayer(Highlight.DepthType.Possibilities);
-			}
 		}
 
 		public void SetCount() {
@@ -478,5 +629,27 @@ namespace SudokuSolver_Try1 {
 		public CheckBox cb_FocusHighlight;
 		public CheckBox cb_ShowPossibilities;
 		public Button btn_SaveBoard;
+		private MenuStrip MainMenuStrip;
+		private ToolStripMenuItem fileToolStripMenuItem;
+		private ToolStripMenuItem loadToolStripItem;
+		private ToolStripMenuItem saveToolStripItem;
+		private ToolStripMenuItem editToolStripMenuItem;
+		private ToolStripMenuItem undoToolStripMenuItem;
+		private ToolStripMenuItem redoToolStripMenuItem;
+		private ToolStripMenuItem toolsToolStripMenuItem;
+		private ToolStripMenuItem customizeToolStripMenuItem;
+		private ToolStripMenuItem optionsToolStripMenuItem;
+		private ToolStripMenuItem newToolStripMenuItem;
+		private ToolStripMenuItem openToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator;
+		private ToolStripMenuItem saveToolStripMenuItem;
+		private ToolStripMenuItem saveAsToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator1;
+		private ToolStripMenuItem printToolStripMenuItem;
+		private ToolStripMenuItem printPreviewToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripMenuItem exitToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator5;
+		private ToolStripMenuItem newToolStripItem;
 	}
 }

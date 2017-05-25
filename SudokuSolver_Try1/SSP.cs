@@ -93,7 +93,7 @@ namespace SudokuSolver_Try1 {
 				string[] selectedBoardData = boards[selectedBoardNumber].Split(new[] { "Puzzle:" }, StringSplitOptions.None);
 				string[] boardData = Regex.Split(selectedBoardData[1].Replace("\n", "").Replace("\r", ""), string.Empty, RegexOptions.IgnorePatternWhitespace);
 
-				if (boardData.Length/ Convert.ToInt32(boardSize[1]) == Convert.ToInt32(boardSize[0])) {
+				if (boardData.Length / Convert.ToInt32(boardSize[1]) == Convert.ToInt32(boardSize[0])) {
 					for (int x = 0; x < Convert.ToInt32(boardSize[0]); x++) {
 						for (int y = 0; y < Convert.ToInt32(boardSize[1]); y++) {
 							// Calculate the offset of the coordinates.
@@ -148,7 +148,7 @@ namespace SudokuSolver_Try1 {
 
 			for (int x = 0; x < program.Gameboard.UIboard.Width; x++) {
 				for (int y = 0; y < program.Gameboard.UIboard.Height; y++) {
-					if (program.Gameboard.Databoard.GetCell(x,y) != null) {
+					if (program.Gameboard.Databoard.GetCell(x, y) != null) {
 						var value = program.Gameboard.Databoard.GetCell(x, y).Value;
 
 						// Format blank spaces.
@@ -168,7 +168,7 @@ namespace SudokuSolver_Try1 {
 			if (File.Exists(filename)) {
 				fileBoards = File.ReadAllText(filename).Split(new[] { "Size:" }, StringSplitOptions.None);
 			} else {
-				fileBoards = new [] {""};
+				fileBoards = new[] { "" };
 			}
 
 			if (fileBoards.Length > 1) {
@@ -182,15 +182,15 @@ namespace SudokuSolver_Try1 {
 
 				switch (result) {
 					case DialogResult.No:
-						// Overwrite
-						File.WriteAllLines(filename, begining);
-						File.AppendAllLines(filename, lines);
-						File.AppendAllLines(filename, puzzle);
+					// Overwrite
+					File.WriteAllLines(filename, begining);
+					File.AppendAllLines(filename, lines);
+					File.AppendAllLines(filename, puzzle);
 					break;
 					case DialogResult.Yes:
-						// Append
-						File.AppendAllLines(filename, lines);
-						File.AppendAllLines(filename, puzzle);
+					// Append
+					File.AppendAllLines(filename, lines);
+					File.AppendAllLines(filename, puzzle);
 					break;
 					case DialogResult.Cancel:
 					return;

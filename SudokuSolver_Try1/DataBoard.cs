@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace SudokuSolver_Try1 {
-	public class DataBoard {
+	public class DataBoard : ICloneable {
 
 		private Cell[,] cells;
 		private int width;
@@ -29,6 +29,14 @@ namespace SudokuSolver_Try1 {
 			Reset();
 			
 		}
+
+		public DataBoard Clone() {
+			return (DataBoard)this.MemberwiseClone();
+		}
+		object ICloneable.Clone() {
+			return Clone();
+		}
+		
 
 		public void Reset() {
 			for (int x = 0; x < Width; x++) {
@@ -195,7 +203,6 @@ namespace SudokuSolver_Try1 {
 						for (int i = 0; i < dummy.Length; i++) {
 							if (dummy[i] == 1) {
 								array[x, y] = -1;
-								//Console.WriteLine("(" + x + "," + y + ") " + dummy[0] + dummy[1] + dummy[2]);
 							}
 						}
 					}

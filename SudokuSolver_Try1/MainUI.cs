@@ -21,7 +21,7 @@ namespace SudokuSolver_Try1 {
 			program.Gameboard.UpdateFromTextbox(obj);
 
 			// Should always come last.
-			ShowPossibilities();
+			program.Gameboard.ShowPossibilities();
 			SetCount();
 		}
 
@@ -35,7 +35,7 @@ namespace SudokuSolver_Try1 {
 			if (cb_FocusHighlight.Checked) {
 				program.Gameboard.UIHighlight.CreateFocusHighlight(program.Gameboard.Databoard, tb_HighlightText.Text);
 			}
-			ShowPossibilities();
+			program.Gameboard.ShowPossibilities();
 			SetCount();
 
 		}
@@ -74,7 +74,7 @@ namespace SudokuSolver_Try1 {
 
 		private void cb_possib_CheckedChanged(object sender, EventArgs e) {
 			if (cb_ShowPossibilities.Checked) {
-				ShowPossibilities();
+				program.Gameboard.ShowPossibilities();
 			} else {
 				program.Gameboard.UIHighlight.ClearLayer(Highlight.DepthType.Possibilities);
 			}
@@ -97,7 +97,7 @@ namespace SudokuSolver_Try1 {
 
 		private void cb_autoFill_CheckedChanged(object sender, EventArgs e) {
 			if (cb_AutoFillPossibilities.Checked) {
-				ShowPossibilities();
+				program.Gameboard.ShowPossibilities();
 			}
 		}
 
@@ -109,6 +109,33 @@ namespace SudokuSolver_Try1 {
 
 		private void tb_HighlightText_KeyPress(object sender, KeyPressEventArgs e) {
 
+		}
+
+		private void loadToolStripItem_Click(object sender, EventArgs e) {
+			SSP ssp = new SSP(program, self);
+
+			ssp.Load();
+		}
+
+		private void saveToolStripItem_Click(object sender, EventArgs e) {
+			SSP ssp = new SSP(program, self);
+
+			ssp.Save();
+		}
+
+		private void newToolStripItem_Click(object sender, EventArgs e) {
+			ResizeUI resi = new ResizeUI();
+
+			DialogResult result = resi.ShowDialog();
+
+			switch (result) {
+				case DialogResult.OK:
+				resizeBoard((int)resi.nud_Width.Value, (int)resi.nud_Height.Value);
+				break;
+				case DialogResult.Cancel:
+				return;
+			}
+			resi.Dispose();
 		}
 	}
 }
